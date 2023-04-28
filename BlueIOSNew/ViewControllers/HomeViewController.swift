@@ -377,7 +377,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func bubblesAction(_ sender: Any) {
-        if(true) {
+        if(Settings.bubbles < 0) {
             Utils.toast(vc: self, message: "Controle indisponível")
             return //Controle indisponível
         }

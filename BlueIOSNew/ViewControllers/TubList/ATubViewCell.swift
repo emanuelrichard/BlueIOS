@@ -19,4 +19,6 @@ class ATubViewCell: UICollectionViewCell {
     @IBOutlet weak var ble_ico: UIButton!
     @IBOutlet weak var wifi_ico: UIButton!
     @IBOutlet weak var mqtt_ico: UIButton!
+    @IBOutlet weak var celula_view: UIView!
+    
 }

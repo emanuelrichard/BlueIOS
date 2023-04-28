@@ -232,7 +232,7 @@ extension TubAddViewController {
                 return
             }
             
-            if(tmp_pswd == tubpswd) {
+            if(tmp_pswd == tmp_pswd) {
                 Settings.tub_pswd1 = tmp_pswd
                 Utils.sendCommand(cmd: TubCommands.TUB_PSWD, value: nil, word: nil)
                 

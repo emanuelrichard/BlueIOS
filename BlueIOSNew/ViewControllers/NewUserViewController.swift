@@ -14,7 +14,8 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var email_edt: UITextField!
     @IBOutlet weak var register_btn: DCBorderedButton!
     @IBOutlet weak var cancel_btn: DCBorderedButton!
-    @IBOutlet weak var msg_height: NSLayoutConstraint!
+    @IBOutlet weak var msg_height: DCBaseLabel!
+    @IBOutlet weak var bathtubimage: UIImageView!
     
     private let realmDB = RealmDB.it
     private var addedUser: User? = nil
@@ -22,10 +23,38 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Cria um gradiente com as 3 cores desejadas
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor, UIColor(red: 102/255, green: 148/255, blue: 250/255, alpha: 1).cgColor, UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor]
+        
+        // Define o plano de fundo da view com o gradiente
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        // Configura o campo do nome
+        name_edt.layer.cornerRadius = 10.0
+        name_edt.layer.masksToBounds = true
+        name_edt.backgroundColor = UIColor.clear
+        name_edt.layer.borderColor = UIColor.white.cgColor
+        name_edt.layer.borderWidth = 2
+        name_edt.textColor = UIColor.white
+        
+        // Configura o campo do email
+        email_edt.layer.cornerRadius = 10.0
+        email_edt.layer.masksToBounds = true
+        email_edt.backgroundColor = UIColor.clear
+        email_edt.layer.borderColor = UIColor.white.cgColor
+        email_edt.layer.borderWidth = 2
+        email_edt.textColor = UIColor.white
+        
         name_edt.delegate = self
         email_edt.delegate = self
         
-        msg_height.isActive = true
+        msg_height.isHidden = true
+        bathtubimage.isHidden = false
+        
+        // Adiciona a ação de botão para voltar para a primeira tela
+        cancel_btn.addTarget(self, action: #selector(goToFirstScreen), for: .touchUpInside)
     }
     
     @IBAction func registerClick(_ sender: Any) {
@@ -48,7 +77,11 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancelClick(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func goToFirstScreen() {
+        navigationController?.popToRootViewController(animated: true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -117,7 +150,8 @@ extension NewUserViewController: RequestProtocol {
             self.cancel_btn.isEnabled = true
             if(code < 400) {
                 Utils.toast(vc: self, message: "E-mail enviado com sucesso", type: 1)
-                self.msg_height.isActive = false
+                self.msg_height.isHidden = false
+                self.bathtubimage.isHidden = true
                 return
             } else if(code < 500) {
                 Utils.toast(vc: self, message: "Usuário já cadastrado no sistema", type: 0)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol QRCodeProtocol: class {
+protocol QRCodeProtocol: AnyObject {
     
     func qrScanningDidFail()
     

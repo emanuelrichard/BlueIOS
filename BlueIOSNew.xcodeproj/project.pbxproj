@@ -60,7 +60,6 @@
 		2859095129E498620015FF80 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859095029E498620015FF80 /* SettingsViewController.swift */; };
 		2859095329E498A60015FF80 /* InstallationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859095229E498A60015FF80 /* InstallationViewController.swift */; };
 		2859095529E499FD0015FF80 /* ConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859095429E499FD0015FF80 /* ConfigViewController.swift */; };
-		2859095729E49A1A0015FF80 /* AccountOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859095629E49A1A0015FF80 /* AccountOptionsViewController.swift */; };
 		2859095929E49A3B0015FF80 /* GeneralConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859095829E49A3B0015FF80 /* GeneralConfigViewController.swift */; };
 		2859095F29E49CB70015FF80 /* QRScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859095E29E49CB70015FF80 /* QRScanView.swift */; };
 		2859096129E49CCB0015FF80 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859096029E49CCB0015FF80 /* Notifications.swift */; };
@@ -92,6 +91,7 @@
 		2859099929E4A24E0015FF80 /* BLEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859099829E4A24E0015FF80 /* BLEService.swift */; };
 		2859099B29E4A2630015FF80 /* WifiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859099A29E4A2630015FF80 /* WifiService.swift */; };
 		2859099D29E4A30E0015FF80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2859099C29E4A30E0015FF80 /* LaunchScreen.storyboard */; };
+		28D96FFE29E7298500122FCD /* AccountOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D96FFD29E7298500122FCD /* AccountOptionsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,7 +141,6 @@
 		2859095029E498620015FF80 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2859095229E498A60015FF80 /* InstallationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationViewController.swift; sourceTree = "<group>"; };
 		2859095429E499FD0015FF80 /* ConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigViewController.swift; sourceTree = "<group>"; };
-		2859095629E49A1A0015FF80 /* AccountOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOptionsViewController.swift; sourceTree = "<group>"; };
 		2859095829E49A3B0015FF80 /* GeneralConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralConfigViewController.swift; sourceTree = "<group>"; };
 		2859095E29E49CB70015FF80 /* QRScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanView.swift; sourceTree = "<group>"; };
 		2859096029E49CCB0015FF80 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -173,6 +172,7 @@
 		2859099829E4A24E0015FF80 /* BLEService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEService.swift; sourceTree = "<group>"; };
 		2859099A29E4A2630015FF80 /* WifiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WifiService.swift; sourceTree = "<group>"; };
 		2859099C29E4A30E0015FF80 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		28D96FFD29E7298500122FCD /* AccountOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOptionsViewController.swift; sourceTree = "<group>"; };
 		B5C5F65CCAD163F773D72D23 /* Pods-BlueIOSNew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueIOSNew.release.xcconfig"; path = "Target Support Files/Pods-BlueIOSNew/Pods-BlueIOSNew.release.xcconfig"; sourceTree = "<group>"; };
 		E18D2D96B5D1CB48A6D5EDF0 /* Pods-BlueIOSNew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueIOSNew.debug.xcconfig"; path = "Target Support Files/Pods-BlueIOSNew/Pods-BlueIOSNew.debug.xcconfig"; sourceTree = "<group>"; };
 		F5369878127E92618C916DD5 /* Pods_BlueIOSNew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlueIOSNew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -394,8 +394,8 @@
 				2859095029E498620015FF80 /* SettingsViewController.swift */,
 				2859095229E498A60015FF80 /* InstallationViewController.swift */,
 				2859095429E499FD0015FF80 /* ConfigViewController.swift */,
-				2859095629E49A1A0015FF80 /* AccountOptionsViewController.swift */,
 				2859095829E49A3B0015FF80 /* GeneralConfigViewController.swift */,
+				28D96FFD29E7298500122FCD /* AccountOptionsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -662,6 +662,7 @@
 				2859093529E4933A0015FF80 /* BottomTabViewController.swift in Sources */,
 				2859096329E49CEC0015FF80 /* CommandQoS.swift in Sources */,
 				2859098F29E4A1C60015FF80 /* TubInfo.swift in Sources */,
+				28D96FFE29E7298500122FCD /* AccountOptionsViewController.swift in Sources */,
 				2859097329E49ED20015FF80 /* RequestProtocol.swift in Sources */,
 				2859098529E4A0A20015FF80 /* BluetoothLEDefs.swift in Sources */,
 				2859095329E498A60015FF80 /* InstallationViewController.swift in Sources */,
@@ -688,7 +689,6 @@
 				2859096129E49CCB0015FF80 /* Notifications.swift in Sources */,
 				2859097B29E4A01A0015FF80 /* DataBackProtocol.swift in Sources */,
 				2859097529E49EED0015FF80 /* BluetoothLEProtocol.swift in Sources */,
-				2859095729E49A1A0015FF80 /* AccountOptionsViewController.swift in Sources */,
 				2842E83C29C9F19B00A7B20D /* SceneDelegate.swift in Sources */,
 				2859098829E4A1800015FF80 /* RequestManager.swift in Sources */,
 				2859095529E499FD0015FF80 /* ConfigViewController.swift in Sources */,

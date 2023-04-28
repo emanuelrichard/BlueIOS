@@ -19,7 +19,15 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var lstTubs: UICollectionView!
     @IBOutlet weak var btnAccOptions: UIButton!
     @IBOutlet weak var btnAppSettings: UIButton!
-    @IBOutlet weak var viwLoading: UIView!
+    @IBOutlet weak var viwLoading: UIView?
+    @IBOutlet weak var configBtn: UIButton!
+    @IBOutlet weak var addBtn: UIButton!
+    
+    @IBOutlet weak var view_tool_bar: UIView!
+    @IBOutlet weak var logo_bar: UIImageView!
+    @IBOutlet weak var view_botton_menu: UIView!
+    @IBOutlet weak var view_bath_tub: UIView!
+    @IBOutlet weak var view_bath_tub_bodder: UIView!
     
     private var added_lst: [Tub] = []
     private var shouldShowConn: [Int] = []
@@ -37,6 +45,117 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Cria um gradiente com as 3 cores desejadas
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor, UIColor(red: 102/255, green: 148/255, blue: 250/255, alpha: 1).cgColor, UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor]
+        
+        // Define o plano de fundo da view com o gradiente
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        //ToolBar View
+        view_tool_bar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(view_tool_bar)
+        let guide = view.safeAreaLayoutGuide
+
+        
+        NSLayoutConstraint.activate([
+            view_tool_bar.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            view_tool_bar.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+            view_tool_bar.topAnchor.constraint(equalTo: guide.topAnchor),
+            view_tool_bar.heightAnchor.constraint(equalToConstant: 44.0),
+            view_tool_bar.widthAnchor.constraint(equalToConstant: 50.0)
+        ])
+        
+        //Logo dentro da view toolbar
+        logo_bar.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.addSubview(logo_bar)
+        
+        NSLayoutConstraint.activate([
+            logo_bar.widthAnchor.constraint(equalToConstant: 50.0),
+            logo_bar.heightAnchor.constraint(equalToConstant: 50.0),
+            logo_bar.centerXAnchor.constraint(equalTo: view_tool_bar.centerXAnchor),
+            logo_bar.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
+        ])
+        
+        //Bunton Config dentro da view toolbar
+        configBtn.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.addSubview(configBtn)
+        
+        
+        NSLayoutConstraint.activate([
+            configBtn.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
+            configBtn.trailingAnchor.constraint(equalTo: view_tool_bar.trailingAnchor),
+        ])
+        
+        configBtn.setTitle("", for: .normal)
+        
+        //Configuracao do titulo
+        txtAddedTitle.adjustsFontSizeToFitWidth = true
+        txtAddedTitle.minimumScaleFactor = 1 // ou qualquer outro valor que desejar
+        txtAddedTitle.textAlignment = .center
+        
+        txtAddedTitle.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(txtAddedTitle)
+        
+        NSLayoutConstraint.activate([
+            // Centralizar a label horizontalmente
+            txtAddedTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            // txt_email a parte superior da label com a parte inferior do texto email
+            txtAddedTitle.topAnchor.constraint(equalTo: view_tool_bar.bottomAnchor),
+        ])
+        
+        //View Botton Menu
+        view_botton_menu.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(view_botton_menu)
+        
+        NSLayoutConstraint.activate([
+            // Define a margem esquerda do objeto lstTubs para ser igual à margem esquerda da safe area
+            view_botton_menu.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            // Define a margem direita do objeto lstTubs para ser igual à margem direita da safe area
+            view_botton_menu.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            // Defina a margem inferior do lstTubs para ser igual à margem inferior da view
+            view_botton_menu.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
+            // Adicione a restrição de altura à view
+            view_botton_menu.heightAnchor.constraint(equalToConstant: 50.0),
+        ])
+        
+        //Button add dentro da view botton menu
+        // Desative a tradução automática das máscaras de layout
+        addBtn.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(addBtn)
+
+        // Adicione as restrições de layout
+        NSLayoutConstraint.activate([
+            // Centralize horizontalmente o addBtn na view
+            addBtn.centerXAnchor.constraint(equalTo: view_botton_menu.centerXAnchor),
+            // Centralize verticalmente o addBtn na view
+            addBtn.centerYAnchor.constraint(equalTo: view_botton_menu.centerYAnchor),
+            // Defina a largura do addBtn como 40 pontos
+            addBtn.widthAnchor.constraint(equalToConstant: 50.0),
+            // Defina a altura do addBtn como 40 pontos
+            addBtn.heightAnchor.constraint(equalToConstant: 50.0)
+        ])
+        
+        // List View
+        lstTubs.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(lstTubs)
+        
+        // Ativa as restrições de layout
+        NSLayoutConstraint.activate([
+            // Define a margem esquerda do objeto lstTubs para ser igual à margem esquerda da safe area
+            lstTubs.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            // Define a margem direita do objeto lstTubs para ser igual à margem direita da safe area
+            lstTubs.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            // Defina a margem superior do lstTubs para ser igual à margem superior da view
+            lstTubs.topAnchor.constraint(equalTo: txtAddedTitle.bottomAnchor, constant: -10),
+            // Defina a margem inferior do lstTubs para ser igual à margem inferior da view
+            lstTubs.bottomAnchor.constraint(equalTo: view_botton_menu.topAnchor)
+        ])
+        
+
+        
+
         // Assume responses in QRCode scans
         viwQRScan.delegate = self
         
@@ -56,11 +175,11 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         loading(show: !Settings.favorite.isEmpty && autocon)
         
         //
-        if #available(iOS 13.0, *) {
-            let status = CLLocationManager.authorizationStatus()
+        if #available(iOS 14.0, *) {
+            let status = locationManager.authorizationStatus
             if status != .authorizedWhenInUse {
-                self.locationManager.delegate = self
-                self.locationManager.requestWhenInUseAuthorization()
+                locationManager.delegate = self
+                locationManager.requestWhenInUseAuthorization()
             }
         }
     }
@@ -120,7 +239,7 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     @IBAction func AddTubClick(_ sender: Any) {
-        if(BLEService.it.ble_enabled) {
+        if(BLEService.it.ble_enabled == false) {
             performSegue(withIdentifier: "TubAdd", sender: nil)
         } else {
             Utils.toast(vc: self, message: "Ligue o Bluetooth e tente novamente!")
@@ -135,31 +254,73 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         performSegue(withIdentifier: "GenCfg", sender: nil)
     }
     
+    // Lista de opcaos
+    @IBAction func configBtnClick(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Opçoes", message: "Escolha uma opção", preferredStyle: .actionSheet)
+        
+        // Adiciona opções na lista de opções
+        alert.addAction(UIAlertAction(title: "Configuração de conta", style: .default, handler: { [self] _ in
+            // Código para lidar com a seleção da opção 1
+            
+            performSegue(withIdentifier: "AConfig", sender: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "QRCode", style: .default, handler: { [self] _ in
+            // Código para lidar com a seleção da opção 2
+            viwQRCode.isHidden = false
+            viwQRCode.isUserInteractionEnabled = true
+            viwQRScan.startScanning()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Configuracao Notificacao", style: .default, handler: { [self] _ in
+            // Código para lidar com a seleção da opção 3
+            performSegue(withIdentifier: "AConfigNotif", sender: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: nil))
+        
+        // Exibe a lista de opções
+        present(alert, animated: true, completion: nil)
+    }
+    
     func loading(show: Bool) {
-        viwLoading.isHidden = !show
-        viwLoading.isUserInteractionEnabled = show
+        viwLoading?.isHidden = show
+        viwLoading?.isUserInteractionEnabled = show
     }
     
+    // Método que retorna a quantidade de itens na seção da collectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return added_lst.count
+    return added_lst.count
+    }
+
+    // Método que retorna a altura da célula para um determinado indexPath
+    func collectionView(
+    _ collectionView: UICollectionView,
+    heightForCellAtIndexPath indexPath: IndexPath) -> CGFloat {
+        // Obtém a largura da célula, que é baseada na largura da lista de tubos
+        let h = lstTubs.frame.width
+        // Chama o método privado estimateHeight para obter a altura estimada da célula
+        return estimateHeight(ref: h, for: indexPath.row)
     }
     
-    func collectionView(
-          _ collectionView: UICollectionView,
-          heightForCellAtIndexPath indexPath:IndexPath) -> CGFloat {
-        let h = lstTubs.frame.width
-        return estimateHeight(ref: h, for: indexPath.row)
-      }
-    
+    // Método privado que estima a altura da célula com base na largura de referência e no índice da linha
     private func estimateHeight(ref: CGFloat, for row: Int) -> CGFloat {
+        // Inicializa a variável total com zero
         var total: CGFloat = 0
+        // Obtém o nome do tubo da lista de tubos e calcula a largura da célula
         let tubname = added_lst[row].tub_name
         let w_cell = (ref/2) - 32
+
+        // Adiciona a altura do texto do nome do tubo à variável total, levando em consideração a largura da célula
         let sz_text = tubname.size(withAttributes:[.font: UIFont.systemFont(ofSize: 17.0, weight: .bold)])
         total += 120
         total += w_cell <= sz_text.width ? (sz_text.height+8) * 2 : (sz_text.height+8)
+
+        // Adiciona a altura das margens superior e inferior da célula
         total += 40
+
+        // Adiciona a altura do botão de conexão, se o índice da linha estiver contido no array shouldShowConn
         total += shouldShowConn.contains(row) ? 40 : 0
+        
+        // Retorna a altura total estimada da célula
         return total
     }
     
@@ -191,15 +352,15 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         cell.conn_btn.addTarget(self, action: #selector(showTubConn), for: .touchUpInside)
         
         let is_fav = Settings.favorite == tub.BTid
-        let fav_ico = is_fav ? #imageLiteral(resourceName: "star_on") : #imageLiteral(resourceName: "star_off")
+        _ = is_fav ? #imageLiteral(resourceName: "star_on") : #imageLiteral(resourceName: "star_off")
         if(is_fav && autocon) {
             autocon = false
             selected = indexPath.row
             _ = connect(sel_tub: tub)
         }
-        cell.fav_btn.setImage(fav_ico, for: .normal)
-        cell.fav_btn.tag = indexPath.row
-        cell.fav_btn.addTarget(self, action: #selector(favoriteTub), for: .touchUpInside)
+        //cell.fav_btn.setImage(fav_ico, for: .normal)
+        //cell.fav_btn.tag = indexPath.row
+        //cell.fav_btn.addTarget(self, action: #selector(favoriteTub), for: .touchUpInside)
         
         cell.del_btn.tag = indexPath.row
         cell.del_btn.addTarget(self, action: #selector(deleteTub), for: .touchUpInside)
@@ -376,7 +537,7 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
             
             if(added_lst.isEmpty) {
-                txtAddedTitle.text = "Nenhuma banheira adicionada. Utilize os botões acima para adicionar uma banheira."
+                txtAddedTitle.text = "Não há banheiras adicionadas.\nPara adicionar uma banheira, utilize os botões abaixo."
             } else {
                 txtAddedTitle.text = "Selecione a banheira que deseja conectar-se"
             }
@@ -516,7 +677,7 @@ extension TubListViewController: RequestProtocol {
 
 extension TubListViewController: QRCodeProtocol {
     func qrScanningDidFail() {
-        Utils.toast(vc: self, message: "Falha ao ler QRCode de banheira CAS", type: 2)
+        Utils.toast(vc: self, message: "Falha ao ler QRCode do BLUE", type: 2)
     }
     
     func qrScanningSucceededWithCode(_ str: String?) {
@@ -533,7 +694,7 @@ extension TubListViewController: QRCodeProtocol {
             Utils.toast(vc: self, message: "Banheira remota adicionada com sucesso", type: 1)
             return
         }
-        Utils.toast(vc: self, message: "QRCode lido não é um código de banheira CAS válido", type: 2)
+        Utils.toast(vc: self, message: "QRCode lido não é um código válido", type: 2)
     }
     
     func qrScanningDidStop() {

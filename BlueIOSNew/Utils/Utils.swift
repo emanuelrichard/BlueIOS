@@ -37,11 +37,11 @@ class Utils {
         
         // Add the beginning marker
         if(cmd != TubCommands.WIFI) { command = ":" }
-        // Add the message code
-        m_code = generateRandomCode()
-        command += "\(m_code) "
         // Add the password
         command += "\(Settings.tub_pswd1) "
+        // Add the message code
+        m_code = generateSequentialCode()
+        command += "\(m_code) "
         // Add the command key
         command += "\(cmd)"
         // Add the command value
@@ -77,9 +77,9 @@ class Utils {
     }
     
     // Generates a two digit code to the command message
-    private static func generateRandomCode() -> String {
-        let chars = ".,!?@#$_&-+=()/|\\*%[]{}<>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<2).map { _ in chars.randomElement()! } )
+    private static func generateSequentialCode() -> String {
+        let sequentialNumbers = (1...99).map { String(format: "%02d", $0) }
+        return sequentialNumbers.randomElement()!
     }
     
     // Verify there's a valid connection

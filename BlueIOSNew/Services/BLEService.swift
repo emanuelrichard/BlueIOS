@@ -186,7 +186,16 @@ extension BLEService: CBCentralManagerDelegate {
 
         // Ignore non-tub peripherals
         if(peripheral.name == nil) { return }
-        if(!peripheral.name!.starts(with: "CAS_")) { return }
+        if (!peripheral.name!.starts(with: "Opp_") &&
+            !peripheral.name!.starts(with: "OppCromo_") &&
+            !peripheral.name!.starts(with: "OppOne_") &&
+            !peripheral.name!.starts(with: "OppFlex_") &&
+            !peripheral.name!.starts(with: "OppPlus_") &&
+            !peripheral.name!.starts(with: "OppPro_") &&
+            !peripheral.name!.starts(with: "OppSpa_")) {
+            return
+        }
+
         
         if(RSSI.intValue >= nearestRSSI || peripheral.name == nearestBtid) {
             nearestRSSI = RSSI.intValue
