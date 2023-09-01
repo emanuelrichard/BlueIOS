@@ -13,13 +13,9 @@ class TubCommands {
     static let GET_TEMP = "statusTempAgua"
     static let GET_DTEMP = "statusTempSet"
     static let TEMP_SET = "tempset "                //const value 15~40
-    static let B1 = "b1 "
-    static let B2 = "b2 "
-    static let B3 = "b3 "
-    static let B4 = "b4 "
-    static let B5 = "b5 "
+
     static let WATER = "agua "
-    static let SET_AUTOON = "setligaautom "
+    static let SET_AUTOON = "saae "
     static let SPOT_OFF = "spots off"
     static let SPOT_STATIC_CROMO = "spots st "      //0 - 8 = branco - cyan - azul - rosa - magenta - vermelho - laranja - amarelo - verde
     //static let SPOT_STATIC_RGB = "spots rgb "     // + R + G + B unused
@@ -52,7 +48,7 @@ class TubCommands {
     static let WIFI = "setwifi "                    // + ssid + senha
     static let SET_BACKLIGHT = "setbacklit "
     static let TUB_PSWD = "setsenha "               // + posição + nova_senha
-    static let KEEP_WARM = "smq "
+    static let KEEP_WARM = "smqe "
     static let TIMEZONE = "setfuso "
     static let SET_FILTER = "saf "
     static let CLR_FILTER = "aaf "
@@ -77,4 +73,22 @@ class TubCommands {
     static let SET_HASCROMO = "setcromo "
     static let SET_SPOT_CMODE = "spots setpadrao "
     static let SET_STRIP_CMODE = "fitas setpadrao "
+    
+    static let CASCATA = "cascata "
+    static let BLOWER = "blower "
+    static let MODO_ECO = "smqe "
+    static let MODO_BLOQUEIO = "setmodo "
+    static let MODO_AQUECIMENTO = "saw "
+    static let TIMEOUT_BANHEIRA = "settimeoutligado "
+    
+    
+    static let B1 = "s 1 "
+    static let B2 = "s 2 "
+    static let B3 = "s 3 "
+    static let B4 = "s 4 "
+    static let B5 = "s 5 "
+    static let B6 = "s 6 "
+    static let B7 = "s 7 "
+    static let B8 = "s 8 "
+    static let B9 = "s 9 "
 }

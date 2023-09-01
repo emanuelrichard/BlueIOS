@@ -8,7 +8,10 @@
 import UIKit
 import UserNotifications
 import IQKeyboardManagerSwift
-import Firebase
+import FirebaseCore // Importa o módulo do Firebase Core
+import FirebaseFirestore // Importa o módulo do Firebase Firestore
+import FirebaseMessaging
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {

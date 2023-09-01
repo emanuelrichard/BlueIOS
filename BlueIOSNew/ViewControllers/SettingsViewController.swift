@@ -75,6 +75,18 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var item0: UIView!
     @IBOutlet weak var inner0: DCBorderedView!
     
+    @IBOutlet weak var itemBloqueio: UIView!
+    @IBOutlet weak var innerBloqueio: DCBorderedView!
+    
+    @IBOutlet weak var itemAquecimento: UIView!
+    @IBOutlet weak var innerAquecimento: DCBorderedView!
+    
+    @IBOutlet weak var itemDesligamentoAutomatico: UIView!
+    @IBOutlet weak var innerDesligamentoAutomatico: DCBorderedView!
+    
+    @IBOutlet weak var itemTempoEnchimento: UIView!
+    @IBOutlet weak var innerTempoEnchimento: DCBorderedView!
+    
     @IBOutlet weak var itemPf: UIView!
     @IBOutlet weak var innerPf: DCBorderedView!
     
@@ -101,6 +113,24 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var itemN: UIView!
     
+    @IBOutlet weak var view_tool_bar: UIView!
+    @IBOutlet weak var logo_img: UIImageView!
+    
+    @IBOutlet weak var switch_bloqueio: UISwitch!
+    @IBOutlet weak var switch_aquecimento: UISwitch!
+    @IBOutlet weak var switch_aquecimento_txt: UILabel!
+    @IBOutlet weak var switch_bloqueio_txt: UILabel!
+    
+    @IBOutlet weak var desligamento_automatico_valor: UILabel!
+    @IBOutlet weak var desligamento_automatico_status: UILabel!
+    @IBOutlet weak var desligamento_automatico_slider: MSCircularSlider!
+    
+    @IBOutlet weak var tempo_enchimento_valor: UILabel!
+    @IBOutlet weak var tempo_enchimento_status: UILabel!
+    @IBOutlet weak var tempo_enchimento_slider: MSCircularSlider!
+
+
+    
     private var brightsetTimer: Timer?
     
     private var wifi_toast = false
@@ -113,6 +143,86 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Cria um gradiente com as 3 cores desejadas
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor,
+                                UIColor(red: 93/255, green: 143/255, blue: 255/255, alpha: 1).cgColor,
+                                UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor]
+        
+        // Define o plano de fundo da view com o gradiente
+        view.layer.insertSublayer(gradientLayer, at: 0)
+                
+        //ToolBar View
+        view_tool_bar.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.backgroundColor = UIColor.clear // Adicione esta linha para tornar o fundo transparente
+        view.addSubview(view_tool_bar)
+        let guide = view.safeAreaLayoutGuide
+        
+        // Crie um dicionário com as configurações de texto desejadas
+        let normalTextAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.darkGray // Altere a cor do texto aqui
+        ]
+
+        let selectedTextAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.white // Altere a cor do texto selecionado aqui
+        ]
+        
+        // Aplique as configurações ao seu UISegmentedControl
+        sch_btn.setTitleTextAttributes(normalTextAttributes, for: .normal)
+        sch_btn.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+
+
+        
+        NSLayoutConstraint.activate([
+            view_tool_bar.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            view_tool_bar.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+            view_tool_bar.topAnchor.constraint(equalTo: guide.topAnchor),
+            view_tool_bar.heightAnchor.constraint(equalToConstant: 44.0),
+            view_tool_bar.widthAnchor.constraint(equalToConstant: 50.0)
+        ])
+        
+        //Logo dentro da view toolbar
+        logo_img.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.addSubview(logo_img)
+        
+        NSLayoutConstraint.activate([
+            logo_img.widthAnchor.constraint(equalToConstant: 50.0),
+            logo_img.heightAnchor.constraint(equalToConstant: 50.0),
+            logo_img.centerXAnchor.constraint(equalTo: view_tool_bar.centerXAnchor),
+            logo_img.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
+        ])
+        
+        
+        //Bunton on/off dentro da view toolbar
+        power_btn.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.addSubview(power_btn)
+        
+        
+        NSLayoutConstraint.activate([
+            power_btn.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
+            power_btn.trailingAnchor.constraint(equalTo: view_tool_bar.trailingAnchor, constant: -15),
+        ])
+        
+        if(Settings.modo_painel == "BLOQUEADO"){
+            switch_bloqueio.isOn = true
+            switch_bloqueio_txt.text = "— Bloqueado"
+        } else{
+            switch_bloqueio.isOn = false
+            switch_bloqueio_txt.text = "— Desbloqueado"
+
+        }
+        
+        if(Settings.aquecedor_automatico == 1){
+            switch_aquecimento.isOn = true
+            switch_aquecimento_txt.text = "— Ligado"
+
+        } else{
+            switch_aquecimento.isOn = false
+            switch_aquecimento_txt.text = "— Desligado"
+
+        }
         
         // Assumes BLE service responses
         BLEService.it.delegates(ble: nil, conn: self, comm: self).ok()
@@ -129,13 +239,17 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         profile1_edt.delegate = self
         profile2_edt.delegate = self
         profile3_edt.delegate = self
-        profile4_edt.delegate = self
-        profile5_edt.delegate = self
+//        profile4_edt.delegate = self
+//        profile5_edt.delegate = self
         ssid_txt.delegate = self
         pswd_txt.delegate = self
         
         // Setup tags as heights
         inner0.tag = Int(inner0.frame.height)
+        innerBloqueio.tag = Int(innerBloqueio.frame.height)
+        innerAquecimento.tag = Int(innerAquecimento.frame.height)
+        innerDesligamentoAutomatico.tag = Int(innerDesligamentoAutomatico.frame.height)
+        innerTempoEnchimento.tag = Int(innerTempoEnchimento.frame.height)
         innerPf.tag = Int(innerPf.frame.height)
         inner1.tag = Int(inner1.frame.height)
         inner2.tag = Int(inner2.frame.height)
@@ -151,6 +265,14 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         itemPf.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClickPf)))
         
         item1.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClick1)))
+        
+        itemBloqueio.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClickBloqueio)))
+        
+        itemAquecimento.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClickAquecimento)))
+        
+        itemTempoEnchimento.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClickTempoEnchimento)))
+        
+        itemDesligamentoAutomatico.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClickDesligamentoAutomatico)))
         
         item2.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClick2)))
         
@@ -171,23 +293,45 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         tubname_edt.text = Settings.tubname
         
         // Profiles
-        profileStatus.text = "— \(Settings.memos)/5 salvos"
+        profileStatus.text = "— \(Settings.memos)/3 salvos"
         manageProfiles(slot: profile1_btn, slotname: profile1_edt, slotAct: pf1Action_btn, pos: 1, del: Settings.memo1.isEmpty, ini: true)
         manageProfiles(slot: profile2_btn, slotname: profile2_edt, slotAct: pf2Action_btn, pos: 2, del: Settings.memo2.isEmpty, ini: true)
         manageProfiles(slot: profile3_btn, slotname: profile3_edt, slotAct: pf3Action_btn, pos: 3, del: Settings.memo3.isEmpty, ini: true)
-        manageProfiles(slot: profile4_btn, slotname: profile4_edt, slotAct: pf4Action_btn, pos: 4, del: Settings.memo4.isEmpty, ini: true)
-        manageProfiles(slot: profile5_btn, slotname: profile5_edt, slotAct: pf5Action_btn, pos: 5, del: Settings.memo5.isEmpty, ini: true)
-        profile1_edt.text = Settings.memo1.isEmpty ? "Perfil 1" : Settings.memo1
-        profile2_edt.text = Settings.memo2.isEmpty ? "Perfil 2" : Settings.memo2
-        profile3_edt.text = Settings.memo3.isEmpty ? "Perfil 3" : Settings.memo3
-        profile4_edt.text = Settings.memo4.isEmpty ? "Perfil 4" : Settings.memo4
-        profile5_edt.text = Settings.memo5.isEmpty ? "Perfil 5" : Settings.memo5
+//        manageProfiles(slot: profile4_btn, slotname: profile4_edt, slotAct: pf4Action_btn, pos: 4, del: Settings.memo4.isEmpty, ini: true)
+//        manageProfiles(slot: profile5_btn, slotname: profile5_edt, slotAct: pf5Action_btn, pos: 5, del: Settings.memo5.isEmpty, ini: true)
+        profile1_edt.text = Settings.memo1.isEmpty ? "Memoria 1" : Settings.memo1
+        profile2_edt.text = Settings.memo2.isEmpty ? "Memoria 2" : Settings.memo2
+        profile3_edt.text = Settings.memo3.isEmpty ? "Memoria 3" : Settings.memo3
+//        profile4_edt.text = Settings.memo4.isEmpty ? "Memoria 4" : Settings.memo4
+//        profile5_edt.text = Settings.memo5.isEmpty ? "Memoria 5" : Settings.memo5
         
         // Bright
         bright_txx.text = "\(Settings.backlight)%"
         brightStatus_txt.text = "— \(Settings.backlight)%"
         bright_sld.currentValue = Double(Settings.backlight)
         bright_sld.delegate = self
+        
+        // Desligamento Automatico
+        if Settings.timeoutligado == 0 {
+            desligamento_automatico_status.text = "— Desativado"
+            desligamento_automatico_valor.text = "off"
+        }else{
+            desligamento_automatico_valor.text = "\(Settings.timeoutligado)h"
+            desligamento_automatico_status.text = "— \(Settings.timeoutligado)h"
+        }
+        desligamento_automatico_slider.currentValue = Double(Settings.timeoutligado)
+        desligamento_automatico_slider.delegate = self
+        
+        //tempo de enchimento
+        if Settings.timeoutligado == 0 {
+            tempo_enchimento_status.text = "— Desativado"
+            tempo_enchimento_valor.text = "off"
+        }else{
+            tempo_enchimento_valor.text = "\(Settings.timeoutligado)h"
+            tempo_enchimento_status.text = "— \(Settings.timeoutligado)h"
+        }
+        tempo_enchimento_slider.currentValue = Double(Settings.timeoutligado)
+        tempo_enchimento_slider.delegate = self
         
         // Filtering
         filterStatus_txt.text = Settings.bh_days == 0 && Settings.ft_days == 0 ? "— Não agendado" : "— Agendado"
@@ -224,17 +368,17 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
         
         // MQTT
-        mqttStatus_txt.text = Settings.mqtt_state == 1 ? "— Disponível" : "— Não disponível"
+//        mqttStatus_txt.text = Settings.mqtt_state == 1 ? "— Disponível" : "— Não disponível"
         
         //Drain
-        drainStatus_txt.text = Settings.drain_mode == 1 ? "— Toque longo" : "— Toque curto"
-        drainMode_swt.isOn = Settings.drain_mode == 1
-        drainTime_txt.text = "\(Settings.drain_time/60                                                    )"
-        if(Settings.has_drain == 0) {
-            itemDr.alpha = 0.6
-            itemDr.isUserInteractionEnabled = false
-            drainStatus_txt.text = "— Indisponível"
-        }
+//        drainStatus_txt.text = Settings.drain_mode == 1 ? "— Toque longo" : "— Toque curto"
+//        drainMode_swt.isOn = Settings.drain_mode == 1
+//        drainTime_txt.text = "\(Settings.drain_time/60                                                    )"
+//        if(Settings.has_drain == 0) {
+//            itemDr.alpha = 0.6
+//            itemDr.isUserInteractionEnabled = false
+//            drainStatus_txt.text = "— Indisponível"
+//        }
         
         // QRCode
         generateQRCode()
@@ -267,6 +411,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         setupSelected(inner: inner0, show: false)
         setupSelected(inner: innerPf, show: false)
         setupSelected(inner: inner1, show: false)
+        
+        setupSelected(inner: innerBloqueio, show: false)
+        setupSelected(inner: innerAquecimento, show: false)
+        setupSelected(inner: innerDesligamentoAutomatico, show: false)
+        setupSelected(inner: innerTempoEnchimento, show: false)
+        
         if(Settings.qt_bombs > 0 || Settings.has_cromo != 2) {
             setupSelected(inner: inner2, show: false)   // Case filtering supported
         } else {
@@ -299,6 +449,22 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     @objc private func itemClick2(sender: UITapGestureRecognizer) {
         setupSelected(inner: inner2, show: true)
+    }
+    
+    @objc private func itemClickBloqueio(sender: UITapGestureRecognizer) {
+        setupSelected(inner: innerBloqueio, show: true)
+    }
+    
+    @objc private func itemClickAquecimento(sender: UITapGestureRecognizer) {
+        setupSelected(inner: innerAquecimento, show: true)
+    }
+    
+    @objc private func itemClickDesligamentoAutomatico(sender: UITapGestureRecognizer) {
+        setupSelected(inner: innerDesligamentoAutomatico, show: true)
+    }
+    
+    @objc private func itemClickTempoEnchimento(sender: UITapGestureRecognizer) {
+        setupSelected(inner: innerTempoEnchimento, show: true)
     }
     
     @objc private func itemClick3(sender: UITapGestureRecognizer) {
@@ -348,6 +514,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
+//        print("setup \(inner)")
+//        print("setup \(inner.constraints.filter{$0.firstAttribute == .height}.first)")
+        
         // Force keyboard hiding
         inner.endEditing(true)
         
@@ -368,7 +537,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBAction func pf1EndClick(_ sender: Any) {
         profile1_edt.isEnabled = false
         if((profile1_edt.text ?? "").isEmpty) {
-            profile1_edt.text = "Perfil 1"
+            profile1_edt.text = "Memoria 1"
         }
         Utils.sendCommand(cmd: TubCommands.NAME_MEMO, value: nil, word: "1 \(profile1_edt.text!)")
     }
@@ -384,7 +553,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBAction func pf2EndClick(_ sender: Any) {
         profile2_edt.isEnabled = false
         if((profile2_edt.text ?? "").isEmpty) {
-            profile2_edt.text = "Perfil 2"
+            profile2_edt.text = "Memoria 2"
         }
         Utils.sendCommand(cmd: TubCommands.NAME_MEMO, value: nil, word: "2 \(profile2_edt.text!)")
     }
@@ -400,7 +569,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBAction func pf3EndClick(_ sender: Any) {
         profile3_edt.isEnabled = false
         if((profile3_edt.text ?? "").isEmpty) {
-            profile3_edt.text = "Perfil 3"
+            profile3_edt.text = "Memoria 3"
         }
         Utils.sendCommand(cmd: TubCommands.NAME_MEMO, value: nil, word: "3 \(profile3_edt.text!)")
     }
@@ -443,27 +612,28 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     func manageProfiles(slot: DashedButton, slotname: UITextField, slotAct: UIButton,
                         pos: Int, del: Bool = false, ini: Bool = false) {
-        print("profile\(pos)")
+        print("Memoria \(pos)")
         let delete = del && !slot.initialized
         if(!slot.initialized) {
             if(!del && !ini) {
                 Utils.sendCommand(cmd: TubCommands.LOAD_MEMO, value: pos, word: nil)
-                print("Perfil carregado com sucesso")
+                Utils.toast(vc: self, message: "Memoria carregado com sucesso", type: 1)
+                print("Memoria carregado com sucesso")
                 return
             }
         }
         
         slot.dash(delete)
-        let act_img = delete ? UIImage(named: "star_off")
+        let act_img = delete ? UIImage(named: "sdcard")
                              : UIImage(named: "ic_delete")
         slotAct.setImage(act_img, for: .normal)
-        let color = delete ? UIColor.init(named: "iconAct_color")
-                           : UIColor.init(named: "iconErr_color")
+        let color = delete ? UIColor.green
+                           : UIColor.red
         slotAct.tintColor = color
         
         if(ini) { return }
         
-        slotname.text = "Perfil \(pos)"
+        slotname.text = "Memoria \(pos)"
         slotname.isEnabled = !delete
         slotname.becomeFirstResponder()
         
@@ -587,14 +757,49 @@ extension SettingsViewController: MSCircularSliderDelegate {
         }
     }
     
-    // Bright
+    // Bright. enchimento, desligamento
     func circularSlider(_ slider: MSCircularSlider, valueChangedTo value: Double, fromUser: Bool) {
-        bright_txx.text = "\(Int(value))%"
-        brightStatus_txt.text = "— \(Int(value))%"
-        if(fromUser) {
-            self.brightsetTimer?.invalidate()
-            self.brightsetTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false){ t in
-                Utils.sendCommand(cmd: TubCommands.SET_BACKLIGHT, value: value < 1 ? 1 : Int(value), word: nil)
+        
+        if slider == bright_sld {
+            bright_txx.text = "\(Int(value))%"
+            brightStatus_txt.text = "— \(Int(value))%"
+            if(fromUser) {
+                self.brightsetTimer?.invalidate()
+                self.brightsetTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false){ t in
+                    Utils.sendCommand(cmd: TubCommands.SET_BACKLIGHT, value: value < 1 ? 1 : Int(value), word: nil)
+                }
+            }
+        } else if slider == desligamento_automatico_slider {
+            if value == 0 {
+                desligamento_automatico_valor.text = "off"
+                desligamento_automatico_status.text = "— Desativado"
+
+            } else {
+                desligamento_automatico_valor.text = "\(Int(value))h"
+                desligamento_automatico_status.text = "— \(Int(value))h"
+            }
+            
+            if(fromUser) {
+                self.brightsetTimer?.invalidate()
+                self.brightsetTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false){ t in
+                    Utils.sendCommand(cmd: TubCommands.TIMEOUT_BANHEIRA, value: Int(value), word: nil)
+                }
+            }
+        } else if slider == tempo_enchimento_slider {
+            if value == 0 {
+                tempo_enchimento_valor.text = "off"
+                tempo_enchimento_status.text = "— Desativado"
+
+            } else {
+                tempo_enchimento_valor.text = "\(Int(value))h"
+                tempo_enchimento_status.text = "— \(Int(value))h"
+            }
+            
+            if(fromUser) {
+                self.brightsetTimer?.invalidate()
+                self.brightsetTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false){ t in
+                    Utils.sendCommand(cmd: TubCommands.TIMEOUT_BANHEIRA, value: Int(value), word: nil)
+                }
             }
         }
     }
@@ -744,6 +949,39 @@ extension SettingsViewController: MSCircularSliderDelegate {
         Utils.sendCommand(cmd: TubCommands.OTA_MODE, value: nil, word: nil)
     }
     
+    //Bloqueio de painel
+    @IBAction func switch_bloqueio(_ sender: UISwitch){
+        if sender.isOn {
+                print("Switch is ON \(Settings.modo_painel)")
+                Utils.sendCommand(cmd: TubCommands.MODO_BLOQUEIO, value: nil, word: "bloqueado")
+                switch_bloqueio_txt.text = "— Bloqueado"
+                Settings.modo_painel = "bloqueado"
+
+            } else {
+                print("Switch is OFF \(Settings.modo_painel)")
+                Utils.sendCommand(cmd: TubCommands.MODO_BLOQUEIO, value: nil, word: "normal")
+                switch_bloqueio_txt.text = "— Desbloqueado"
+                Settings.modo_painel = "normal"
+
+            }
+    }
+    
+    //Aquecimento automatico
+    @IBAction func switch_aquecimento(_ sender: UISwitch){
+        if sender.isOn {
+                print("Switch is ON \(Settings.aquecedor_automatico)")
+                Utils.sendCommand(cmd: TubCommands.MODO_AQUECIMENTO, value: 1, word: nil)
+                switch_aquecimento_txt.text = "— Ligado"
+                Settings.aquecedor_automatico = 1
+            } else {
+                print("Switch is OFF \(Settings.aquecedor_automatico)")
+                Utils.sendCommand(cmd: TubCommands.MODO_AQUECIMENTO, value: 0, word: nil)
+                switch_aquecimento_txt.text = "— Desligado"
+                Settings.aquecedor_automatico = 0
+
+            }
+    }
+    
 }
 
 extension SettingsViewController: ConnectingProtocol, CommunicationProtocol {
@@ -760,9 +998,13 @@ extension SettingsViewController: ConnectingProtocol, CommunicationProtocol {
         RequestManager.it.saveTubInfoRequest()
         
         Settings.resetAll()
-        if let pvc = self.navigationController?.viewControllers[1] {
+        print(self.navigationController?.viewControllers[0] as Any)
+        
+        //self.dismiss(animated: true)
+        if let pvc = self.navigationController?.viewControllers[0] {
             self.navigationController?.popToViewController(pvc, animated: true)
         }
+    
     }
     
     func didFail() {
@@ -776,15 +1018,15 @@ extension SettingsViewController: ConnectingProtocol, CommunicationProtocol {
         case BathTubFeedbacks.POWER:
             updatePower()
         case BathTubFeedbacks.STATUS_M1:
-            profileStatus.text = "\(Settings.memos)/5 salvos"
+            profileStatus.text = "\(Settings.memos)/3 salvos"
         case BathTubFeedbacks.STATUS_M2:
-            profileStatus.text = "\(Settings.memos)/5 salvos"
+            profileStatus.text = "\(Settings.memos)/3 salvos"
         case BathTubFeedbacks.STATUS_M3:
-            profileStatus.text = "\(Settings.memos)/5 salvos"
+            profileStatus.text = "\(Settings.memos)/3 salvos"
         case BathTubFeedbacks.STATUS_M4:
-            profileStatus.text = "\(Settings.memos)/5 salvos"
+            profileStatus.text = "\(Settings.memos)/3 salvos"
         case BathTubFeedbacks.STATUS_M5:
-            profileStatus.text = "\(Settings.memos)/5 salvos"
+            profileStatus.text = "\(Settings.memos)/3 salvos"
         case BathTubFeedbacks.BACKLIGHT:
             brightStatus_txt.text = "— \(Settings.backlight)%"
             bright_txx.text = "\(Settings.backlight)%"
@@ -869,32 +1111,32 @@ extension SettingsViewController: ConnectingProtocol, CommunicationProtocol {
     func didReceiveFeedback(about: String, text: String) {
         switch(about) {
             case BathTubFeedbacks.STATUS_M1:
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
             case BathTubFeedbacks.NAME_M1:
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
                 profile1_edt.text = Settings.memo1
             case BathTubFeedbacks.STATUS_M2:
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
             case BathTubFeedbacks.NAME_M2:
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
                 profile2_edt.text = Settings.memo2
             case BathTubFeedbacks.STATUS_M3:
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
             case BathTubFeedbacks.NAME_M3:
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
                 profile3_edt.text = Settings.memo3
             case BathTubFeedbacks.STATUS_M4:
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
             case BathTubFeedbacks.NAME_M4:
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
                 profile4_edt.text = Settings.memo4
             case BathTubFeedbacks.STATUS_M5:
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
             case BathTubFeedbacks.NAME_M5:
-                profileStatus.text = "— \(Settings.memos)/5 salvos"
+                profileStatus.text = "— \(Settings.memos)/3 salvos"
                 profile5_edt.text = Settings.memo5
             case BathTubFeedbacks.DRAIN_MODE:
                 drainMode_swt.isOn = Settings.drain_mode != 0

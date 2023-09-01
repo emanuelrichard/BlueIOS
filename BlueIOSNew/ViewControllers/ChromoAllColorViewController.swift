@@ -19,6 +19,21 @@ class ChromoAllColorViewController: UIViewController {
     var backDelegate: DataBackProtocol?
     private var sldTimer: Timer = Timer.scheduledTimer(withTimeInterval:  0.1, repeats: false) { t in }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Cria um gradiente com as 3 cores desejadas
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor,
+                                UIColor(red: 93/255, green: 143/255, blue: 250/255, alpha: 1).cgColor,
+                                UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor]
+        
+        // Define o plano de fundo da view com o gradiente
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         targetChromo_sbt.selectedSegmentIndex = target
         

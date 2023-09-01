@@ -169,9 +169,7 @@ extension WiFiService: StreamDelegate {
                                 Settings.updateStrSettings(about: about, text: text)
                                 commDelegate!.didReceiveFeedback(about: about, text: text)
                             }
-                        } //else {
-//                            print(" *** Poh Sérgio, tá vacilando no Chave-Valor !! :/")
-//                        }
+                        }
                     }
                 }
             } else {

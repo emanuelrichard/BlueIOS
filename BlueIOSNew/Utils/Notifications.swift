@@ -8,7 +8,9 @@
 import UserNotifications
 import AVFoundation
 import MediaPlayer
-import Firebase
+import FirebaseCore // Importa o módulo do Firebase Core
+import FirebaseFirestore // Importa o módulo do Firebase Firestore
+import FirebaseMessaging
 
 class Notifications {
     

@@ -76,10 +76,13 @@ class Utils {
         sendCommand(cmd: TubCommands.SET_DATE, value: nil, word: "\(ntp)")
     }
     
-    // Generates a two digit code to the command message
+    private static var sequentialNumbers: [String] = (1...99).map { String(format: "%02d", $0) }
+    private static var currentIndex: Int = 0
+
     private static func generateSequentialCode() -> String {
-        let sequentialNumbers = (1...99).map { String(format: "%02d", $0) }
-        return sequentialNumbers.randomElement()!
+        let code = sequentialNumbers[currentIndex]
+        currentIndex = (currentIndex + 1) % sequentialNumbers.count
+        return code
     }
     
     // Verify there's a valid connection
@@ -122,8 +125,13 @@ class Utils {
         if let ifs = CFBridgingRetain(CNCopySupportedInterfaces()) as? [String],
            let info = CFBridgingRetain(CNCopyCurrentNetworkInfo((ifs.first as CFString?)!)) as? [AnyHashable: Any] {
             
-            return info["SSID"] as? String
+            let ssid = info["SSID"] as? String
+            print("SSID: \(ssid ?? "Nenhum")") // Adicione esta linha para imprimir o SSID
+            
+            return ssid
         }
+        
+        print("Nenhuma rede Wi-Fi conectada") // Adicione esta linha para indicar que nenhuma rede Wi-Fi está conectada
         return nil
     }
     

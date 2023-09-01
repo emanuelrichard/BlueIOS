@@ -31,30 +31,46 @@ class NewUserViewController: UIViewController, UITextFieldDelegate {
         // Define o plano de fundo da view com o gradiente
         view.layer.insertSublayer(gradientLayer, at: 0)
         
-        // Configura o campo do nome
-        name_edt.layer.cornerRadius = 10.0
-        name_edt.layer.masksToBounds = true
-        name_edt.backgroundColor = UIColor.clear
-        name_edt.layer.borderColor = UIColor.white.cgColor
-        name_edt.layer.borderWidth = 2
-        name_edt.textColor = UIColor.white
-        
-        // Configura o campo do email
-        email_edt.layer.cornerRadius = 10.0
-        email_edt.layer.masksToBounds = true
-        email_edt.backgroundColor = UIColor.clear
-        email_edt.layer.borderColor = UIColor.white.cgColor
-        email_edt.layer.borderWidth = 2
-        email_edt.textColor = UIColor.white
-        
-        name_edt.delegate = self
-        email_edt.delegate = self
-        
+//        // Configura o campo do nome
+//        name_edt.layer.cornerRadius = 10.0
+//        name_edt.layer.masksToBounds = true
+//        name_edt.backgroundColor = UIColor.clear
+//        name_edt.layer.borderColor = UIColor.white.cgColor
+//        name_edt.layer.borderWidth = 2
+//        name_edt.textColor = UIColor.white
+//        
+//        // Configura o campo do email
+//        email_edt.layer.cornerRadius = 10.0
+//        email_edt.layer.masksToBounds = true
+//        email_edt.backgroundColor = UIColor.clear
+//        email_edt.layer.borderColor = UIColor.white.cgColor
+//        email_edt.layer.borderWidth = 2
+//        email_edt.textColor = UIColor.white
+//        
+//        name_edt.delegate = self
+//        email_edt.delegate = self
+//        
         msg_height.isHidden = true
         bathtubimage.isHidden = false
         
+        applyGradient(to: cancel_btn)
+        applyGradient(to: register_btn)
+        
         // Adiciona a ação de botão para voltar para a primeira tela
         cancel_btn.addTarget(self, action: #selector(goToFirstScreen), for: .touchUpInside)
+    }
+    
+    private func applyGradient(to button: UIButton) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = button.bounds
+        gradientLayer.colors = [
+            UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
+            UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        
+        button.layer.addSublayer(gradientLayer)
     }
     
     @IBAction func registerClick(_ sender: Any) {

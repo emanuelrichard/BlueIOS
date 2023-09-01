@@ -19,6 +19,7 @@ class TubAddViewController: UIViewController {
     @IBOutlet weak var step3_cv: UIView!
     @IBOutlet weak var step4_cv: UIView!
     @IBOutlet weak var next_btn: DCBorderedButton!
+    @IBOutlet weak var cancelar_btn: DCBorderedButton!
     
     private var step2VC: Step2ViewController? = nil
     private var step3VC: Step3ViewController? = nil
@@ -35,11 +36,37 @@ class TubAddViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Cria um gradiente com as 3 cores desejadas
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor,
+                                UIColor(red: 93/255, green: 143/255, blue: 250/255, alpha: 1).cgColor,
+                                UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor]
+        
+        // Define o plano de fundo da view com o gradiente
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        applyGradient(to: next_btn)
+        applyGradient(to: cancelar_btn)
+        
         next_btn.isHidden = true
 
         BLEService.it.delegates(ble: nil, conn: self, comm: self).ok()
         manageSteps()
         requestLocation()
+    }
+    
+    func applyGradient(to button: UIButton) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = button.bounds
+        gradientLayer.colors = [
+            UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
+            UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        
+        button.layer.addSublayer(gradientLayer)
     }
     
     func requestLocation() {
@@ -61,6 +88,7 @@ class TubAddViewController: UIViewController {
         switch step {
         case 3:
             checkStep3()
+            print("Clicou \(String(describing: step3VC?.tubpswd_edt.text))")
         case 4:
             checkStep4()
         default:
@@ -217,38 +245,62 @@ extension TubAddViewController {
         next_btn.isHidden = false
         
         let sel_BTid = BLEService.it.nearestBtid!.suffix(4)
+        print(sel_BTid)
         step3VC?.connected_txt.text = "Conectado à BLE \(sel_BTid)"
     }
     
     func checkStep3() {
-        if let tubpswd = step3VC?.tubpswd_edt.text {
-            if(tubpswd.count < 6) {
-                Utils.toast(vc: self, message: "A senha deve possuir 6 caracteres", type: 2)
-                return
-            }
-            
-            if(tmp_pswd.isEmpty) {
-                Utils.toast(vc: self, message: "Pressione as teclas no painel e confirme a senha", type: 2)
-                return
-            }
-            
-            if(tmp_pswd == tmp_pswd) {
-                Settings.tub_pswd1 = tmp_pswd
-                Utils.sendCommand(cmd: TubCommands.TUB_PSWD, value: nil, word: nil)
-                
-                mTimer = Timer.scheduledTimer(withTimeInterval: 1.2, repeats: false) { _ in
-                    // If no password 1 found, set it
-                    let scmd = "\(1) \(self.tmp_pswd)"
-                    Utils.sendCommand(cmd: TubCommands.TUB_PSWD, value: nil, word: scmd)
-                }
-                
-            } else {
-                Utils.toast(vc: self, message: "Senha incorreta", type: 2)
-                return
-            }
+        
+        if(tmp_pswd.isEmpty) {
+            Utils.toast(vc: self, message: "Pressione as teclas no painel para confirma a conexao", type: 2)
+            return
         }
         
-    }
+        if(tmp_pswd == tmp_pswd) {
+            Settings.tub_pswd1 = tmp_pswd
+            Utils.sendCommand(cmd: TubCommands.TUB_PSWD, value: nil, word: nil)
+            
+            mTimer = Timer.scheduledTimer(withTimeInterval: 1.2, repeats: false) { _ in
+                // If no password 1 found, set it
+                let scmd = "\(1) \(self.tmp_pswd)"
+                Utils.sendCommand(cmd: TubCommands.TUB_PSWD, value: nil, word: scmd)
+            }
+            
+        } else {
+            Utils.toast(vc: self, message: "Senha incorreta", type: 2)
+            return
+        }
+   }
+//    func checkStep3() {
+//        if let tubpswd = step3VC?.tubpswd_edt.text {
+//            print("entrou")
+//            if(tubpswd.count < 4) {
+//                Utils.toast(vc: self, message: "A senha deve possuir 6 caracteres", type: 2)
+//                return
+//            }
+//
+//            if(tmp_pswd.isEmpty) {
+//                Utils.toast(vc: self, message: "Pressione as teclas no painel e confirme a senha", type: 2)
+//                return
+//            }
+//
+//            if(tmp_pswd == tmp_pswd) {
+//                Settings.tub_pswd1 = tmp_pswd
+//                Utils.sendCommand(cmd: TubCommands.TUB_PSWD, value: nil, word: nil)
+//
+//                mTimer = Timer.scheduledTimer(withTimeInterval: 1.2, repeats: false) { _ in
+//                    // If no password 1 found, set it
+//                    let scmd = "\(1) \(self.tmp_pswd)"
+//                    Utils.sendCommand(cmd: TubCommands.TUB_PSWD, value: nil, word: scmd)
+//                }
+//
+//            } else {
+//                Utils.toast(vc: self, message: "Senha incorreta", type: 2)
+//                return
+//            }
+//        }
+//
+//    }
 }
 
 // MARK: Step 4

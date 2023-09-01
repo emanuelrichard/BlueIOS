@@ -8,6 +8,7 @@
 import UIKit
 import DCKit
 import MSCircularSlider
+import SwiftUI
 
 class HomeViewController: UIViewController {
     
@@ -15,60 +16,89 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var viwLoading: UIView!
     
     @IBOutlet weak var power_btn: UIButton!
-    @IBOutlet weak var logo_img: UIImageView!
     
     @IBOutlet weak var temp_sld: MSCircularSlider!
     @IBOutlet weak var desr_sld: MSCircularSlider!
     
     @IBOutlet weak var desr_viw: UIView!
-    @IBOutlet weak var desrHeight_ctr: NSLayoutConstraint!
     @IBOutlet weak var desrTitle_txt: UILabel!
     @IBOutlet weak var desr_txt: UILabel!
     @IBOutlet weak var desrUnity_txt: UILabel!
     
     @IBOutlet weak var temp_viw: UIView!
+    @IBOutlet weak var separador: UIView!
     @IBOutlet weak var tempTitle_txt: UILabel!
     @IBOutlet weak var temp_txt: UILabel!
     @IBOutlet weak var tempUnity_txt: UILabel!
     
     @IBOutlet weak var lvl_ico: UIImageView!
     @IBOutlet weak var heater_ico: UIImageView!
-    @IBOutlet weak var bomb_ico: UIImageView!
     @IBOutlet weak var spot_ico: UIImageView!
-    @IBOutlet weak var strip_ico: UIImageView!
-    @IBOutlet weak var waterEntry_ico: UIImageView!
-    @IBOutlet weak var autoOn_ico: UIImageView!
-    @IBOutlet weak var keepWarm_ico: UIImageView!
-    @IBOutlet weak var bubbles_ico: UIImageView!
+
     
     @IBOutlet weak var bomb1_act: UIButton!
     @IBOutlet weak var bomb2_act: UIButton!
     @IBOutlet weak var bomb3_act: UIButton!
     @IBOutlet weak var bomb4_act: UIButton!
+    @IBOutlet weak var bomb5_act: UIButton!
+    @IBOutlet weak var bomb6_act: UIButton!
+    @IBOutlet weak var bomb7_act: UIButton!
+    @IBOutlet weak var bomb8_act: UIButton!
+    @IBOutlet weak var bomb9_act: UIButton!
+    
     @IBOutlet weak var waterEntry_act: UIButton!
     @IBOutlet weak var autoOn_act: UIButton!
     @IBOutlet weak var keepWarm_act: UIButton!
     @IBOutlet weak var bubbles_act: UIButton!
+    @IBOutlet weak var cascata_bt: UIButton!
     
-    @IBOutlet weak var bleConn_ico: UIImageView!
-    @IBOutlet weak var bleConn_txt: UILabel!
+
     @IBOutlet weak var bleDisconn_ico: UIButton!
     
-    @IBOutlet weak var wifiConn_ico: UIImageView!
-    @IBOutlet weak var wifiConn_txt: UILabel!
+
     @IBOutlet weak var wifiDisconn_ico: UIButton!
     
-    @IBOutlet weak var mqttConn_ico: UIImageView!
-    @IBOutlet weak var mqttConn_txt: UILabel!
+
     @IBOutlet weak var mqttDisconn_ico: UIButton!
     
-    @IBOutlet weak var version_txt: UILabel!
+    //VIews
+    @IBOutlet weak var view_tool_bar: UIView!
+    @IBOutlet weak var conection_view: UIView!
+    @IBOutlet weak var info_view: UIStackView!
+    @IBOutlet weak var bombas_view: UIStackView!
+    @IBOutlet weak var utilitarios_view: UIStackView!
+    @IBOutlet weak var logo_img: UIImageView!
+
+
     
     // Standart vars
     private var tempsetTimer: Timer?
     private var updateTimer: Timer?
     
+    // Calcular a largura da view
+    let widthInPixels = UIScreen.main.bounds.width - 150
+    
     override func viewDidLoad() {
+        
+        super.viewDidLoad()
+
+        // Cria um gradiente com as 3 cores desejadas
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [
+            UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor,
+            UIColor(red: 93/255, green: 143/255, blue: 255/255, alpha: 1).cgColor,
+            UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor
+        ]
+//        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+//        gradientLayer.endPoint = CGPoint(x: 1, y: 0)
+        
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        self.tabBarController?.tabBar.isTranslucent = true
+        self.tabBarController?.tabBar.backgroundColor = .clear
+        
+        layoutHome()
         
         // Assumes BLE service responses
         BLEService.it.delegates(ble: nil, conn: self, comm: self).ok()
@@ -116,6 +146,327 @@ class HomeViewController: UIViewController {
         
     }
     
+    private func layoutHome() {
+        
+        //ToolBar View
+        view_tool_bar.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.backgroundColor = UIColor.clear // Adicione esta linha para tornar o fundo transparente
+        view.addSubview(view_tool_bar)
+        let guide = view.safeAreaLayoutGuide
+
+        
+        NSLayoutConstraint.activate([
+            view_tool_bar.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            view_tool_bar.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+            view_tool_bar.topAnchor.constraint(equalTo: guide.topAnchor),
+            view_tool_bar.heightAnchor.constraint(equalToConstant: 44.0),
+            view_tool_bar.widthAnchor.constraint(equalToConstant: 50.0)
+        ])
+        
+        //Logo dentro da view toolbar
+        logo_img.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.addSubview(logo_img)
+        
+        NSLayoutConstraint.activate([
+            logo_img.widthAnchor.constraint(equalToConstant: 50.0),
+            logo_img.heightAnchor.constraint(equalToConstant: 50.0),
+            logo_img.centerXAnchor.constraint(equalTo: view_tool_bar.centerXAnchor),
+            logo_img.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
+        ])
+        
+        
+        //Bunton on/off dentro da view toolbar
+        power_btn.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.addSubview(power_btn)
+        
+        
+        NSLayoutConstraint.activate([
+            power_btn.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
+            power_btn.trailingAnchor.constraint(equalTo: view_tool_bar.trailingAnchor, constant: -15),
+        ])
+
+        
+
+        // Desativa as restrições automáticas para que possamos definir as nossas próprias
+//        conection_view.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(conection_view)
+//
+//        conection_view.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -100).isActive = true
+//
+//
+//        // Define as restrições
+//        let views = ["conection_view": conection_view, "guide": guide]
+//        let metrics = ["height": 30]
+//
+//        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[conection_view]|", options: [], metrics: nil, views: views as [String : Any])
+//        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[conection_view(height)]|", options: [], metrics: metrics, views: views as [String : Any])
+//
+//        NSLayoutConstraint.activate(horizontalConstraints + verticalConstraints)
+//
+//
+//
+//        //Icon Bluetooth/mqtt/wifi dentro da conection_view
+//        configureIcon(bleDisconn_ico, in: conection_view)
+//        configureIcon(mqttDisconn_ico, in: conection_view)
+//        configureIcon(wifiDisconn_ico, in: conection_view)
+//
+//        let centerXbleIco = bleDisconn_ico.centerXAnchor.constraint(equalTo: conection_view.centerXAnchor)
+//        let rightXmqttIco = wifiDisconn_ico.trailingAnchor.constraint(equalTo: bleDisconn_ico.leadingAnchor)
+//        let leftXwifiIco = mqttDisconn_ico.leadingAnchor.constraint(equalTo: bleDisconn_ico.trailingAnchor)
+//
+//        NSLayoutConstraint.activate([ centerXbleIco, rightXmqttIco, leftXwifiIco ])
+//
+//
+        //VIew icones nivel/aquecedor/spot
+        //info_view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(info_view)
+
+        //let topInfoView = info_view.topAnchor.constraint(equalTo: temp_viw.bottomAnchor, constant: 70)
+//        let rightInfoView = info_view.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: 30)
+//        let leftInfoView = info_view.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 30)
+
+        //NSLayoutConstraint.activate([ topInfoView, rightInfoView, leftInfoView ])
+        
+        
+        addImageViewsToStackView()
+        
+        
+        //bombas view
+        bombas_view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bombas_view)
+
+        NSLayoutConstraint.activate([
+            // Centralizar verticalmente a bombas_view com relação ao safeAreaLayoutGuide da view
+            bombas_view.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            // Alinhar a esquerda da bombas_view com o leadingAnchor do safeAreaLayoutGuide da view
+            bombas_view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            // Configurar a propriedade de largura da bombas_view para 75 pixels
+            bombas_view.widthAnchor.constraint(equalToConstant: 50),
+            // Definir a altura das views internas (bomb1_act, bomb2_act, bomb3_act e bomb4_act) para 50 pixels
+            bomb1_act.heightAnchor.constraint(equalToConstant: 50),
+            bomb2_act.heightAnchor.constraint(equalToConstant: 50),
+            bomb3_act.heightAnchor.constraint(equalToConstant: 50),
+            bomb4_act.heightAnchor.constraint(equalToConstant: 50),
+            bomb5_act.heightAnchor.constraint(equalToConstant: 50),
+            bomb6_act.heightAnchor.constraint(equalToConstant: 50),
+            bomb7_act.heightAnchor.constraint(equalToConstant: 50),
+            bomb8_act.heightAnchor.constraint(equalToConstant: 50),
+            bomb9_act.heightAnchor.constraint(equalToConstant: 50)
+        ])
+
+        
+        // utilitarios view
+        utilitarios_view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(utilitarios_view)
+
+        NSLayoutConstraint.activate([
+            // Centralizar verticalmente a utilitarios_view com relação ao safeAreaLayoutGuide da view
+            utilitarios_view.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            // Alinhar a direita da utilitarios_view com o trailingAnchor do safeAreaLayoutGuide da view
+            utilitarios_view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            // Configurar a propriedade de largura da utilitarios_view para 75 pixels
+//            utilitarios_view.widthAnchor.constraint(equalToConstant: 75),
+            // Definir a altura das views internas para 50 pixels
+            keepWarm_act.heightAnchor.constraint(equalToConstant: 50),
+            autoOn_act.heightAnchor.constraint(equalToConstant: 50),
+            waterEntry_act.heightAnchor.constraint(equalToConstant: 50),
+            cascata_bt.heightAnchor.constraint(equalToConstant: 50),
+            bubbles_act.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        //View da temp desejada e da temp atual
+        desr_viw.translatesAutoresizingMaskIntoConstraints = false
+        temp_viw.translatesAutoresizingMaskIntoConstraints = false
+        separador.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Configurando as labels para ajustarem automaticamente o tamanho com base no conteúdo
+        desrTitle_txt.numberOfLines = 0
+        desrTitle_txt.translatesAutoresizingMaskIntoConstraints = false
+
+        desr_txt.numberOfLines = 0
+        desr_txt.translatesAutoresizingMaskIntoConstraints = false
+
+        desrUnity_txt.numberOfLines = 0
+        desrUnity_txt.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        view.addSubview(desr_viw)
+        view.addSubview(temp_viw)
+        view.addSubview(separador)
+        
+        // Centralizar verticalmente e horizontalmente a desr_viw
+        // Definir o tamanho da desr_viw
+        desr_viw.heightAnchor.constraint(equalToConstant: 150).isActive = true // Defina a altura desejada
+        desr_viw.widthAnchor.constraint(equalToConstant: widthInPixels).isActive = true // Defina a largura desejada
+
+        // Centralizar a desr_viw na tela
+        desr_viw.centerXAnchor.constraint(equalTo: guide.centerXAnchor).isActive = true
+        desr_viw.bottomAnchor.constraint(equalTo: separador.topAnchor).isActive = true
+        
+        desr_txt.bottomAnchor.constraint(equalTo: desr_viw.bottomAnchor).isActive = true
+        desr_txt.centerXAnchor.constraint(equalTo: desr_viw.centerXAnchor).isActive = true
+        desr_txt.heightAnchor.constraint(equalToConstant: 50).isActive = true // Defina a altura desejada
+        if let customFont = UIFont(name: "Helvetica-Bold", size: 50) {
+            desr_txt.font = customFont
+        }
+        
+        desrUnity_txt.topAnchor.constraint(equalTo: desr_txt.topAnchor).isActive = true
+        desrUnity_txt.leadingAnchor.constraint(equalTo: desr_txt.trailingAnchor).isActive = true
+        
+        if let customFontdesrUnity = UIFont(name: "Helvetica-Bold", size: 30) {
+            desrUnity_txt.font = customFontdesrUnity
+        }
+        
+        desrTitle_txt.bottomAnchor.constraint(equalTo: desr_txt.topAnchor).isActive = true
+        desrTitle_txt.centerXAnchor.constraint(equalTo: desr_viw.centerXAnchor).isActive = true
+        
+        //____________
+        
+        tempTitle_txt.numberOfLines = 0
+        tempTitle_txt.translatesAutoresizingMaskIntoConstraints = false
+
+        temp_txt.numberOfLines = 0
+        temp_txt.translatesAutoresizingMaskIntoConstraints = false
+
+        tempUnity_txt.numberOfLines = 0
+        tempUnity_txt.translatesAutoresizingMaskIntoConstraints = false
+        
+        temp_viw.heightAnchor.constraint(equalToConstant: 100).isActive = true // Defina a altura desejada
+        temp_viw.widthAnchor.constraint(equalToConstant: widthInPixels).isActive = true // Defina a largura desejada
+
+        // Centralizar a desr_viw na tela
+        temp_viw.centerXAnchor.constraint(equalTo: guide.centerXAnchor).isActive = true
+        temp_viw.topAnchor.constraint(equalTo: separador.bottomAnchor).isActive = true
+        
+        tempTitle_txt.topAnchor.constraint(equalTo: temp_viw.topAnchor, constant: 10).isActive = true
+        temp_txt.centerXAnchor.constraint(equalTo: temp_viw.centerXAnchor).isActive = true
+        //temp_txt.heightAnchor.constraint(equalToConstant: 50).isActive = true // Defina a altura desejada
+        if let customFontTemp = UIFont(name: "Helvetica-Bold", size: 60) {
+            temp_txt.font = customFontTemp
+        }
+        
+        tempUnity_txt.topAnchor.constraint(equalTo: temp_txt.topAnchor).isActive = true
+        tempUnity_txt.leadingAnchor.constraint(equalTo: temp_txt.trailingAnchor).isActive = true
+        
+        if let customFonttempUnity = UIFont(name: "Helvetica-Bold", size: 40) {
+            tempUnity_txt.font = customFonttempUnity
+        }
+        
+        tempTitle_txt.bottomAnchor.constraint(equalTo: temp_txt.topAnchor).isActive = true
+        tempTitle_txt.centerXAnchor.constraint(equalTo: temp_viw.centerXAnchor).isActive = true
+
+        
+        separador.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        separador.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        separador.heightAnchor.constraint(equalToConstant: 2).isActive = true // Defina a altura desejada
+        separador.widthAnchor.constraint(equalToConstant: temp_sld.bounds.width - 70).isActive = true  // Defina a largura desejada
+        
+        print("Largura entre as views: \(temp_sld.frame.maxX) ..... \(temp_sld.frame.minX) bound \(temp_sld.bounds.minX) ..... \(temp_sld.bounds.maxX)")
+        print("Largura entre as views: \(bombas_view.bounds.minX - utilitarios_view.bounds.maxX)")
+
+        // Centralizar os MSCircularSliders programaticamente:
+        // Você pode centralizá-los em relação à view pai ou a qualquer outra view que deseje usar como referência para o alinhamento.
+        // Por exemplo, para centralizar na view pai:
+        temp_sld.translatesAutoresizingMaskIntoConstraints = false
+        desr_sld.translatesAutoresizingMaskIntoConstraints = false
+        desr_sld.maximumAngle = 260.0
+        desr_sld.rotationAngle = 230.0
+        view.addSubview(temp_sld)
+        view.addSubview(desr_sld)
+
+        NSLayoutConstraint.activate([
+            temp_sld.centerXAnchor.constraint(equalTo: guide.centerXAnchor),
+            temp_sld.centerYAnchor.constraint(equalTo: guide.centerYAnchor),
+            // Defina outras restrições para o tamanho do temp_sld, como largura e altura, se necessário.
+            //temp_sld.heightAnchor.constraint(equalToConstant: 2).isActive = true // Defina a altura desejada
+            temp_sld.widthAnchor.constraint(equalToConstant: widthInPixels - 28), // Defina a largura desejada
+
+            desr_sld.centerXAnchor.constraint(equalTo: guide.centerXAnchor),
+            desr_sld.centerYAnchor.constraint(equalTo: guide.centerYAnchor),
+            // Defina outras restrições para o tamanho do desr_sld, como largura e altura, se necessário.
+            //desr_sld.widthAnchor.constraint(equalToConstant: (utilitarios_view.frame.maxX - bombas_view.frame.minX)), // Defina a largura desejada
+            desr_sld.widthAnchor.constraint(equalToConstant: (widthInPixels)), // Defina a largura desejada
+        ])
+        
+//        print("bound da temperatura desejada: min: \(desr_sld.bounds.minX) max: \(bombas_view.bounds.maxX)")
+//        print("bound da temperatura atual: min: \(temp_sld.bounds.minX) max: \(utilitarios_view.bounds.maxX)")
+//        print("bound da temperatura atual: \(widthInPixels)")
+
+
+    }
+    
+    func configureIcon(_ icon: UIButton, in view: UIView) {
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.tintColor = UIColor.customColor
+        view.addSubview(icon)
+    }
+    
+    func addImageViewsToStackView() {
+        // Adicione os UIImageView à UIStackView
+        info_view.addArrangedSubview(lvl_ico)
+        info_view.addArrangedSubview(spot_ico)
+        info_view.addArrangedSubview(heater_ico)
+        
+//        bombas_view.addArrangedSubview(bomb1_act)
+//        bombas_view.addArrangedSubview(bomb2_act)
+//        bombas_view.addArrangedSubview(bomb3_act)
+//        bombas_view.addArrangedSubview(bomb4_act)
+        
+//        utilitarios_view.addArrangedSubview(keepWarm_act)
+//        utilitarios_view.addArrangedSubview(autoOn_act)
+//        utilitarios_view.addArrangedSubview(waterEntry_act)
+//        utilitarios_view.addArrangedSubview(bubbles_act)
+//        utilitarios_view.addArrangedSubview(cascata_bt)
+        
+        
+        
+        // Definir largura e altura dos ícones
+        let iconSize = CGSize(width: 100, height: 100)
+
+        // Adicione os UIImageView à UIStackView
+        bomb1_act.frame.size = iconSize
+        bombas_view.addArrangedSubview(bomb1_act)
+
+        bomb2_act.frame.size = iconSize
+        bombas_view.addArrangedSubview(bomb2_act)
+
+        bomb3_act.frame.size = iconSize
+        bombas_view.addArrangedSubview(bomb3_act)
+
+        bomb4_act.frame.size = iconSize
+        bombas_view.addArrangedSubview(bomb4_act)
+
+        bomb5_act.frame.size = iconSize
+        bombas_view.addArrangedSubview(bomb5_act)
+
+        bomb6_act.frame.size = iconSize
+        bombas_view.addArrangedSubview(bomb6_act)
+
+        bomb7_act.frame.size = iconSize
+        bombas_view.addArrangedSubview(bomb7_act)
+
+        bomb8_act.frame.size = iconSize
+        bombas_view.addArrangedSubview(bomb8_act)
+        
+        bomb9_act.frame.size = iconSize
+        bombas_view.addArrangedSubview(bomb9_act)
+
+        keepWarm_act.frame.size = iconSize
+        utilitarios_view.addArrangedSubview(keepWarm_act)
+
+        autoOn_act.frame.size = iconSize
+        utilitarios_view.addArrangedSubview(autoOn_act)
+
+        waterEntry_act.frame.size = iconSize
+        utilitarios_view.addArrangedSubview(waterEntry_act)
+
+        cascata_bt.frame.size = iconSize
+        utilitarios_view.addArrangedSubview(cascata_bt)
+        
+        bubbles_act.frame.size = iconSize
+        utilitarios_view.addArrangedSubview(bubbles_act)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         if(BLEService.it.state == Connection.State.CONNECTED ||
             WiFiService.it.state == Connection.State.CONNECTED ||
@@ -133,13 +484,12 @@ class HomeViewController: UIViewController {
             // Update the conns state
             updatePower()
             updateHeater()
-            updateAllBombs()
             updateSpot()
-            updateStrip()
             updateWaterEntry()
             updateAutoOn()
             updateKeepWarm()
             updateBubbles()
+            updateCascata()
             updateBomb1()
             updateBomb2()
             updateBomb3()
@@ -156,9 +506,9 @@ class HomeViewController: UIViewController {
     }
     
     func loading(show: Bool) {
-        viwLoading.isHidden = !show
-        viwLoading.isUserInteractionEnabled = show
-        tabBarController?.tabBar.isHidden = show
+        //viwLoading.isHidden = !show
+        //viwLoading.isUserInteractionEnabled = show
+        //tabBarController?.tabBar.isHidden = show
     }
     
     private func saveTubLocally(){
@@ -182,33 +532,27 @@ class HomeViewController: UIViewController {
         
         // Initializing indicators icons
         lvl_ico.image = #imageLiteral(resourceName: "level_0")
-        lvl_ico.tintColor = UIColor.init(named: "iconOff_color")
-        heater_ico.tintColor = UIColor.init(named: "iconOff_color")
-        bomb_ico.tintColor = UIColor.init(named: "iconOff_color")
-        spot_ico.tintColor = UIColor.init(named: "iconOff_color")
-        strip_ico.tintColor = UIColor.init(named: "iconOff_color")
-        waterEntry_ico.tintColor = UIColor.init(named: "iconOff_color")
-        autoOn_ico.tintColor = UIColor.init(named: "iconOff_color")
-        keepWarm_ico.tintColor = UIColor.init(named: "iconOff_color")
-        bubbles_ico.tintColor = UIColor.init(named: "iconOff_color")
+        lvl_ico.tintColor = UIColor.nivelColor
+        //heater_ico.tintColor = UIColor.white
+        spot_ico.tintColor = UIColor.white
         
         // Initializing bomb indicators
-        bomb1_act.tintColor = UIColor.init(named: "iconOff_color")
-        bomb2_act.tintColor = UIColor.init(named: "iconOff_color")
-        bomb3_act.tintColor = UIColor.init(named: "iconOff_color")
-        bomb4_act.tintColor = UIColor.init(named: "iconOff_color")
-        waterEntry_act.tintColor = UIColor.init(named: "iconOff_color")
-        autoOn_act.tintColor = UIColor.init(named: "iconOff_color")
-        keepWarm_act.tintColor = UIColor.init(named: "iconOff_color")
-        bubbles_act.tintColor = UIColor.init(named: "iconOff_color")
+        bomb1_act.tintColor = UIColor.lightGray
+        bomb2_act.tintColor = UIColor.lightGray
+        bomb3_act.tintColor = UIColor.lightGray
+        bomb4_act.tintColor = UIColor.lightGray
+        bomb5_act.tintColor = UIColor.lightGray
+        bomb6_act.tintColor = UIColor.lightGray
+        bomb7_act.tintColor = UIColor.lightGray
+        bomb8_act.tintColor = UIColor.lightGray
+        bomb9_act.tintColor = UIColor.lightGray
         
-        let tgr = UITapGestureRecognizer(target: self, action: #selector(logoTap))
-        logo_img.isUserInteractionEnabled = true
-        logo_img.addGestureRecognizer(tgr)
-    }
-    
-    @objc func logoTap(tgr: UITapGestureRecognizer) {
-        performSegue(withIdentifier: "Install", sender: nil)
+        waterEntry_act.tintColor = UIColor.lightGray
+        autoOn_act.tintColor = UIColor.lightGray
+        keepWarm_act.tintColor = UIColor.lightGray
+        bubbles_act.tintColor = UIColor.lightGray
+        cascata_bt.tintColor = UIColor.lightGray
+        
     }
     
     // Actions
@@ -227,7 +571,7 @@ class HomeViewController: UIViewController {
                 }
             }
             if(p >= 0) {
-                Utils.sendCommand(cmd: TubCommands.POWER, value: p, word: nil)
+                Utils.askOffAction(vc: self)
             } else {
                 Utils.askOffAction(vc: self)
             }
@@ -248,9 +592,9 @@ class HomeViewController: UIViewController {
         }
         
         if(Settings.bomb_1 > 0) {
-            if(Settings.keep_warm > 0) {
-                Utils.sendCommand(cmd: TubCommands.KEEP_WARM, value: 0, word: nil)
-                Settings.keep_warm = 0
+            if(Settings.modo_eco > 0) {
+                Utils.sendCommand(cmd: TubCommands.MODO_ECO, value: 0, word: nil)
+                Settings.modo_eco = 0
             }
             Timer.scheduledTimer(withTimeInterval: 0.45, repeats: false) { _ in
                 Utils.sendCommand(cmd: TubCommands.B1, value: 0, word: nil)
@@ -261,76 +605,79 @@ class HomeViewController: UIViewController {
             Settings.bomb_1 = 1
         }
         updateBomb1()
+        updateKeepWarm()
+        updateHeater()
     }
     
     @IBAction func bomb2Action(_ sender: Any) {
-        if(Settings.qt_bombs < 2) {
-            Utils.toast(vc: self, message: "Controle indisponível")
-            return //Controle indisponível
-        }
-        
-        if(Settings.level < 1) {
-            Utils.toast(vc: self, message: "Nível insuficiente")
-            return //Nível máximo atingido
-        }
-        
-        if(Settings.bomb_2 > 0) {
-            Utils.sendCommand(cmd: TubCommands.B2, value: 0, word: nil)
-            Settings.bomb_2 = 0
-        } else {
-            Utils.sendCommand(cmd: TubCommands.B2, value: 1, word: nil)
-            Settings.bomb_2 = 1
-        }
-        updateBomb2()
+        bombAction(bombIndex: 2, button: bomb2_act)
     }
     
     @IBAction func bomb3Action(_ sender: Any) {
-        if(Settings.qt_bombs < 3) {
-            Utils.toast(vc: self, message: "Controle indisponível")
-            return //Controle indisponível
-        }
-        
-        if(Settings.level < 1) {
-            Utils.toast(vc: self, message: "Nível insuficiente")
-            return //Nível máximo atingido
-        }
-        
-        if(Settings.bomb_3 > 0) {
-            Utils.sendCommand(cmd: TubCommands.B3, value: 0, word: nil)
-            Settings.bomb_3 = 0
-        } else {
-            Utils.sendCommand(cmd: TubCommands.B3, value: 1, word: nil)
-            Settings.bomb_3 = 1
-        }
-        updateBomb3()
+        bombAction(bombIndex: 3, button: bomb3_act)
     }
     
     @IBAction func bomb4Action(_ sender: Any) {
-        if(Settings.qt_bombs < 4) {
+        bombAction(bombIndex: 4, button: bomb4_act)
+    }
+
+    @IBAction func bomb5Action(_ sender: Any) {
+        bombAction(bombIndex: 5, button: bomb5_act)
+    }
+
+    @IBAction func bomb6Action(_ sender: Any) {
+        bombAction(bombIndex: 6, button: bomb6_act)
+    }
+
+    @IBAction func bomb7Action(_ sender: Any) {
+        bombAction(bombIndex: 7, button: bomb7_act)
+    }
+
+    @IBAction func bomb8Action(_ sender: Any) {
+        bombAction(bombIndex: 8, button: bomb8_act)
+    }
+
+    @IBAction func bomb9Action(_ sender: Any) {
+        bombAction(bombIndex: 9, button: bomb9_act)
+    }
+
+    // Common function to perform bomb action
+    private func bombAction(bombIndex: Int, button: UIButton) {
+        guard Settings.qt_bombs >= bombIndex else {
             Utils.toast(vc: self, message: "Controle indisponível")
-            return //Controle indisponível
+            return // Controle indisponível
         }
         
-        if(Settings.level < 1) {
+        guard Settings.level >= 1 else {
             Utils.toast(vc: self, message: "Nível insuficiente")
-            return //Nível máximo atingido
+            return // Nível máximo atingido
         }
         
-        if(Settings.bomb_4 > 0) {
-            Utils.sendCommand(cmd: TubCommands.B4, value: 0, word: nil)
-            Settings.bomb_4 = 0
-        } else {
-            Utils.sendCommand(cmd: TubCommands.B4, value: 1, word: nil)
-            Settings.bomb_4 = 1
+        let bombSetting = Settings.bombSettingForIndex(bombIndex)
+        let newBombSetting = bombSetting == 0 ? 1 : 0
+        Utils.sendCommand(cmd: TubCommands.bombCommandForIndex(bombIndex), value: newBombSetting, word: nil)
+        Settings.updateBombSettingForIndex(bombIndex, newValue: newBombSetting)
+
+        switch bombIndex {
+        case 2: return updateBomb2()
+        case 3: return updateBomb3()
+        case 4: return updateBomb4()
+        case 5: return updateBomb5()
+        case 6: return updateBomb6()
+        case 7: return updateBomb7()
+        case 8: return updateBomb8()
+        case 9: return updateBomb9()
+        default: return Utils.toast(vc: self, message: "Controle indisponível")
         }
-        updateBomb4()
     }
     
+
+    
     @IBAction func waterEntryAction(_ sender: Any) {
-        if(Settings.has_waterctrl < 1) {
-            Utils.toast(vc: self, message: "Controle indisponível")
-            return //Controle indisponível
-        }
+//        if(Settings.has_waterctrl < 1) {
+//            Utils.toast(vc: self, message: "Controle indisponível")
+//            return //Controle indisponível
+//        }
         
         if(Settings.level > 1) {
             Utils.toast(vc: self, message: "Nível máximo atingido")
@@ -348,10 +695,10 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func autoOnAction(_ sender: Any) {
-//        if(Settings.has_waterctrl < 1) {
-//            Utils.toast(vc: self, message: "Controle indisponível")
-//            return //Controle indisponível
-//        }
+        if(Settings.banheira_com_aquecedor != "habilitado") {
+            Utils.toast(vc: self, message: "Controle indisponível")
+            return //Controle indisponível
+        }
         
         if(Settings.auto_on > 0) {
             Utils.sendCommand(cmd: TubCommands.SET_AUTOON, value: 0, word: nil)
@@ -364,16 +711,20 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func keepWarmAction(_ sender: Any) {
-        if(Settings.has_heater < 1) {
+        if(Settings.banheira_com_aquecedor != "habilitado") {
             Utils.toast(vc: self, message: "Controle indisponível")
             return //Controle indisponível
         }
         
-        if(Settings.keep_warm > 0) {
-            Utils.sendCommand(cmd: TubCommands.KEEP_WARM, value: 0, word: nil)
+        if(Settings.modo_eco > 0) {
+            Utils.sendCommand(cmd: TubCommands.MODO_ECO, value: 0, word: nil)
+            Settings.modo_eco = 0
         } else {
-            Utils.sendCommand(cmd: TubCommands.KEEP_WARM, value: 1, word: nil)
+            Utils.sendCommand(cmd: TubCommands.MODO_ECO, value: 1, word: nil)
+            Settings.modo_eco = 1
         }
+        
+        updateKeepWarm()
     }
     
     @IBAction func bubblesAction(_ sender: Any) {
@@ -382,11 +733,32 @@ class HomeViewController: UIViewController {
             return //Controle indisponível
         }
         
-//        if(Settings.bubbles > 0) {
-//            Utils.sendCommand(cmd: TubCommands.B1, value: nil, word: nil)
-//        } else {
-//            Utils.sendCommand(cmd: TubCommands.B1, value: nil, word: nil)
-//        }
+        if(Settings.bubbles > 0) {
+            Utils.sendCommand(cmd: TubCommands.BLOWER, value: 0, word: nil)
+            Settings.bubbles = 1
+        } else {
+            Utils.sendCommand(cmd: TubCommands.BLOWER, value: 1, word: nil)
+            Settings.bubbles = 0
+        }
+        
+        updateBubbles()
+    }
+    
+    @IBAction func cascataAction(_ sender: Any) {
+        if(Settings.cascata < 0) {
+            Utils.toast(vc: self, message: "Controle indisponível")
+            return //Controle indisponível
+        }
+        
+        if(Settings.cascata > 0) {
+            Utils.sendCommand(cmd: TubCommands.CASCATA, value: 0, word: nil)
+            Settings.cascata = 1
+        } else {
+            Utils.sendCommand(cmd: TubCommands.CASCATA, value: 1, word: nil)
+            Settings.cascata = 0
+        }
+        
+        updateCascata()
     }
     
     @IBAction func bleDisconn(_ sender: Any) {
@@ -412,14 +784,6 @@ class HomeViewController: UIViewController {
         }
     }
     
-    private func setVersion() {
-        var app_v = ""
-        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            app_v = "Versão do aplicativo: v\(appVersion)"
-        }
-
-        version_txt.text = "Firmware da banheira : v\(Settings.version)\n\(app_v)"
-    }
     
     private func updatePower() {
         // Power indicator
@@ -447,12 +811,18 @@ class HomeViewController: UIViewController {
         updateBomb2()
         updateBomb3()
         updateBomb4()
+        updateBomb5()
+        updateBomb6()
+        updateBomb7()
+        updateBomb8()
+        updateBomb9()
         
         // Other indicators
         updateWaterEntry()
         updateAutoOn()
         updateKeepWarm()
         updateBubbles()
+        updateCascata()
     }
     
     private func updateTemp() {
@@ -461,9 +831,9 @@ class HomeViewController: UIViewController {
         
         if(Settings.power != 0) { warnTemp() }
         else {
-            tempTitle_txt.textColor = UIColor.init(named: "iconOff_color")
-            temp_txt.textColor = UIColor.init(named: "iconOff_color")
-            tempUnity_txt.textColor =  UIColor.init(named: "iconOff_color")
+            tempTitle_txt.textColor = UIColor.white
+            temp_txt.textColor = UIColor.white
+            tempUnity_txt.textColor =  UIColor.white
         }
         
         updateHeaterConfig()
@@ -475,27 +845,26 @@ class HomeViewController: UIViewController {
         
         if(Settings.power != 0) { warnDesr() }
         else {
-            desrTitle_txt.textColor = UIColor.init(named: "iconOff_color")
-            desr_txt.textColor = UIColor.init(named: "iconOff_color")
-            desrUnity_txt.textColor = UIColor.init(named: "iconOff_color")
+            desrTitle_txt.textColor = UIColor.white
+            desr_txt.textColor = UIColor.white
+            desrUnity_txt.textColor = UIColor.white
         }
         updateHeaterConfig()
     }
     
     private func updateHeaterConfig() {
-        desrHeight_ctr.constant = Settings.has_heater == 0 ? -65 : 0
-        desr_viw.isHidden = Settings.has_heater == 0
-        desr_sld.isEnabled = Settings.has_heater != 0
-        if(Settings.has_heater == 0) { warnDesr(temp: Settings.curr_temp) }
+        //desr_viw.isHidden = Settings.has_heater == 0
+        //desr_sld.isEnabled = Settings.has_heater != 0
+        if(Settings.aquecedor_on_off == 0) { warnDesr(temp: Settings.curr_temp) }
     }
     
     private func updateHeater() {
-        heater_ico.tintColor = Settings.heater != 0 ? UIColor.init(named: "iconHot_color") : UIColor.init(named: "iconOff_color")
+        heater_ico.tintColor = Settings.aquecedor_on_off > 0 ? UIColor.red : UIColor.white
     }
     
     private func updateTubLevels() {
         if(Settings.power != 0) {
-            lvl_ico.tintColor = UIColor.init(named: "iconOn_color")
+            lvl_ico.tintColor = UIColor.nivelColor
 
             switch Settings.level {
             case 1:
@@ -507,261 +876,270 @@ class HomeViewController: UIViewController {
             }
             
         } else {
-            lvl_ico.tintColor = UIColor.init(named: "iconOff_color")
+            lvl_ico.tintColor = UIColor.nivelColor
             lvl_ico.image = #imageLiteral(resourceName: "level_0")
-        }
-    }
-    private func updateAllBombs() {
-        if(Settings.bomb_1 == 0 &&
-            Settings.bomb_2 == 0 &&
-            Settings.bomb_3 == 0 &&
-            Settings.bomb_4 == 0 &&
-            Settings.bomb_5 == 0) {
-                bomb_ico.tintColor = UIColor.init(named: "iconOff_color")
-        } else {
-            bomb_ico.tintColor = UIColor.init(named: "iconOn_color")
         }
     }
     
     private func updateBomb1() {
-        if(Settings.cooling > 0) {
-            bomb_ico.tintColor = UIColor.init(named: "iconIce_color")
-            bomb1_act.tintColor = UIColor.init(named: "iconIce_color")
-            return
-        }
-        
-        if(Settings.power <= 0 || Settings.qt_bombs < 1) {
-            bomb1_act.tintColor = UIColor.init(named: "iconOff_color")
-            return
-        }
-        
-        bomb1_act.tintColor = Settings.bomb_1 != 0 ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        updateBombCommon(bombButton: bomb1_act, bombSetting: Settings.bomb_1, bombQuantity: Settings.qt_bombs >= 1)
     }
-    
+
     private func updateBomb2() {
-        if(Settings.power <= 0 || Settings.qt_bombs < 2) {
-            bomb2_act.tintColor = UIColor.init(named: "iconOff_color")
-            return
-        }
-        
-        bomb2_act.tintColor = Settings.bomb_2 != 0 ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        updateBombCommon(bombButton: bomb2_act, bombSetting: Settings.bomb_2, bombQuantity: Settings.qt_bombs >= 2)
     }
-    
+
     private func updateBomb3() {
-        if(Settings.power <= 0 || Settings.qt_bombs < 3) {
-            bomb3_act.tintColor = UIColor.init(named: "iconOff_color")
-            return
-        }
-        
-        bomb3_act.tintColor = Settings.bomb_3 != 0 ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        updateBombCommon(bombButton: bomb3_act, bombSetting: Settings.bomb_3, bombQuantity: Settings.qt_bombs >= 3)
+    }
+
+    private func updateBomb4() {
+        updateBombCommon(bombButton: bomb4_act, bombSetting: Settings.bomb_4, bombQuantity: Settings.qt_bombs >= 4)
+    }
+    private func updateBomb5() {
+        updateBombCommon(bombButton: bomb5_act, bombSetting: Settings.bomb_5, bombQuantity: Settings.qt_bombs >= 5)
+    }
+
+    private func updateBomb6() {
+        updateBombCommon(bombButton: bomb6_act, bombSetting: Settings.bomb_6, bombQuantity: Settings.qt_bombs >= 6)
+    }
+
+    private func updateBomb7() {
+        updateBombCommon(bombButton: bomb7_act, bombSetting: Settings.bomb_7, bombQuantity: Settings.qt_bombs >= 7)
+    }
+
+    private func updateBomb8() {
+        updateBombCommon(bombButton: bomb8_act, bombSetting: Settings.bomb_8, bombQuantity: Settings.qt_bombs >= 8)
     }
     
-    private func updateBomb4() {
-        if(Settings.power <= 0 || Settings.qt_bombs < 4) {
-            bomb4_act.tintColor = UIColor.init(named: "iconOff_color")
+    private func updateBomb9() {
+        updateBombCommon(bombButton: bomb9_act, bombSetting: Settings.bomb_9, bombQuantity: Settings.qt_bombs >= 9)
+    }
+
+    // Common function to update bomb buttons
+    private func updateBombCommon(bombButton: UIButton, bombSetting: Int, bombQuantity: Bool) {
+        if(Settings.cooling > 0) {
+            bombButton.tintColor = UIColor.yellow
+            return
+        }
+        if(Settings.power <= 0) {
+            bombButton.isHidden = true
             return
         }
         
-        bomb4_act.tintColor = Settings.bomb_4 != 0 ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        bombButton.isEnabled = bombQuantity
+        bombButton.isHidden = !bombQuantity
+        
+        bombButton.tintColor = bombSetting != 0 ? UIColor.systemGreen : UIColor(named: "Icon_OFF")
     }
     
     private func updateSpot() {
         if(Settings.spot_state <= 0){
-            spot_ico.tintColor = UIColor.init(named: "iconOff_color")
+            spot_ico.tintColor = UIColor.white
         } else if(Settings.spot_state == 1) {
             switch Settings.spot_static {
-            case 0:
-                spot_ico.tintColor = UIColor.init(named: "white_color")
+            case 9:
+                spot_ico.tintColor = UIColor.white
             case 1:
-                spot_ico.tintColor = UIColor.init(named: "cyan_color")
+                spot_ico.tintColor = UIColor.cyan
             case 2:
-                spot_ico.tintColor = UIColor.init(named: "blue_color")
+                spot_ico.tintColor = UIColor.blue
             case 3:
-                spot_ico.tintColor = UIColor.init(named: "pink_color")
+                spot_ico.tintColor = UIColor.systemPink
             case 4:
-                spot_ico.tintColor = UIColor.init(named: "magenta_color")
+                spot_ico.tintColor = UIColor.magenta
             case 5:
-                spot_ico.tintColor = UIColor.init(named: "red_color")
+                spot_ico.tintColor = UIColor.red
             case 6:
-                spot_ico.tintColor = UIColor.init(named: "orange_color")
+                spot_ico.tintColor = UIColor.orange
             case 7:
-                spot_ico.tintColor = UIColor.init(named: "yellow_color")
+                spot_ico.tintColor = UIColor.yellow
             case 8:
-                spot_ico.tintColor = UIColor.init(named: "green_color")
+                spot_ico.tintColor = UIColor.green
             default:
-                spot_ico.tintColor = UIColor.init(named: "iconOn_color")
+                spot_ico.tintColor = UIColor(named: "Icon_OFF")
             }
         } else {
-            spot_ico.tintColor = UIColor.init(named: "iconOn_color")
-        }
-    }
-    
-    private func updateStrip() {
-        if(Settings.strip_state <= 0) {
-            strip_ico.tintColor = UIColor.init(named: "iconOff_color")
-        } else if(Settings.strip_state == 1) {
-            switch Settings.strip_static {
-            case 0:
-                strip_ico.tintColor = UIColor.init(named: "white_color")
-            case 1:
-                strip_ico.tintColor = UIColor.init(named: "cyan_color")
-            case 2:
-                strip_ico.tintColor = UIColor.init(named: "blue_color")
-            case 3:
-                strip_ico.tintColor = UIColor.init(named: "pink_color")
-            case 4:
-                strip_ico.tintColor = UIColor.init(named: "magenta_color")
-            case 5:
-                strip_ico.tintColor = UIColor.init(named: "red_color")
-            case 6:
-                strip_ico.tintColor = UIColor.init(named: "orange_color")
-            case 7:
-                strip_ico.tintColor = UIColor.init(named: "yellow_color")
-            case 8:
-                strip_ico.tintColor = UIColor.init(named: "green_color")
-            default:
-                strip_ico.tintColor = UIColor.init(named: "iconOn_color")
-            }
-        } else {
-            strip_ico.tintColor = UIColor.init(named: "iconOn_color")
+            spot_ico.tintColor = UIColor(named: "Icon_OFF")
         }
     }
     
     private func updateWaterEntry() {
-        if(Settings.power <= 0 || Settings.has_waterctrl <= 0) {
-            waterEntry_act.tintColor = UIColor.init(named: "iconOff_color")
+        if(Settings.power <= 0) {
+            waterEntry_act.tintColor = UIColor(named: "Icon_OFF")
+            waterEntry_act.isHidden = true
             return
         }
         
-        waterEntry_ico.tintColor = Settings.waterctrl != 0 ? UIColor.init(named: "iconOn_color") : UIColor.init(named: "iconOff_color")
-        waterEntry_act.tintColor = Settings.waterctrl != 0 ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        waterEntry_act.tintColor = Settings.waterctrl != 0 ? UIColor.systemYellow : UIColor(named: "Icon_OFF")
+        waterEntry_act.isHidden = false
     }
     
     private func updateAutoOn() {
         if(Settings.power <= 0) {
-            autoOn_act.tintColor = UIColor.init(named: "iconOff_color")
-            autoOn_ico.tintColor = UIColor.init(named: "iconOff_color")
+            autoOn_act.tintColor = UIColor(named: "Icon_OFF")
             return
         }
         
-        autoOn_ico.tintColor = Settings.auto_on != 0 ? UIColor.init(named: "iconOn_color") : UIColor.init(named: "iconOff_color")
-        autoOn_act.tintColor = Settings.auto_on != 0 ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        autoOn_act.tintColor = Settings.auto_on != 0 ? UIColor.orange : UIColor(named: "Icon_OFF")
     }
     
     private func updateKeepWarm() {
-        if(Settings.power <= 0 || Settings.has_temp <= 0) {
-            keepWarm_act.tintColor = UIColor.init(named: "iconOff_color")
-            keepWarm_ico.tintColor = UIColor.init(named: "iconOff_color")
+        if(Settings.power <= 0) {
+            keepWarm_act.tintColor = UIColor(named: "Icon_OFF")
+            //keepWarm_act.isHidden = true
             return
         }
         
-        keepWarm_ico.tintColor = Settings.keep_warm != 0 ? UIColor.init(named: "iconOn_color") : UIColor.init(named: "iconOff_color")
-        keepWarm_act.tintColor = Settings.keep_warm != 0 ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        keepWarm_act.tintColor = Settings.modo_eco != 0 ? UIColor.systemGreen : UIColor(named: "Icon_OFF")
+    }
+    
+    private func updateCascata() {
+        if(Settings.power <= 0) {
+            cascata_bt.tintColor = UIColor(named: "Icon_OFF")
+            cascata_bt.isHidden = true
+            return
+        }
+        
+        cascata_bt.tintColor = Settings.cascata != 0 ? UIColor.blue : UIColor(named: "Icon_OFF")
+        cascata_bt.isHidden = false
     }
     
     private func updateBubbles() {
-        if(Settings.power <= 0 || true) {
-            bubbles_act.tintColor = UIColor.init(named: "iconOff_color")
+        if(Settings.power <= 0) {
+            bubbles_act.tintColor = UIColor.lightGray
+            bubbles_act.isHidden = true
             return
         }
         
-        bubbles_ico.tintColor = Settings.bubbles != 0 ? UIColor.init(named: "iconOn_color") : UIColor.init(named: "iconOff_color")
-        bubbles_act.tintColor = Settings.bubbles != 0 ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        bubbles_act.tintColor = Settings.bubbles != 0 ? UIColor.blue : UIColor(named: "Icon_OFF")
+        bubbles_act.isHidden = false
     }
     
     private func setupConns() {
         var up = BLEService.it.state == Connection.State.CONNECTED
-        var color = up ? UIColor.init(named: "iconOn_color") : UIColor.init(named: "iconOff_color")
+        var color = up ? UIColor.conectedColor : UIColor.customColor
         print("BLE UP: \(up)")
-        bleConn_ico.tintColor = color
-        bleDisconn_ico.tintColor = color
-        print("\(bleConn_ico.tintColor == color ? "EQUALS :)": "NOT EQUALS :(")")
-        bleConn_txt.text = up ? "Conectado à \(Settings.tubname)" : "Não conectado via Bluetooth"
-        bleConn_txt.textColor = color
+        bleDisconn_ico.tintColor = up ? UIColor.conectedColor : UIColor.customColor
+
         
         up = WiFiService.it.state == Connection.State.CONNECTED
-        color = up ? UIColor.init(named: "iconOn_color") : UIColor.init(named: "iconOff_color")
+        color = up ? UIColor.conectedColor : UIColor.customColor
         print("WIFI UP: \(up)")
-        wifiConn_ico.tintColor = color
         wifiDisconn_ico.tintColor = color
-        wifiConn_txt.text = up ? "Conectado à \(Settings.tubname)" : "Não conectado via Wi-Fi"
-        wifiConn_txt.textColor = color
+
 
         up = MqttService.it.state == Connection.State.CONNECTED
-        color = up ? UIColor.init(named: "iconOn_color") : UIColor.init(named: "iconOff_color")
+        color = up ? UIColor.conectedColor : UIColor.customColor
         print("MQTT UP: \(up)")
-        mqttConn_ico.tintColor = color
         mqttDisconn_ico.tintColor = color
-        mqttConn_txt.text = up ? "Conectado à \(Settings.tubname)" : "Não conectado remotamente"
-        mqttConn_txt.textColor = color
+
     }
     
     private func warnTemp(temp: Int = Settings.curr_temp) {
-        tempTitle_txt.textColor = UIColor.init(named: "title2_color")
+        tempTitle_txt.textColor = UIColor.white
         if(temp >= 36) {
-            temp_txt.textColor = UIColor.init(named: "seekbarWarnTemp_color")
-            tempUnity_txt.textColor = UIColor.init(named: "seekbarWarnTemp_color")
-            temp_sld.filledColor = UIColor.init(named: "seekbarWarnTemp_color") ?? UIColor.systemRed
+            temp_txt.textColor = UIColor.white
+            tempUnity_txt.textColor = UIColor.white
+            temp_sld.filledColor = UIColor.systemRed
         } else {
-            temp_txt.textColor = UIColor.init(named: "title2_color")
-            tempUnity_txt.textColor = UIColor.init(named: "title2_color")
-            temp_sld.filledColor = UIColor.init(named: "seekbarTemp_color") ?? UIColor.systemBlue
+            temp_txt.textColor = UIColor.white
+            tempUnity_txt.textColor = UIColor.white
+            temp_sld.filledColor = UIColor.cyan
         }
     }
     
     private func warnDesr(temp: Int = Settings.desr_temp) {
-        desrTitle_txt.textColor = UIColor.init(named: "title_color")
+        desrTitle_txt.textColor = UIColor.white
         if(temp >= 36) {
-            desr_txt.textColor = UIColor.init(named: "seekbarWarnDesr_color")
-            desrUnity_txt.textColor = UIColor.init(named: "seekbarWarnDesr_color")
-            desr_sld.filledColor = UIColor.init(named: "seekbarWarnDesr_color") ?? UIColor.systemRed
+            desr_txt.textColor = UIColor.red
+            desrUnity_txt.textColor = UIColor.red
+            desr_sld.filledColor = UIColor.orange
         } else {
-            desr_txt.textColor = UIColor.init(named: "title_color")
-            desrUnity_txt.textColor = UIColor.init(named: "title_color")
-            desr_sld.filledColor = UIColor.init(named: "seekbarDesr_color") ?? UIColor.systemBlue
+            desr_txt.textColor = UIColor.white
+            desrUnity_txt.textColor = UIColor.white
+            desr_sld.filledColor = UIColor.blue
         }
     }
     
 }
 
 extension HomeViewController: MSCircularSliderDelegate {
-    
+
     func circularSlider(_ slider: MSCircularSlider, valueChangedTo value: Double, fromUser: Bool) {
-        self.desr_txt.text = Settings.power != 0 ? "\(Int(value)+15)" : "--"
-        warnDesr(temp: Int(value)+15)
-        if(fromUser) {
+        // Atualiza o texto do desr_txt com base no valor do slider
+        self.desr_txt.text = Settings.power != 0 ? "\(Int(value) + 15)" : "--"
+
+        // Chama a função warnDesr(temp:) para executar a lógica relacionada ao valor do slider
+        warnDesr(temp: Int(value) + 15)
+
+        print(value)
+
+        // Verifica se a alteração do valor foi feita pelo usuário (toque no slider)
+        if fromUser {
+            // Invalida o timer anterior, se existir, para evitar chamadas duplicadas
             self.tempsetTimer?.invalidate()
-            self.tempsetTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false){ t in
-                Utils.sendCommand(cmd: TubCommands.TEMP_SET, value: Int(value)+15, word: nil)
+            // Chama a função warnDesr(temp:) para executar a lógica relacionada ao valor do slider
+            warnDesr(temp: Int(value) + 15)
+
+            // Cria um novo timer para aguardar 0.3 segundos antes de enviar o comando
+            self.tempsetTimer = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false) { t in
+                Utils.sendCommand(cmd: TubCommands.TEMP_SET, value: Int(value) + 15, word: nil)
             }
         }
     }
-    
+
 }
 
 extension HomeViewController: ConnectingProtocol, CommunicationProtocol {
-    
-    func didStartConnectingTub() {
-        // Do anything
-    }
-    
-    func didConnectTub() {
-        // Do anything
-    }
-    
-    func didDisconnectTub() {
-        RequestManager.it.saveTubInfoRequest()
-        
-        Settings.resetAll()
-        if let pvc = self.navigationController?.viewControllers[1] {
-            self.navigationController?.popToViewController(pvc, animated: true)
+    func didReceiveFeedback(about: String, text: String) {
+        switch about {
+        case BathTubFeedbacks.POWER:
+            updatePower()
+            loading(show: false)
+        case BathTubFeedbacks.TEMP_NOW:
+            //Notifications.notify(title: "Temperatura desejada atingida", message: "A água já se encontra na temperatura desejada", reason: about)
+            updateTemp()
+        case BathTubFeedbacks.TEMP_DESIRED:
+            updateDesr()
+        case BathTubFeedbacks.BOMB1_STATE:
+            updateBomb1()
+        case BathTubFeedbacks.BOMB2_STATE:
+            updateBomb2()
+        case BathTubFeedbacks.BOMB3_STATE:
+            updateBomb3()
+        case BathTubFeedbacks.BOMB4_STATE:
+            updateBomb4()
+        case BathTubFeedbacks.BOMB5_STATE:
+            updateBomb5()
+        case BathTubFeedbacks.BOMB6_STATE:
+            updateBomb6()
+        case BathTubFeedbacks.BOMB7_STATE:
+            updateBomb7()
+        case BathTubFeedbacks.BOMB8_STATE:
+            updateBomb8()
+        case BathTubFeedbacks.BOMB9_STATE:
+            updateBomb9()
+        case BathTubFeedbacks.HEATER_STATE:
+            updateHeater()
+        case BathTubFeedbacks.SPOTS_STATE:
+            updateSpot()
+        case BathTubFeedbacks.SPOTS_COLOR:
+            updateSpot()
+        case BathTubFeedbacks.WATER_CTRL:
+            updateWaterEntry()
+        case BathTubFeedbacks.AUTO_ON:
+            updateAutoOn()
+        case BathTubFeedbacks.LEVEL_STATE:
+            //Notifications.notify(title: "Banheira em nível máximo", message: "Tudo pronto para seu banho", reason: about)
+            updateTubLevels()
+        case BathTubFeedbacks.COOLING:
+            updateBomb1()
+        case BathTubFeedbacks.MODO_ECO:
+            updateKeepWarm()
+        default:
+            return
         }
-    }
-    
-    func didFail() {
-        RequestManager.it.saveTubInfoRequest()
-        
-        Settings.resetAll()
     }
     
     func didReceiveFeedback(about: String, value: Int) {
@@ -776,26 +1154,28 @@ extension HomeViewController: ConnectingProtocol, CommunicationProtocol {
             updateDesr()
         case BathTubFeedbacks.BOMB1_STATE:
             updateBomb1()
-            updateAllBombs()
         case BathTubFeedbacks.BOMB2_STATE:
             updateBomb2()
-            updateAllBombs()
         case BathTubFeedbacks.BOMB3_STATE:
             updateBomb3()
-            updateAllBombs()
         case BathTubFeedbacks.BOMB4_STATE:
             updateBomb4()
-            updateAllBombs()
+        case BathTubFeedbacks.BOMB5_STATE:
+            updateBomb5()
+        case BathTubFeedbacks.BOMB6_STATE:
+            updateBomb6()
+        case BathTubFeedbacks.BOMB7_STATE:
+            updateBomb7()
+        case BathTubFeedbacks.BOMB8_STATE:
+            updateBomb8()
+        case BathTubFeedbacks.BOMB9_STATE:
+            updateBomb9()
         case BathTubFeedbacks.HEATER_STATE:
             updateHeater()
         case BathTubFeedbacks.SPOTS_STATE:
             updateSpot()
         case BathTubFeedbacks.SPOTS_COLOR:
             updateSpot()
-        case BathTubFeedbacks.STRIP_STATE:
-            updateStrip()
-        case BathTubFeedbacks.STRIP_COLOR:
-            updateStrip()
         case BathTubFeedbacks.WATER_CTRL:
             updateWaterEntry()
         case BathTubFeedbacks.AUTO_ON:
@@ -807,20 +1187,41 @@ extension HomeViewController: ConnectingProtocol, CommunicationProtocol {
             updateBomb1()
         case BathTubFeedbacks.KEEP_WARM:
             updateKeepWarm()
+        case BathTubFeedbacks.CASCATA:
+            updateCascata()
+        case BathTubFeedbacks.BLOWER:
+            updateBubbles()
+//        case BathTubFeedbacks.AQUECEDOR_ON_OFF:
+//            updateHeater()
         default:
             return
         }
     }
     
-    func didReceiveFeedback(about: String, text: String) {
-        switch about {
-        case BathTubFeedbacks.VERSION:
-            setupConns()
-            setVersion()
-        default:
-            return
+    
+    func didStartConnectingTub() {
+        // Do anything
+    }
+    
+    func didConnectTub() {
+        // Do anything
+    }
+    
+    func didDisconnectTub() {
+        RequestManager.it.saveTubInfoRequest()
+        
+        Settings.resetAll()
+        if let pvc = self.navigationController?.viewControllers[0] {
+            self.navigationController?.popToViewController(pvc, animated: true)
         }
     }
+    
+    func didFail() {
+        RequestManager.it.saveTubInfoRequest()
+        
+        Settings.resetAll()
+    }
+        
 }
 
 extension HomeViewController: RequestProtocol {
@@ -829,4 +1230,48 @@ extension HomeViewController: RequestProtocol {
     
     func onError(code: Int, error: Error, source: String) { }
     
+}
+
+
+extension UIColor {
+    static let customColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+    static let nivelColor = UIColor.white
+    static let conectedColor = UIColor.green
+}
+
+extension Settings {
+    static func bombSettingForIndex(_ index: Int) -> Int {
+        switch index {
+        case 2: return bomb_2
+        case 3: return bomb_3
+        case 4: return bomb_4
+        case 5: return bomb_5
+        case 6: return bomb_6
+        case 7: return bomb_7
+        case 8: return bomb_8
+        case 9: return bomb_9
+        default: return 0
+        }
+    }
+
+    static func updateBombSettingForIndex(_ index: Int, newValue: Int) {
+        switch index {
+        case 2: bomb_2 = newValue
+        case 3: bomb_3 = newValue
+        case 4: bomb_4 = newValue
+        case 5: bomb_5 = newValue
+        case 6: bomb_6 = newValue
+        case 7: bomb_7 = newValue
+        case 8: bomb_8 = newValue
+        case 9: bomb_9 = newValue
+        default: break
+        }
+    }
+
+}
+
+extension TubCommands {
+    static func bombCommandForIndex(_ index: Int) -> String {
+        return "s \(index) "
+    }
 }

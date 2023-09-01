@@ -98,22 +98,22 @@ extension MqttService: CocoaMQTTDelegate {
     
     
     func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
-        //print("Connected !")
+        print("Connected !")
         
         // Subscribing to feedbacks topic
         mqtt.subscribe("\(tub_id)_status")
     }
     
     func mqtt(_ mqtt: CocoaMQTT, didPublishMessage message: CocoaMQTTMessage, id: UInt16) {
-        //print("Publish message: \(message) !")
+        print("Publish message: \(message) !")
     }
     
     func mqtt(_ mqtt: CocoaMQTT, didPublishAck id: UInt16) {
-        //print("Publish ACK !")
+        print("Publish ACK !")
     }
     
     func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16) {
-        //print("Received message: \(message.string!) !")
+        print("Received message: \(message.string!) !")
         
         mqttTimer?.invalidate()
         let payload = message.string!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -134,27 +134,27 @@ extension MqttService: CocoaMQTTDelegate {
     }
     
     func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopics topics: [String]) {
-        //print("Subscribed to \(topics[0]) !")
+        print("Subscribed to \(topics[0]) !")
         
     }
     
     func mqtt(_ mqtt: CocoaMQTT, didUnsubscribeTopic topic: String) {
-        //print("Unsubscribed from \(topic) !")
+        print("Unsubscribed from \(topic) !")
     }
     
     func mqttDidPing(_ mqtt: CocoaMQTT) {
-        //print("Did Ping !")
+        print("Did Ping !")
     }
     
     func mqttDidReceivePong(_ mqtt: CocoaMQTT) {
-        //print("Received Pong !")
+        print("Received Pong !")
     }
     
     func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
-        //print("Disconnected !")
-        //if let error = err {
-        //  print("Got error: \(error.localizedDescription)")
-        //}
+        print("Disconnected !")
+        if let error = err {
+          print("Got error: \(error.localizedDescription)")
+        }
         mqttTimer?.invalidate()
         
         tub_id = ""

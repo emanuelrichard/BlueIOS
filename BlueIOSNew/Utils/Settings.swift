@@ -75,11 +75,15 @@ class Settings {
     static var memo5 = ""
     
     static var qt_bombs = 0
-    static var bomb_1 = 0
-    static var bomb_2 = 0
-    static var bomb_3 = 0
-    static var bomb_4 = 0
-    static var bomb_5 = 0
+    static var bomb_1 = -1
+    static var bomb_2 = -1
+    static var bomb_3 = -1
+    static var bomb_4 = -1
+    static var bomb_5 = -1
+    static var bomb_6 = -1
+    static var bomb_7 = -1
+    static var bomb_8 = -1
+    static var bomb_9 = -1
     static var cooling = 0
     
     static var level = 0            // 0~2
@@ -114,8 +118,15 @@ class Settings {
     static var strip_cmode = 0
     
     static var keep_warm = 0
-    static var bubbles = 0
-    static var cascate = 0
+    static var bubbles = -1
+    static var cascata = -1
+    static var modo_eco = 0
+    static var banheira_com_aquecedor : String = ""
+    static var modo_painel : String = ""
+    static var aquecedor_on_off = -1
+    static var aquecedor_automatico : Int = -1
+    static var timeoutligado : Int = -1
+    
     
     static var auto_conn = false
     
@@ -278,6 +289,10 @@ extension Settings {
         bomb_3 = 0
         bomb_4 = 0
         bomb_5 = 0
+        bomb_6 = 0
+        bomb_7 = 0
+        bomb_8 = 0
+        bomb_9 = 0
         cooling = 0
         
         level = 0            // 0~2
@@ -311,8 +326,14 @@ extension Settings {
         strip_cmode = 0
         
         keep_warm = 0
-        bubbles = 0
-        cascate = 0
+        bubbles = -1
+        cascata = -1
+        modo_eco = 0
+        banheira_com_aquecedor = ""
+        modo_painel = ""
+        aquecedor_on_off = -1
+        aquecedor_automatico = -1
+        timeoutligado = -1
         
         auto_conn = false
         
@@ -337,7 +358,7 @@ extension Settings {
 extension Settings {
     
     static func updateIntSettings(about: String, value: Int) {
-        //print("\(about):\(value)")
+        print("\(about):\(value)")
         switch about {
         case BathTubFeedbacks.QT_BOMBS:
             Settings.qt_bombs = value
@@ -351,6 +372,12 @@ extension Settings {
             Settings.auto_on = value
         case BathTubFeedbacks.KEEP_WARM:
             Settings.keep_warm = value
+        case BathTubFeedbacks.AQUECEDOR_ON_OFF:
+            Settings.aquecedor_on_off = value
+        case BathTubFeedbacks.AQUECEDOR_AUTOMATICO:
+            Settings.aquecedor_automatico = value
+        case BathTubFeedbacks.TIMEOUTBANHEIRA:
+            Settings.timeoutligado = value
         case BathTubFeedbacks.HAS_HEATER:
             Settings.has_heater = value
         case BathTubFeedbacks.HAS_DRAIN:
@@ -399,10 +426,26 @@ extension Settings {
             Notifications.notify(title: "\(tubname) na temperatura desejada", message: "A banheira já se encontra na temperatura desejada", reason: about, identifier: "\(Utils.getMqttId() ?? " Banheira")_TEMP")
         case BathTubFeedbacks.TEMP_DESIRED:
             Settings.desr_temp = value
+            
         case BathTubFeedbacks.BOMB1_STATE:
             Settings.bomb_1 = value
         case BathTubFeedbacks.BOMB2_STATE:
             Settings.bomb_2 = value
+        case BathTubFeedbacks.BOMB3_STATE:
+            Settings.bomb_3 = value
+        case BathTubFeedbacks.BOMB4_STATE:
+            Settings.bomb_4 = value
+        case BathTubFeedbacks.BOMB5_STATE:
+            Settings.bomb_5 = value
+        case BathTubFeedbacks.BOMB6_STATE:
+            Settings.bomb_6 = value
+        case BathTubFeedbacks.BOMB7_STATE:
+            Settings.bomb_7 = value
+        case BathTubFeedbacks.BOMB8_STATE:
+            Settings.bomb_8 = value
+        case BathTubFeedbacks.BOMB9_STATE:
+            Settings.bomb_9 = value
+            
         case BathTubFeedbacks.HEATER_STATE:
             Settings.heater = value
         case BathTubFeedbacks.LEVEL_STATE:
@@ -439,6 +482,12 @@ extension Settings {
             Settings.online = value == 1
         case BathTubFeedbacks.TUB_NPSWD:
             Settings.n_pswd = value
+        case BathTubFeedbacks.CASCATA:
+            Settings.cascata = value
+        case BathTubFeedbacks.BLOWER:
+            Settings.bubbles = value
+        case BathTubFeedbacks.MODO_ECO:
+            Settings.modo_eco = value
         case BathTubFeedbacks.LAST_ON:
             Settings.online = true
         default:
@@ -449,6 +498,10 @@ extension Settings {
     static func updateStrSettings(about: String, text: String) {
         print("\(about):\(text)")
         switch about {
+        case BathTubFeedbacks.BANHEIRA_COM_AQUECEDOR:
+            Settings.banheira_com_aquecedor = text
+        case BathTubFeedbacks.MODO_PAINEL:
+            Settings.modo_painel = text
         case BathTubFeedbacks.FIRMWARE:
             Settings.firmware = text
         case BathTubFeedbacks.VERSION:
@@ -482,19 +535,19 @@ extension Settings {
         case BathTubFeedbacks.PSWD_ERR:
             if(text == "ERRO") { pswd_err = true }
         case BathTubFeedbacks.STATUS_M1:
-            if(text != "GRAVADA" && text != "SALVA") {
+            if(text != "1 CRIADA" && text != "1 SALVA") {
                 memo1 = ""
             }
         case BathTubFeedbacks.NAME_M1:
             memo1 = text
         case BathTubFeedbacks.STATUS_M2:
-            if(text != "GRAVADA" && text != "SALVA") {
+            if(text != "2 CRIADA" && text != "2 SALVA") {
                 memo2 = ""
             }
         case BathTubFeedbacks.NAME_M2:
             memo2 = text
         case BathTubFeedbacks.STATUS_M3:
-            if(text != "GRAVADA" && text != "SALVA") {
+            if(text != "3 CRIADA" && text != "3 SALVA") {
                 memo3 = ""
             }
         case BathTubFeedbacks.NAME_M3:

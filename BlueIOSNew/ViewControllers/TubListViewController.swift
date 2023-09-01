@@ -48,10 +48,15 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         // Cria um gradiente com as 3 cores desejadas
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
-        gradientLayer.colors = [UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor, UIColor(red: 102/255, green: 148/255, blue: 250/255, alpha: 1).cgColor, UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor]
+        gradientLayer.colors = [UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor,
+                                UIColor(red: 93/255, green: 143/255, blue: 250/255, alpha: 1).cgColor,
+                                UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor]
         
         // Define o plano de fundo da view com o gradiente
         view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        view.bringSubviewToFront(viwQRCode)
+
         
         //ToolBar View
         view_tool_bar.translatesAutoresizingMaskIntoConstraints = false
@@ -115,7 +120,7 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
             // Define a margem direita do objeto lstTubs para ser igual à margem direita da safe area
             view_botton_menu.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             // Defina a margem inferior do lstTubs para ser igual à margem inferior da view
-            view_botton_menu.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
+            view_botton_menu.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             // Adicione a restrição de altura à view
             view_botton_menu.heightAnchor.constraint(equalToConstant: 50.0),
         ])
@@ -125,16 +130,13 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         addBtn.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(addBtn)
 
-        // Adicione as restrições de layout
+        let buttonSize: CGFloat = 50.0
+
         NSLayoutConstraint.activate([
-            // Centralize horizontalmente o addBtn na view
             addBtn.centerXAnchor.constraint(equalTo: view_botton_menu.centerXAnchor),
-            // Centralize verticalmente o addBtn na view
             addBtn.centerYAnchor.constraint(equalTo: view_botton_menu.centerYAnchor),
-            // Defina a largura do addBtn como 40 pontos
-            addBtn.widthAnchor.constraint(equalToConstant: 50.0),
-            // Defina a altura do addBtn como 40 pontos
-            addBtn.heightAnchor.constraint(equalToConstant: 50.0)
+            addBtn.widthAnchor.constraint(equalToConstant: buttonSize),
+            addBtn.heightAnchor.constraint(equalToConstant: buttonSize)
         ])
         
         // List View
@@ -148,14 +150,14 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
             // Define a margem direita do objeto lstTubs para ser igual à margem direita da safe area
             lstTubs.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             // Defina a margem superior do lstTubs para ser igual à margem superior da view
-            lstTubs.topAnchor.constraint(equalTo: txtAddedTitle.bottomAnchor, constant: -10),
+            lstTubs.topAnchor.constraint(equalTo: txtAddedTitle.bottomAnchor, constant: 20),
             // Defina a margem inferior do lstTubs para ser igual à margem inferior da view
             lstTubs.bottomAnchor.constraint(equalTo: view_botton_menu.topAnchor)
         ])
         
 
         
-
+        view.addSubview(viwQRCode)
         // Assume responses in QRCode scans
         viwQRScan.delegate = self
         
@@ -163,8 +165,8 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         if let layout = lstTubs.collectionViewLayout as? ATubViewLayout {
           layout.delegate = self
         }
-        //lstTubs.delegate = self
-        //lstTubs.dataSource = self
+        lstTubs.delegate = self
+        lstTubs.dataSource = self
         
         // Assume responses of Services
         BLEService.it.delegates(ble: self, conn: self, comm: nil).ok()
@@ -239,19 +241,11 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     @IBAction func AddTubClick(_ sender: Any) {
-        if(BLEService.it.ble_enabled == false) {
+        if(BLEService.it.ble_enabled == true) {
             performSegue(withIdentifier: "TubAdd", sender: nil)
         } else {
             Utils.toast(vc: self, message: "Ligue o Bluetooth e tente novamente!")
         }
-    }
-    
-    @IBAction func accountOptionsClick(_ sender: Any) {
-        performSegue(withIdentifier: "AccOpt", sender: nil)
-    }
-    
-    @IBAction func appSettingsClick(_ sender: Any) {
-        performSegue(withIdentifier: "GenCfg", sender: nil)
     }
     
     // Lista de opcaos
@@ -326,25 +320,119 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ATub", for: indexPath) as! ATubViewCell
-            
+        
+        
+        //View principal da celula
+        cell.layout_celula_view.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(cell.layout_celula_view)
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = cell.layout_celula_view.bounds
+        gradientLayer.colors = [
+            UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
+            UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        cell.layout_celula_view.layer.addSublayer(gradientLayer)
+        cell.layout_celula_view.layer.addSublayer(gradientLayer)
+        
+        cell.layout_celula_view.layer.cornerRadius = 30
+        cell.layout_celula_view.layer.borderWidth = 4
+        cell.layout_celula_view.layer.borderColor = UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
+
+
+        NSLayoutConstraint.activate([
+            cell.layout_celula_view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            cell.layout_celula_view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            cell.layout_celula_view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            cell.layout_celula_view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor),
+        ])
+        
+        //Logo banheira da celula
+        cell.logo_tub.translatesAutoresizingMaskIntoConstraints = false
+        cell.layout_celula_view.addSubview(cell.logo_tub)
+        
+        cell.logo_tub.contentMode = .center
+        cell.logo_tub.clipsToBounds = true
+        
+        cell.logo_tub.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        cell.logo_tub.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        
+        //let logo = UIImage(named: "bathtub")
+        //cell.logo_tub.image = logo
+        cell.logo_tub.contentMode = .scaleAspectFit
+        
+        cell.logo_tub.topAnchor.constraint(equalTo: cell.layout_celula_view.topAnchor, constant: 10).isActive = true
+        cell.logo_tub.centerXAnchor.constraint(equalTo: cell.layout_celula_view.centerXAnchor).isActive = true
+        
+        
+        //Nome da banheira
+        cell.tubname_txt.translatesAutoresizingMaskIntoConstraints = false
+        cell.layout_celula_view.addSubview(cell.tubname_txt)
+        
+        cell.tubname_txt.contentMode = .center
+        cell.tubname_txt.clipsToBounds = true
+        cell.tubname_txt.textColor = .white
+
+
+        //cell.tubname_txt.topAnchor.constraint(equalTo: cell.logo_tub.bottomAnchor, constant: 5).isActive = true
+        cell.tubname_txt.centerXAnchor.constraint(equalTo: cell.layout_celula_view.centerXAnchor).isActive = true
+        cell.tubname_txt.centerYAnchor.constraint(equalTo: cell.layout_celula_view.centerYAnchor).isActive = true
+        
+        //Dual button
+        cell.stack_view.translatesAutoresizingMaskIntoConstraints = false
+        cell.layout_celula_view.addSubview(cell.stack_view)
+        
+        cell.stack_view.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        cell.stack_view.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        cell.stack_view.topAnchor.constraint(equalTo: cell.tubname_txt.bottomAnchor, constant: 10).isActive = true
+        cell.stack_view.centerXAnchor.constraint(equalTo: cell.layout_celula_view.centerXAnchor).isActive = true
+        
+        //button conexao
+        cell.conn_btn.translatesAutoresizingMaskIntoConstraints = false
+        cell.stack_view.addSubview(cell.conn_btn)
+
+        //button delete
+        cell.del_btn.translatesAutoresizingMaskIntoConstraints = false
+        cell.stack_view.addSubview(cell.del_btn)
+
+        NSLayoutConstraint.activate([
+            cell.conn_btn.leadingAnchor.constraint(equalTo: cell.stack_view.leadingAnchor),
+            cell.del_btn.trailingAnchor.constraint(equalTo: cell.stack_view.trailingAnchor),
+            cell.conn_btn.topAnchor.constraint(equalTo: cell.stack_view.topAnchor),
+            cell.del_btn.topAnchor.constraint(equalTo: cell.stack_view.topAnchor)
+        ])
+        
+        //Tipos de conexoes view
+        cell.conn_viw.translatesAutoresizingMaskIntoConstraints = false
+        cell.layout_celula_view.addSubview(cell.conn_viw)
+        
+        cell.conn_viw.widthAnchor.constraint(equalToConstant: 140).isActive = true
+
+        cell.conn_viw.bottomAnchor.constraint(equalTo: cell.layout_celula_view.bottomAnchor, constant: -20).isActive = true
+        cell.conn_viw.centerXAnchor.constraint(equalTo: cell.layout_celula_view.centerXAnchor).isActive = true
+        
+        
         let tub = added_lst[indexPath.row]
         cell.tubname_txt.text = tub.tub_name
 
         let ble_up = BLEService.it.ble_enabled &&
         BLEService.it.discoveredPeripherals.contains(where: { $0.name == tub.BTid })
-        cell.ble_ico.tintColor = ble_up == true ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        cell.ble_ico.tintColor = ble_up == true ? UIColor.init(named: "Conection_ON") : UIColor.init(named: "Conection_OFF")
 
         let wifi_up = tub.wifi_state == "2" &&
             Utils.getWiFiNetworkName() != nil &&
             Utils.getWiFiNetworkName() == tub.ssid
-        cell.wifi_ico.tintColor = wifi_up == true ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        cell.wifi_ico.tintColor = wifi_up == true ? UIColor.init(named: "Conection_ON") : UIColor.init(named: "Conection_OFF")
 
         let mqtt_up = tub.mqtt_state == "1" &&
             tub.online &&
             Utils.isNetworkReachable()
-        cell.mqtt_ico.tintColor = mqtt_up == true ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        cell.mqtt_ico.tintColor = mqtt_up == true ? UIColor.init(named: "Conection_ON") : UIColor.init(named: "Conection_OFF")
         
-        cell.conn_btn.tintColor = ble_up || wifi_up || mqtt_up ? UIColor.init(named: "iconAct_color") : UIColor.init(named: "iconOn_color")
+        cell.conn_btn.tintColor = ble_up || wifi_up || mqtt_up ? UIColor.init(named: "Conection_ON") : UIColor.init(named: "Conection_OFF")
         
         cell.conn_hgt.constant = shouldShowConn.contains(indexPath.row) ? 32 : 0
 
@@ -367,11 +455,14 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(lstAddedLongPress))
         cell.del_btn.addGestureRecognizer(longPressGesture)
         
+        // Configurando as tags dos ícones BLE, WiFi e MQTT da célula de acordo com o índice da linha da tabela
         cell.ble_ico.tag = (indexPath.row+1) * 17
-        cell.ble_ico.addTarget(self, action: #selector(forceConnect), for: .touchUpInside)
         cell.wifi_ico.tag = (indexPath.row+1) * 19
-        cell.wifi_ico.addTarget(self, action: #selector(forceConnect), for: .touchUpInside)
         cell.mqtt_ico.tag = (indexPath.row+1) * 23
+
+        // Adicionando um alvo para cada ícone que executará o método 'forceConnect' quando for tocado
+        cell.ble_ico.addTarget(self, action: #selector(forceConnect), for: .touchUpInside)
+        cell.wifi_ico.addTarget(self, action: #selector(forceConnect), for: .touchUpInside)
         cell.mqtt_ico.addTarget(self, action: #selector(forceConnect), for: .touchUpInside)
             
         return cell
@@ -421,7 +512,7 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
             if(mqtt_up) {
                 if let tubid = Utils.getMqttId(pub: sel_tub.mqtt_pub, sub: sel_tub.mqtt_sub) {
                     MqttService.it.connect(BTid: sel_tub.BTid, tubid: tubid)
-                    //viwLoading.backgroundColor = UIColor.cyan
+                    //viwLoading?.backgroundColor = UIColor.cyan
                     autocon = false
                     return true
                 }

@@ -21,4 +21,11 @@ class ATubViewCell: UICollectionViewCell {
     @IBOutlet weak var mqtt_ico: UIButton!
     @IBOutlet weak var celula_view: UIView!
     
+    @IBOutlet weak var layout_celula_view: UIView!
+    @IBOutlet weak var stack_view: UIView!
+    
+    
+    @IBOutlet weak var logo_tub: UIImageView!
+    
+    
 }

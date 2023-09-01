@@ -13,7 +13,7 @@ class RequestManager {
     
     //private static let API_ADDRESS = "http://ec2-18-210-17-121.compute-1.amazonaws.com:8090/api/"
     //private let API_ADDRESS = "http://blueeasy-102203163.sa-east-1.elb.amazonaws.com/api/"
-    private let API_ADDRESS = "http://server.opportunitysys.com.br:8090/api/"
+    private let API_ADDRESS = "https://server.opportunitysys.com.br/api/"
     
     private var delegate: RequestProtocol? = nil
     

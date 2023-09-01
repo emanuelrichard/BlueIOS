@@ -47,6 +47,6 @@ class DashedButton: UIButton {
         layer.addSublayer(dashBorder)
         self.dashBorder = dashBorder
         
-        self.backgroundColor = dash ? UIColor.clear : UIColor.init(named: "iconAct_color")
+        self.backgroundColor = dash ? UIColor.clear : UIColor.green
     }
 }

@@ -37,128 +37,128 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         
         //BathTub Logo
-        bathtub_image.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bathtub_image)
-
-        NSLayoutConstraint.activate([
-            bathtub_image.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            // Alinhar a esquerda da label com a esquerda da view_config_notific
-            bathtub_image.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
+//        bathtub_image.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(bathtub_image)
+//
+//        NSLayoutConstraint.activate([
+//            bathtub_image.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+//            // Alinhar a esquerda da label com a esquerda da view_config_notific
+//            bathtub_image.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//        ])
         
-        // Txt email
-        txt_email.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(txt_email)
-        txt_email.textAlignment = .center
-
-        
-        NSLayoutConstraint.activate([
-            // Centralizar a label horizontalmente
-            txt_email.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            txt_email.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            // txt_email a parte superior da label com a parte superior da view_config_notific
-            //txt_email.topAnchor.constraint(equalTo: bathtub_image.bottomAnchor),
-            // Definir a largura máxima da label
-            txt_email.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor),
-            // Alinhar a esquerda da label com a esquerda da view_config_notific
-            txt_email.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            // Alinhar a direita da label com a direita da view_config_notific
-            txt_email.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-        
-        // Configura o campo do email
-        email_edt.layer.cornerRadius = 20.0
-        email_edt.layer.masksToBounds = true
-        email_edt.backgroundColor = UIColor.clear
-        email_edt.layer.borderColor = UIColor.white.cgColor
-        email_edt.layer.borderWidth = 1.5
-        email_edt.textColor = UIColor.white
-        
-        email_edt.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(email_edt)
-        
-        NSLayoutConstraint.activate([
-            // Centralizar a label horizontalmente
-            email_edt.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            // txt_email a parte superior da label com a parte inferior do texto email
-            email_edt.topAnchor.constraint(equalTo: txt_email.bottomAnchor, constant: 10),
-            // Alinhar a esquerda da label com a esquerda da view_config_notific
-            email_edt.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            // Alinhar a direita da label com a direita da view_config_notific
-            email_edt.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
-        ])
-        
-        //Texto Senha
-        txt_senha.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(txt_senha)
-        txt_senha.textAlignment = .center
-
-        
-        NSLayoutConstraint.activate([
-            // Centralizar a label horizontalmente
-            txt_senha.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            // txt_email a parte superior da label com a parte inferior do editor de texto email
-            txt_senha.topAnchor.constraint(equalTo: email_edt.bottomAnchor, constant: 20),
-            // Definir a largura máxima da label
-            txt_senha.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor),
-            // Alinhar a esquerda da label com a esquerda da view_config_notific
-            txt_senha.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            // Alinhar a direita da label com a direita da view_config_notific
-            txt_senha.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-        
-        
-        // Configura o campo de senha
-        pswd_edt.layer.cornerRadius = 20.0
-        pswd_edt.layer.masksToBounds = true
-        pswd_edt.backgroundColor = UIColor.clear
-        pswd_edt.layer.borderColor = UIColor.white.cgColor
-        pswd_edt.layer.borderWidth = 1.5
-        pswd_edt.textColor = UIColor.white
-        
-        pswd_edt.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(pswd_edt)
-        
-        NSLayoutConstraint.activate([
-            // Centralizar a label horizontalmente
-            pswd_edt.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            // txt_email a parte superior da label com a parte inferior do texto email
-            pswd_edt.topAnchor.constraint(equalTo: txt_senha.bottomAnchor, constant: 10),
-            // Alinhar a esquerda da label com a esquerda da view_config_notific
-            pswd_edt.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            // Alinhar a direita da label com a direita da view_config_notific
-            pswd_edt.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
-        ])
-        
-        
-        // Layout butons
-        
-        //Bunton Enter
-        enter_btn.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(enter_btn)
-
-        
-        NSLayoutConstraint.activate([
-            // txt_email a parte superior da label com a parte superior da view_config_notific
-            enter_btn.topAnchor.constraint(equalTo: pswd_edt.bottomAnchor, constant: 50),
-            // Alinhar a esquerda da label com a esquerda da view_config_notific
-            enter_btn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-
-        ])
-        
-        //Button Register
-        register_btn.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(register_btn)
-
-        
-        NSLayoutConstraint.activate([
-            //register_btn.centerXAnchor.constraint(equalTo: enter_btn.centerXAnchor),
-            // txt_email a parte superior da label com a parte superior da view_config_notific
-            register_btn.topAnchor.constraint(equalTo: pswd_edt.bottomAnchor, constant: 50),
-            // Alinhar a esquerda da label com a esquerda da view_config_notific
-            register_btn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50)
-
-        ])
+//        // Txt email
+//        txt_email.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(txt_email)
+//        txt_email.textAlignment = .center
+//
+//
+//        NSLayoutConstraint.activate([
+//            // Centralizar a label horizontalmente
+//            txt_email.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            txt_email.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+//            // txt_email a parte superior da label com a parte superior da view_config_notific
+//            //txt_email.topAnchor.constraint(equalTo: bathtub_image.bottomAnchor),
+//            // Definir a largura máxima da label
+//            txt_email.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor),
+//            // Alinhar a esquerda da label com a esquerda da view_config_notific
+//            txt_email.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            // Alinhar a direita da label com a direita da view_config_notific
+//            txt_email.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//        ])
+//
+//        // Configura o campo do email
+//        email_edt.layer.cornerRadius = 20.0
+//        email_edt.layer.masksToBounds = true
+//        email_edt.backgroundColor = UIColor.clear
+//        email_edt.layer.borderColor = UIColor.white.cgColor
+//        email_edt.layer.borderWidth = 1.5
+//        email_edt.textColor = UIColor.white
+//
+//        email_edt.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(email_edt)
+//
+//        NSLayoutConstraint.activate([
+//            // Centralizar a label horizontalmente
+//            email_edt.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            // txt_email a parte superior da label com a parte inferior do texto email
+//            email_edt.topAnchor.constraint(equalTo: txt_email.bottomAnchor, constant: 10),
+//            // Alinhar a esquerda da label com a esquerda da view_config_notific
+//            email_edt.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+//            // Alinhar a direita da label com a direita da view_config_notific
+//            email_edt.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
+//        ])
+//
+//        //Texto Senha
+//        txt_senha.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(txt_senha)
+//        txt_senha.textAlignment = .center
+//
+//
+//        NSLayoutConstraint.activate([
+//            // Centralizar a label horizontalmente
+//            txt_senha.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            // txt_email a parte superior da label com a parte inferior do editor de texto email
+//            txt_senha.topAnchor.constraint(equalTo: email_edt.bottomAnchor, constant: 20),
+//            // Definir a largura máxima da label
+//            txt_senha.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor),
+//            // Alinhar a esquerda da label com a esquerda da view_config_notific
+//            txt_senha.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            // Alinhar a direita da label com a direita da view_config_notific
+//            txt_senha.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//        ])
+//
+//
+//        // Configura o campo de senha
+//        pswd_edt.layer.cornerRadius = 20.0
+//        pswd_edt.layer.masksToBounds = true
+//        pswd_edt.backgroundColor = UIColor.clear
+//        pswd_edt.layer.borderColor = UIColor.white.cgColor
+//        pswd_edt.layer.borderWidth = 1.5
+//        pswd_edt.textColor = UIColor.white
+//
+//        pswd_edt.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(pswd_edt)
+//
+//        NSLayoutConstraint.activate([
+//            // Centralizar a label horizontalmente
+//            pswd_edt.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            // txt_email a parte superior da label com a parte inferior do texto email
+//            pswd_edt.topAnchor.constraint(equalTo: txt_senha.bottomAnchor, constant: 10),
+//            // Alinhar a esquerda da label com a esquerda da view_config_notific
+//            pswd_edt.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+//            // Alinhar a direita da label com a direita da view_config_notific
+//            pswd_edt.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
+//        ])
+//
+//
+//        // Layout butons
+//
+//        //Bunton Enter
+//        enter_btn.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(enter_btn)
+//
+//
+//        NSLayoutConstraint.activate([
+//            // txt_email a parte superior da label com a parte superior da view_config_notific
+//            enter_btn.topAnchor.constraint(equalTo: pswd_edt.bottomAnchor, constant: 50),
+//            // Alinhar a esquerda da label com a esquerda da view_config_notific
+//            enter_btn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+//
+//        ])
+//
+//        //Button Register
+//        register_btn.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(register_btn)
+//
+//
+//        NSLayoutConstraint.activate([
+//            //register_btn.centerXAnchor.constraint(equalTo: enter_btn.centerXAnchor),
+//            // txt_email a parte superior da label com a parte superior da view_config_notific
+//            register_btn.topAnchor.constraint(equalTo: pswd_edt.bottomAnchor, constant: 50),
+//            // Alinhar a esquerda da label com a esquerda da view_config_notific
+//            register_btn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50)
+//
+//        ])
         
         // Load Settings
         Settings.inititate()
@@ -171,6 +171,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Setup edit's delegates
         email_edt.delegate = self
         pswd_edt.delegate = self
+        
+        applyGradient(to: enter_btn)
+        applyGradient(to: register_btn)
+    }
+    
+    private func applyGradient(to button: UIButton) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = button.bounds
+        gradientLayer.colors = [
+            UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
+            UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        
+        button.layer.addSublayer(gradientLayer)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

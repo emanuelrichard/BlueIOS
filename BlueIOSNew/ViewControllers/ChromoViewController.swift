@@ -25,9 +25,7 @@ class ChromoViewController: UIViewController {
     @IBOutlet weak var orange_btn: DCBorderedButton!
     @IBOutlet weak var yellow_btn: DCBorderedButton!
     @IBOutlet weak var green_btn: DCBorderedButton!
-    
-    @IBOutlet weak var allColor_btn: UIButton!
-    
+        
     @IBOutlet weak var rand1_btn: DCBorderedButton!
     @IBOutlet weak var rand2_btn: DCBorderedButton!
     @IBOutlet weak var seq1_btn: DCBorderedButton!
@@ -42,6 +40,16 @@ class ChromoViewController: UIViewController {
     
     @IBOutlet weak var chromoOff_btn: UIButton!
     
+    @IBOutlet weak var view_tool_bar: UIView!
+    @IBOutlet weak var logo_img: UIImageView!
+    
+    @IBOutlet weak var view_custon_color_chromo: UIView!
+    @IBOutlet weak var view_chromo: UIView!
+    @IBOutlet weak var allColor_btn: UIButton!
+
+    @IBOutlet weak var bar_chromo: UITabBarItem!
+    
+    
     // Standart vars
     private var target = 0
     
@@ -51,18 +59,176 @@ class ChromoViewController: UIViewController {
     private var sldTimer: Timer = Timer.scheduledTimer(withTimeInterval:  0.1, repeats: false) { t in }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         
-        // Assumes BLE service responses
+        // Configura os serviços BLE, Wi-Fi e MQTT
+        setupServices()
+        
+        // Configura as visualizações
+        setupViews()
+    }
+
+    // Configura os serviços BLE, Wi-Fi e MQTT
+    private func setupServices() {
+        // Assume as respostas do serviço BLE
         BLEService.it.delegates(ble: nil, conn: self, comm: self).ok()
         
-        // Assume responses in Wifi
+        // Assume as respostas do serviço Wi-Fi
         WiFiService.it.delegates(conn: self, comm: self).ok()
         
-        // Assume responses in MQTT
+        // Assume as respostas do serviço MQTT
         MqttService.it.delegates(conn: self, comm: self).ok()
+    }
+
+    // Configura as visualizações
+    private func setupViews() {
+        // Configura o layout da view Chromo
+        layoutChromo()
         
-        // Setup controls
-        setupViews()
+        // Configura as cores e atributos de texto para o UISegmentedControl
+        configureSegmentedControlTextColors()
+        
+        // Configura a barra de ferramentas
+        configureToolbarLayout()
+        
+        // Aplica gradientes aos botões
+        applyGradientsToButtons()
+        
+        setupViewsButton()
+    }
+
+    // Configura o layout da view Chromo
+    private func layoutChromo() {
+        // Cria um gradiente com as 3 cores desejadas
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [
+            UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor,
+            UIColor(red: 93/255, green: 143/255, blue: 255/255, alpha: 1).cgColor,
+            UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor
+        ]
+        
+        // Define o plano de fundo da view com o gradiente
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        // Configura as cores de texto para o UISegmentedControl
+        configureSegmentedControlTextColors()
+        
+        // Configura a barra de ferramentas
+        configureToolbarLayout()
+        
+        // Aplica gradientes aos botões
+        applyGradientsToButtons([
+            rand1_btn, rand2_btn, seq1_btn, seq2_btn, bum1_btn, bum2_btn
+        ])
+    }
+
+    // Configura as cores de texto para o UISegmentedControl
+    private func configureSegmentedControlTextColors() {
+        let normalTextAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.darkGray
+        ]
+        
+        let selectedTextAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.white
+        ]
+        
+        targetChromo_sbt.setTitleTextAttributes(normalTextAttributes, for: .normal)
+        targetChromo_sbt.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+    }
+
+    // Configura a barra de ferramentas
+    private func configureToolbarLayout() {
+        view_tool_bar.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.backgroundColor = UIColor.clear
+        view.addSubview(view_tool_bar)
+        let guide = view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            view_tool_bar.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            view_tool_bar.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+            view_tool_bar.topAnchor.constraint(equalTo: guide.topAnchor),
+            view_tool_bar.heightAnchor.constraint(equalToConstant: 44.0),
+            view_tool_bar.widthAnchor.constraint(equalToConstant: 50.0)
+        ])
+        
+        // Configura o logo na view da barra de ferramentas
+        configureLogoLayout()
+        
+        // Configura o botão de ligar/desligar na barra de ferramentas
+        configurePowerButtonLayout()
+    }
+
+    // Configura o logo na view da barra de ferramentas
+    private func configureLogoLayout() {
+        logo_img.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.addSubview(logo_img)
+        
+        NSLayoutConstraint.activate([
+            logo_img.widthAnchor.constraint(equalToConstant: 50.0),
+            logo_img.heightAnchor.constraint(equalToConstant: 50.0),
+            logo_img.centerXAnchor.constraint(equalTo: view_tool_bar.centerXAnchor),
+            logo_img.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
+        ])
+    }
+
+    // Configura o botão de ligar/desligar na barra de ferramentas
+    private func configurePowerButtonLayout() {
+        power_btn.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.addSubview(power_btn)
+        
+        NSLayoutConstraint.activate([
+            power_btn.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
+            power_btn.trailingAnchor.constraint(equalTo: view_tool_bar.trailingAnchor, constant: -15),
+        ])
+    }
+
+    // Aplica gradientes aos botões
+    private func applyGradientsToButtons(_ buttons: [UIButton]? = nil) {
+        let buttonsToApplyGradients = buttons ?? [
+            rand1_btn, rand2_btn, seq1_btn, seq2_btn, bum1_btn, bum2_btn
+        ]
+        
+        for button in buttonsToApplyGradients {
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.frame = button.bounds
+            gradientLayer.colors = [
+                UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
+                UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
+            ]
+            gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+            
+            button.layer.addSublayer(gradientLayer)
+        }
+    }
+
+    
+    private func applyGradient(to button: UIButton) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = button.bounds
+        gradientLayer.colors = [
+            UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
+            UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        
+        button.layer.addSublayer(gradientLayer)
+    }
+    
+    private func colorTextSegment(color: UIColor, segment: UISegmentedControl){
+        // Crie um dicionário com as configurações de texto desejadas
+        let normalTextAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: color // Altere a cor do texto aqui
+        ]
+
+        let selectedTextAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.white // Altere a cor do texto selecionado aqui
+        ]
+        
+        // Aplique as configurações ao seu UISegmentedControl
+        segment.setTitleTextAttributes(normalTextAttributes, for: .normal)
+        segment.setTitleTextAttributes(selectedTextAttributes, for: .selected)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,8 +246,15 @@ class ChromoViewController: UIViewController {
             MqttService.it.delegates(conn: self, comm: self).ok()
             
             // Initialize selected controls
-            if(Settings.n_spotleds <= 0) { target = 1 }
-            if(Settings.n_stripleds <= 0) { target = 0 }
+            if(Settings.n_spotleds <= 0) {
+                targetChromo_sbt.setEnabled(false, forSegmentAt: 0)
+                target = 1
+            }
+            if(Settings.n_stripleds <= 0) {
+                target = 0
+                targetChromo_sbt.setEnabled(false, forSegmentAt: 1)
+                colorTextSegment(color: UIColor.lightGray, segment: targetChromo_sbt)
+            }
             if(target != targetChromo_sbt.selectedSegmentIndex) {
                 targetChromo_sbt.selectedSegmentIndex = target
             } else {
@@ -102,7 +275,7 @@ class ChromoViewController: UIViewController {
         }
     }
     
-    private func setupViews() {
+    private func setupViewsButton() {
         white_btn.addTarget(self, action: #selector(colorPressed), for: .touchUpInside)
         cyan_btn.addTarget(self, action: #selector(colorPressed), for: .touchUpInside)
         blue_btn.addTarget(self, action: #selector(colorPressed), for: .touchUpInside)
@@ -114,7 +287,7 @@ class ChromoViewController: UIViewController {
         green_btn.addTarget(self, action: #selector(colorPressed), for: .touchUpInside)
         
         rand1_btn.addTarget(self, action: #selector(effectPressed), for: .touchUpInside)
-        rand2_btn.addTarget(self, action: #selector(effectPressed), for: .touchUpInside)
+        //rand2_btn.addTarget(self, action: #selector(effectPressed), for: .touchUpInside)
         seq1_btn.addTarget(self, action: #selector(effectPressed), for: .touchUpInside)
         seq2_btn.addTarget(self, action: #selector(effectPressed), for: .touchUpInside)
         bum1_btn.addTarget(self, action: #selector(effectPressed), for: .touchUpInside)
@@ -268,15 +441,15 @@ class ChromoViewController: UIViewController {
         
         if(select) { setCtrlSelected(state: sel_effect, color: sel_color, select: false) }
         let textColor = select ?
-            UIColor.init(named: "iconAct_color") ?? UIColor.systemGreen :
-            UIColor.init(named: "title_color") ?? UIColor.systemGreen
+            UIColor.init(named: "iconAct_color") ?? UIColor.green :
+            UIColor.init(named: "title_color") ?? UIColor.lightGray
         
         switch state {
         case 0:
             return
         case 1:
             switch color {
-            case 0:
+            case 9:
                 white_btn.normalTextColor = textColor
             case 1:
                 cyan_btn.normalTextColor = textColor

@@ -23,7 +23,7 @@ class BLEDefs {
     
     // Information mqtt
     //static let MQTT_HOST = "tcp://54.235.59.247"
-    static let MQTT_HOST = "tcp://server.opportunitysys.com.br"
+    static let MQTT_HOST = "server.opportunitysys.com.br"
     static let MQTT_PORT: UInt16 = 1883
     static let MQTT_USER = "blue"
     static let MQTT_PSWD = "teste"

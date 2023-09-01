@@ -1,9 +1,7 @@
-# Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+use_frameworks!
 
 target 'BlueIOSNew' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+  platform :ios, '14.2'
 
   # Pods for Banheira
   pod 'DCKit'
@@ -13,8 +11,10 @@ target 'BlueIOSNew' do
   pod 'RealmSwift', '~> 10.18.0'
   pod 'Starscream', '~> 4.0.0'
   pod 'IQKeyboardManagerSwift'
-  pod 'Firebase/Analytics'
-  pod 'Firebase/Messaging'
-
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseMessaging'
+  pod 'FirebaseCore'
+  pod 'FirebaseAuth'
+  pod 'FirebaseFirestore'
 
 end
