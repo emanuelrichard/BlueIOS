@@ -143,11 +143,11 @@ extension MqttService: CocoaMQTTDelegate {
     }
     
     func mqttDidPing(_ mqtt: CocoaMQTT) {
-        print("Did Ping !")
+        //print("Did Ping !")
     }
     
     func mqttDidReceivePong(_ mqtt: CocoaMQTT) {
-        print("Received Pong !")
+        //print("Received Pong !")
     }
     
     func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {

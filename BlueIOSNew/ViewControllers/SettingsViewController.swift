@@ -55,6 +55,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var sex_btn: DCBorderedButton!
     @IBOutlet weak var sab_btn: DCBorderedButton!
     @IBOutlet weak var saveFilter_btn: DCBorderedButton!
+    @IBOutlet weak var clearFilter_btn: DCBorderedButton!
+    
+    @IBOutlet weak var atualizacao_btn: DCBorderedButton!
+    
+    
+    @IBOutlet weak var brilho_opcao: UIView!
     
     @IBOutlet weak var filterStatus_txt: UILabel!
     @IBOutlet weak var wifiStatus_txt: UILabel!
@@ -294,14 +300,14 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
         // Profiles
         profileStatus.text = "— \(Settings.memos)/3 salvos"
-        manageProfiles(slot: profile1_btn, slotname: profile1_edt, slotAct: pf1Action_btn, pos: 1, del: Settings.memo1.isEmpty, ini: true)
-        manageProfiles(slot: profile2_btn, slotname: profile2_edt, slotAct: pf2Action_btn, pos: 2, del: Settings.memo2.isEmpty, ini: true)
-        manageProfiles(slot: profile3_btn, slotname: profile3_edt, slotAct: pf3Action_btn, pos: 3, del: Settings.memo3.isEmpty, ini: true)
+        manageProfiles(slot: profile1_btn, slotname: profile1_edt, slotAct: pf1Action_btn, pos: 1, del: Settings.memo1 == 0, ini: true)
+        manageProfiles(slot: profile2_btn, slotname: profile2_edt, slotAct: pf2Action_btn, pos: 2, del: Settings.memo2 == 0, ini: true)
+        manageProfiles(slot: profile3_btn, slotname: profile3_edt, slotAct: pf3Action_btn, pos: 3, del: Settings.memo3 == 0, ini: true)
 //        manageProfiles(slot: profile4_btn, slotname: profile4_edt, slotAct: pf4Action_btn, pos: 4, del: Settings.memo4.isEmpty, ini: true)
 //        manageProfiles(slot: profile5_btn, slotname: profile5_edt, slotAct: pf5Action_btn, pos: 5, del: Settings.memo5.isEmpty, ini: true)
-        profile1_edt.text = Settings.memo1.isEmpty ? "Memoria 1" : Settings.memo1
-        profile2_edt.text = Settings.memo2.isEmpty ? "Memoria 2" : Settings.memo2
-        profile3_edt.text = Settings.memo3.isEmpty ? "Memoria 3" : Settings.memo3
+        profile1_edt.text = Settings.memo1_name.isEmpty ? "Memoria 1" : Settings.memo1_name
+        profile2_edt.text = Settings.memo2_name.isEmpty ? "Memoria 2" : Settings.memo2_name
+        profile3_edt.text = Settings.memo3_name.isEmpty ? "Memoria 3" : Settings.memo3_name
 //        profile4_edt.text = Settings.memo4.isEmpty ? "Memoria 4" : Settings.memo4
 //        profile5_edt.text = Settings.memo5.isEmpty ? "Memoria 5" : Settings.memo5
         
@@ -383,6 +389,42 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         // QRCode
         generateQRCode()
         
+        applyGradient(to: setWifi_btn)
+        applyGradient(to: tubnameSave_btn)
+        applyGradient(to: saveFilter_btn)
+        applyGradient(to: clearFilter_btn)
+        applyGradient(to: atualizacao_btn)
+        
+        produtos()
+    }
+    
+    private func produtos(){
+        switch Settings.produto {
+        case "BluePLUS", "BlueFLEX", "BlueCROMO":
+            // Caso "BluePLUS", "BlueFLEX" ou "BlueCROMO"
+            brilho_opcao.isHidden = true
+            sch_btn.setEnabled(false, forSegmentAt: 0)
+            sch_btn.selectedSegmentIndex = 1
+        case "ProTECLAS":
+            // Caso "ProTECLAS"
+            brilho_opcao.isHidden = false
+        default:
+            // Outros casos, se necessário
+            break
+        }
+    }
+    
+    private func applyGradient(to button: UIButton) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = button.bounds
+        gradientLayer.colors = [
+            UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
+            UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        
+        button.layer.addSublayer(gradientLayer)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -618,7 +660,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             if(!del && !ini) {
                 Utils.sendCommand(cmd: TubCommands.LOAD_MEMO, value: pos, word: nil)
                 Utils.toast(vc: self, message: "Memoria carregado com sucesso", type: 1)
-                print("Memoria carregado com sucesso")
+                //print("Memoria carregado com sucesso")
                 return
             }
         }
@@ -659,6 +701,30 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             setActiveDays(days: Settings.ft_days)
             fillWarmTime_txt.text = ""
         }
+    }
+    
+    @IBAction func powerAction(_ sender: Any) {
+        if(Settings.power <= 0) {
+            Utils.sendCommand(cmd: TubCommands.POWER, value: 1, word: nil)
+            Settings.power = 1
+        } else {
+            var p = 0;
+            if(Settings.has_drain > 0) {
+                switch(Settings.off_action) {
+                    case 0: p = 2
+                    case 1: p = 0
+                    case 2: p = -1
+                    default: break
+                }
+            }
+            if(p >= 0) {
+                Utils.askOffAction(vc: self)
+            } else {
+                Utils.askOffAction(vc: self)
+            }
+            Settings.power = 0
+        }
+        updatePower()
     }
     
     @objc func clearFillWarmTimes(longPressGesture: UILongPressGestureRecognizer) {
@@ -939,14 +1005,31 @@ extension SettingsViewController: MSCircularSliderDelegate {
     
     //OTA
     @IBAction func initOTA(_ sender: Any) {
-        let ip = Settings.ip
-        let url = URL(string: "http://\(ip)")
-        Timer.scheduledTimer(withTimeInterval: 1.2, repeats: false, block: { _ in
-            let vc = SFSafariViewController(url: url!)
-            self.present(vc, animated: true, completion: nil)
-        })
         
-        Utils.sendCommand(cmd: TubCommands.OTA_MODE, value: nil, word: nil)
+        let alert = UIAlertController(title: "Tem certeza que deseja atualizar sua banheira ?", message: "Escolha uma das opções:", preferredStyle: .actionSheet)
+
+        // Adiciona opções na lista de opções
+        alert.addAction(UIAlertAction(title: "Atualizar painel via OTA", style: .default, handler: { _ in
+            // Código para lidar com a seleção da opção 1
+            let ip = Settings.ip
+            let url = URL(string: "http://\(ip)")
+            Timer.scheduledTimer(withTimeInterval: 1.2, repeats: false, block: { _ in
+                let vc = SFSafariViewController(url: url!)
+                self.present(vc, animated: true, completion: nil)
+            })
+
+            Utils.sendCommand(cmd: TubCommands.OTA_MODE, value: nil, word: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Atualizar painel automatico", style: .default, handler: { _ in
+            // Código para lidar com a seleção da opção 2
+            Utils.sendCommand(cmd: TubCommands.OTA_MODE, value: nil, word: "auto")
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: nil))
+
+        // Exibe a lista de opções
+        present(alert, animated: true, completion: nil)
     }
     
     //Bloqueio de painel
@@ -998,10 +1081,10 @@ extension SettingsViewController: ConnectingProtocol, CommunicationProtocol {
         RequestManager.it.saveTubInfoRequest()
         
         Settings.resetAll()
-        print(self.navigationController?.viewControllers[0] as Any)
+        //print(self.navigationController?.viewControllers[1] as Any)
         
         //self.dismiss(animated: true)
-        if let pvc = self.navigationController?.viewControllers[0] {
+        if let pvc = self.navigationController?.viewControllers[1] {
             self.navigationController?.popToViewController(pvc, animated: true)
         }
     
@@ -1114,19 +1197,19 @@ extension SettingsViewController: ConnectingProtocol, CommunicationProtocol {
                 profileStatus.text = "— \(Settings.memos)/3 salvos"
             case BathTubFeedbacks.NAME_M1:
                 profileStatus.text = "— \(Settings.memos)/3 salvos"
-                profile1_edt.text = Settings.memo1
+                profile1_edt.text = Settings.memo1_name
             case BathTubFeedbacks.STATUS_M2:
                 profileStatus.text = "— \(Settings.memos)/3 salvos"
                 profileStatus.text = "— \(Settings.memos)/3 salvos"
             case BathTubFeedbacks.NAME_M2:
                 profileStatus.text = "— \(Settings.memos)/3 salvos"
-                profile2_edt.text = Settings.memo2
+                profile2_edt.text = Settings.memo2_name
             case BathTubFeedbacks.STATUS_M3:
                 profileStatus.text = "— \(Settings.memos)/3 salvos"
                 profileStatus.text = "— \(Settings.memos)/3 salvos"
             case BathTubFeedbacks.NAME_M3:
                 profileStatus.text = "— \(Settings.memos)/3 salvos"
-                profile3_edt.text = Settings.memo3
+                profile3_edt.text = Settings.memo3_name
             case BathTubFeedbacks.STATUS_M4:
                 profileStatus.text = "— \(Settings.memos)/3 salvos"
                 profileStatus.text = "— \(Settings.memos)/3 salvos"

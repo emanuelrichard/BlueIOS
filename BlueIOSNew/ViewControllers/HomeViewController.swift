@@ -90,8 +90,6 @@ class HomeViewController: UIViewController {
             UIColor(red: 93/255, green: 143/255, blue: 255/255, alpha: 1).cgColor,
             UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor
         ]
-//        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-//        gradientLayer.endPoint = CGPoint(x: 1, y: 0)
         
         view.layer.insertSublayer(gradientLayer, at: 0)
         
@@ -185,48 +183,7 @@ class HomeViewController: UIViewController {
             power_btn.trailingAnchor.constraint(equalTo: view_tool_bar.trailingAnchor, constant: -15),
         ])
 
-        
-
-        // Desativa as restrições automáticas para que possamos definir as nossas próprias
-//        conection_view.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(conection_view)
-//
-//        conection_view.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -100).isActive = true
-//
-//
-//        // Define as restrições
-//        let views = ["conection_view": conection_view, "guide": guide]
-//        let metrics = ["height": 30]
-//
-//        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[conection_view]|", options: [], metrics: nil, views: views as [String : Any])
-//        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[conection_view(height)]|", options: [], metrics: metrics, views: views as [String : Any])
-//
-//        NSLayoutConstraint.activate(horizontalConstraints + verticalConstraints)
-//
-//
-//
-//        //Icon Bluetooth/mqtt/wifi dentro da conection_view
-//        configureIcon(bleDisconn_ico, in: conection_view)
-//        configureIcon(mqttDisconn_ico, in: conection_view)
-//        configureIcon(wifiDisconn_ico, in: conection_view)
-//
-//        let centerXbleIco = bleDisconn_ico.centerXAnchor.constraint(equalTo: conection_view.centerXAnchor)
-//        let rightXmqttIco = wifiDisconn_ico.trailingAnchor.constraint(equalTo: bleDisconn_ico.leadingAnchor)
-//        let leftXwifiIco = mqttDisconn_ico.leadingAnchor.constraint(equalTo: bleDisconn_ico.trailingAnchor)
-//
-//        NSLayoutConstraint.activate([ centerXbleIco, rightXmqttIco, leftXwifiIco ])
-//
-//
-        //VIew icones nivel/aquecedor/spot
-        //info_view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(info_view)
-
-        //let topInfoView = info_view.topAnchor.constraint(equalTo: temp_viw.bottomAnchor, constant: 70)
-//        let rightInfoView = info_view.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: 30)
-//        let leftInfoView = info_view.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 30)
-
-        //NSLayoutConstraint.activate([ topInfoView, rightInfoView, leftInfoView ])
-        
         
         addImageViewsToStackView()
         
@@ -388,11 +345,26 @@ class HomeViewController: UIViewController {
             desr_sld.widthAnchor.constraint(equalToConstant: (widthInPixels)), // Defina a largura desejada
         ])
         
-//        print("bound da temperatura desejada: min: \(desr_sld.bounds.minX) max: \(bombas_view.bounds.maxX)")
-//        print("bound da temperatura atual: min: \(temp_sld.bounds.minX) max: \(utilitarios_view.bounds.maxX)")
-//        print("bound da temperatura atual: \(widthInPixels)")
+        // Cria um gradiente com as 3 cores desejadas
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [
+            UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor,
+            UIColor(red: 93/255, green: 143/255, blue: 255/255, alpha: 1).cgColor,
+            UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor
+        ]
+        
+        view.addSubview(viwLoading)
+        viwLoading.layer.insertSublayer(gradientLayer, at: 0)
+        Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(hideLoadingView), userInfo: nil, repeats: false)
 
-
+    }
+    
+    @objc func hideLoadingView() {
+        // Método chamado quando o temporizador é acionado
+        
+        // Oculta a view de carregamento
+        viwLoading.isHidden = true
     }
     
     func configureIcon(_ icon: UIButton, in view: UIView) {
@@ -401,70 +373,29 @@ class HomeViewController: UIViewController {
         view.addSubview(icon)
     }
     
+    func addImageViewToStackView(imageView: UIButton, stackView: UIStackView, size: CGSize) {
+        imageView.frame.size = size
+        stackView.addArrangedSubview(imageView)
+    }
+    
+    func addImageViewToStackViewInfo(imageView: UIImageView, stackView: UIStackView, size: CGSize) {
+        imageView.frame.size = size
+        stackView.addArrangedSubview(imageView)
+    }
+
     func addImageViewsToStackView() {
-        // Adicione os UIImageView à UIStackView
-        info_view.addArrangedSubview(lvl_ico)
-        info_view.addArrangedSubview(spot_ico)
-        info_view.addArrangedSubview(heater_ico)
+        // Adicione os UIImageViews à UIStackView com o tamanho especificado
+        addImageViewToStackViewInfo(imageView: lvl_ico, stackView: info_view, size: CGSize(width: 100, height: 100))
+        addImageViewToStackViewInfo(imageView: spot_ico, stackView: info_view, size: CGSize(width: 100, height: 100))
+        addImageViewToStackViewInfo(imageView: heater_ico, stackView: info_view, size: CGSize(width: 100, height: 100))
         
-//        bombas_view.addArrangedSubview(bomb1_act)
-//        bombas_view.addArrangedSubview(bomb2_act)
-//        bombas_view.addArrangedSubview(bomb3_act)
-//        bombas_view.addArrangedSubview(bomb4_act)
-        
-//        utilitarios_view.addArrangedSubview(keepWarm_act)
-//        utilitarios_view.addArrangedSubview(autoOn_act)
-//        utilitarios_view.addArrangedSubview(waterEntry_act)
-//        utilitarios_view.addArrangedSubview(bubbles_act)
-//        utilitarios_view.addArrangedSubview(cascata_bt)
-        
-        
-        
-        // Definir largura e altura dos ícones
         let iconSize = CGSize(width: 100, height: 100)
-
-        // Adicione os UIImageView à UIStackView
-        bomb1_act.frame.size = iconSize
-        bombas_view.addArrangedSubview(bomb1_act)
-
-        bomb2_act.frame.size = iconSize
-        bombas_view.addArrangedSubview(bomb2_act)
-
-        bomb3_act.frame.size = iconSize
-        bombas_view.addArrangedSubview(bomb3_act)
-
-        bomb4_act.frame.size = iconSize
-        bombas_view.addArrangedSubview(bomb4_act)
-
-        bomb5_act.frame.size = iconSize
-        bombas_view.addArrangedSubview(bomb5_act)
-
-        bomb6_act.frame.size = iconSize
-        bombas_view.addArrangedSubview(bomb6_act)
-
-        bomb7_act.frame.size = iconSize
-        bombas_view.addArrangedSubview(bomb7_act)
-
-        bomb8_act.frame.size = iconSize
-        bombas_view.addArrangedSubview(bomb8_act)
         
-        bomb9_act.frame.size = iconSize
-        bombas_view.addArrangedSubview(bomb9_act)
-
-        keepWarm_act.frame.size = iconSize
-        utilitarios_view.addArrangedSubview(keepWarm_act)
-
-        autoOn_act.frame.size = iconSize
-        utilitarios_view.addArrangedSubview(autoOn_act)
-
-        waterEntry_act.frame.size = iconSize
-        utilitarios_view.addArrangedSubview(waterEntry_act)
-
-        cascata_bt.frame.size = iconSize
-        utilitarios_view.addArrangedSubview(cascata_bt)
+        let bombIndicators: [UIButton] = [bomb1_act, bomb2_act, bomb3_act, bomb4_act, bomb5_act, bomb6_act, bomb7_act, bomb8_act, bomb9_act]
+        bombIndicators.forEach { addImageViewToStackView(imageView: $0, stackView: bombas_view, size: iconSize) }
         
-        bubbles_act.frame.size = iconSize
-        utilitarios_view.addArrangedSubview(bubbles_act)
+        let utilitarios: [UIButton] = [keepWarm_act, autoOn_act, waterEntry_act, cascata_bt, bubbles_act]
+        utilitarios.forEach { addImageViewToStackView(imageView: $0, stackView: utilitarios_view, size: iconSize) }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -527,32 +458,21 @@ class HomeViewController: UIViewController {
     }
     
     func setupViews() {
-        
         desr_sld.delegate = self
         
         // Initializing indicators icons
         lvl_ico.image = #imageLiteral(resourceName: "level_0")
-        lvl_ico.tintColor = UIColor.nivelColor
-        //heater_ico.tintColor = UIColor.white
-        spot_ico.tintColor = UIColor.white
+        lvl_ico.tintColor = .nivelColor
+        spot_ico.tintColor = .white
         
-        // Initializing bomb indicators
-        bomb1_act.tintColor = UIColor.lightGray
-        bomb2_act.tintColor = UIColor.lightGray
-        bomb3_act.tintColor = UIColor.lightGray
-        bomb4_act.tintColor = UIColor.lightGray
-        bomb5_act.tintColor = UIColor.lightGray
-        bomb6_act.tintColor = UIColor.lightGray
-        bomb7_act.tintColor = UIColor.lightGray
-        bomb8_act.tintColor = UIColor.lightGray
-        bomb9_act.tintColor = UIColor.lightGray
+        // Initializing bomb indicators and other controls
+        let bombIndicators: [UIButton?] = [
+            bomb1_act, bomb2_act, bomb3_act, bomb4_act, bomb5_act,
+            bomb6_act, bomb7_act, bomb8_act, bomb9_act,
+            waterEntry_act, autoOn_act, keepWarm_act, bubbles_act, cascata_bt
+        ]
         
-        waterEntry_act.tintColor = UIColor.lightGray
-        autoOn_act.tintColor = UIColor.lightGray
-        keepWarm_act.tintColor = UIColor.lightGray
-        bubbles_act.tintColor = UIColor.lightGray
-        cascata_bt.tintColor = UIColor.lightGray
-        
+        bombIndicators.forEach { $0?.tintColor = .lightGray }
     }
     
     // Actions
@@ -918,7 +838,7 @@ class HomeViewController: UIViewController {
 
     // Common function to update bomb buttons
     private func updateBombCommon(bombButton: UIButton, bombSetting: Int, bombQuantity: Bool) {
-        if(Settings.cooling > 0) {
+        if(Settings.cooling > 0 && bombButton == bomb1_act) {
             bombButton.tintColor = UIColor.yellow
             return
         }
@@ -965,7 +885,7 @@ class HomeViewController: UIViewController {
     }
     
     private func updateWaterEntry() {
-        if(Settings.power <= 0) {
+        if(Settings.power <= 0 || Settings.waterctrl == -1) {
             waterEntry_act.tintColor = UIColor(named: "Icon_OFF")
             waterEntry_act.isHidden = true
             return
@@ -995,7 +915,7 @@ class HomeViewController: UIViewController {
     }
     
     private func updateCascata() {
-        if(Settings.power <= 0) {
+        if(Settings.power <= 0 || Settings.cascata == -1) {
             cascata_bt.tintColor = UIColor(named: "Icon_OFF")
             cascata_bt.isHidden = true
             return
@@ -1006,7 +926,7 @@ class HomeViewController: UIViewController {
     }
     
     private func updateBubbles() {
-        if(Settings.power <= 0) {
+        if(Settings.power <= 0 || Settings.bubbles == -1) {
             bubbles_act.tintColor = UIColor.lightGray
             bubbles_act.isHidden = true
             return
@@ -1211,7 +1131,7 @@ extension HomeViewController: ConnectingProtocol, CommunicationProtocol {
         RequestManager.it.saveTubInfoRequest()
         
         Settings.resetAll()
-        if let pvc = self.navigationController?.viewControllers[0] {
+        if let pvc = self.navigationController?.viewControllers[1] {
             self.navigationController?.popToViewController(pvc, animated: true)
         }
     }

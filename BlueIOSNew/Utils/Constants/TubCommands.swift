@@ -19,7 +19,7 @@ class TubCommands {
     static let SPOT_OFF = "spots off"
     static let SPOT_STATIC_CROMO = "spots st "      //0 - 8 = branco - cyan - azul - rosa - magenta - vermelho - laranja - amarelo - verde
     //static let SPOT_STATIC_RGB = "spots rgb "     // + R + G + B unused
-    static let SPOT_STATIC_HSL = "spots hsl "       // + H + S + L
+    static let SPOT_STATIC_HSL = "spots st "       // + H + S + L
     static let SPOT_RND_1 = "spots rnd1"
     static let SPOT_RND_2 = "spots rnd2"
     static let SPOT_SEQ_1 = "spots seq1"
@@ -33,7 +33,7 @@ class TubCommands {
     static let STRIP_OFF = "fitas off"
     static let STRIP_STATIC_CROMO = "fitas st "      //0 - 8 = branco - cyan - azul - rosa - magenta - vermelho - laranja - amarelo - verde
     //static let STRIP_STATIC_RGB = "fitas rgb "     // + R + G + B unused
-    static let STRIP_STATIC_HSL = "fitas hsl "       // + H + S + L
+    static let STRIP_STATIC_HSL = "fitas st "       // + H + S + L
     static let STRIP_RND_1 = "fitas rnd1"
     static let STRIP_RND_2 = "fitas rnd2"
     static let STRIP_SEQ_1 = "fitas seq1"
@@ -60,7 +60,7 @@ class TubCommands {
     static let OTA_MODE = "setmodo ota"
     static let SET_DATE = "setdata "
     static let STATUS_MEMO = "statusmemo"
-    static let NAME_MEMO = "setmemonome "
+    static let NAME_MEMO = "smemon "
     static let SAVE_MEMO = "salvageral "
     static let LOAD_MEMO = "m "
     static let CLR_MEMO = "apagamemo "

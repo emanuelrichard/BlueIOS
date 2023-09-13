@@ -8,10 +8,13 @@
 import UIKit
 import DCKit
 import CoreLocation
+import SystemConfiguration.CaptiveNetwork
+import NetworkExtension
 
 class TubListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ATubLayoutDelegate {
     
-    var locationManager = CLLocationManager()
+    //var locationManager = CLLocationManager()
+    var locationManger: CLLocationManager?
     
     @IBOutlet weak var viwQRCode: DCBorderedView!
     @IBOutlet weak var viwQRScan: QRScannerView!
@@ -45,125 +48,15 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Cria um gradiente com as 3 cores desejadas
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = view.bounds
-        gradientLayer.colors = [UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor,
-                                UIColor(red: 93/255, green: 143/255, blue: 250/255, alpha: 1).cgColor,
-                                UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor]
+        //ajuste de layout
+        layoutTubList()
         
-        // Define o plano de fundo da view com o gradiente
-        view.layer.insertSublayer(gradientLayer, at: 0)
-        
-        view.bringSubviewToFront(viwQRCode)
-
-        
-        //ToolBar View
-        view_tool_bar.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(view_tool_bar)
-        let guide = view.safeAreaLayoutGuide
-
-        
-        NSLayoutConstraint.activate([
-            view_tool_bar.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
-            view_tool_bar.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
-            view_tool_bar.topAnchor.constraint(equalTo: guide.topAnchor),
-            view_tool_bar.heightAnchor.constraint(equalToConstant: 44.0),
-            view_tool_bar.widthAnchor.constraint(equalToConstant: 50.0)
-        ])
-        
-        //Logo dentro da view toolbar
-        logo_bar.translatesAutoresizingMaskIntoConstraints = false
-        view_tool_bar.addSubview(logo_bar)
-        
-        NSLayoutConstraint.activate([
-            logo_bar.widthAnchor.constraint(equalToConstant: 50.0),
-            logo_bar.heightAnchor.constraint(equalToConstant: 50.0),
-            logo_bar.centerXAnchor.constraint(equalTo: view_tool_bar.centerXAnchor),
-            logo_bar.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
-        ])
-        
-        //Bunton Config dentro da view toolbar
-        configBtn.translatesAutoresizingMaskIntoConstraints = false
-        view_tool_bar.addSubview(configBtn)
-        
-        
-        NSLayoutConstraint.activate([
-            configBtn.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
-            configBtn.trailingAnchor.constraint(equalTo: view_tool_bar.trailingAnchor),
-        ])
-        
-        configBtn.setTitle("", for: .normal)
-        
-        //Configuracao do titulo
-        txtAddedTitle.adjustsFontSizeToFitWidth = true
-        txtAddedTitle.minimumScaleFactor = 1 // ou qualquer outro valor que desejar
-        txtAddedTitle.textAlignment = .center
-        
-        txtAddedTitle.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(txtAddedTitle)
-        
-        NSLayoutConstraint.activate([
-            // Centralizar a label horizontalmente
-            txtAddedTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            // txt_email a parte superior da label com a parte inferior do texto email
-            txtAddedTitle.topAnchor.constraint(equalTo: view_tool_bar.bottomAnchor),
-        ])
-        
-        //View Botton Menu
-        view_botton_menu.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(view_botton_menu)
-        
-        NSLayoutConstraint.activate([
-            // Define a margem esquerda do objeto lstTubs para ser igual à margem esquerda da safe area
-            view_botton_menu.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            // Define a margem direita do objeto lstTubs para ser igual à margem direita da safe area
-            view_botton_menu.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            // Defina a margem inferior do lstTubs para ser igual à margem inferior da view
-            view_botton_menu.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            // Adicione a restrição de altura à view
-            view_botton_menu.heightAnchor.constraint(equalToConstant: 50.0),
-        ])
-        
-        //Button add dentro da view botton menu
-        // Desative a tradução automática das máscaras de layout
-        addBtn.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(addBtn)
-
-        let buttonSize: CGFloat = 50.0
-
-        NSLayoutConstraint.activate([
-            addBtn.centerXAnchor.constraint(equalTo: view_botton_menu.centerXAnchor),
-            addBtn.centerYAnchor.constraint(equalTo: view_botton_menu.centerYAnchor),
-            addBtn.widthAnchor.constraint(equalToConstant: buttonSize),
-            addBtn.heightAnchor.constraint(equalToConstant: buttonSize)
-        ])
-        
-        // List View
-        lstTubs.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(lstTubs)
-        
-        // Ativa as restrições de layout
-        NSLayoutConstraint.activate([
-            // Define a margem esquerda do objeto lstTubs para ser igual à margem esquerda da safe area
-            lstTubs.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            // Define a margem direita do objeto lstTubs para ser igual à margem direita da safe area
-            lstTubs.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            // Defina a margem superior do lstTubs para ser igual à margem superior da view
-            lstTubs.topAnchor.constraint(equalTo: txtAddedTitle.bottomAnchor, constant: 20),
-            // Defina a margem inferior do lstTubs para ser igual à margem inferior da view
-            lstTubs.bottomAnchor.constraint(equalTo: view_botton_menu.topAnchor)
-        ])
-        
-
-        
-        view.addSubview(viwQRCode)
         // Assume responses in QRCode scans
         viwQRScan.delegate = self
         
         // Init tubs list
         if let layout = lstTubs.collectionViewLayout as? ATubViewLayout {
-          layout.delegate = self
+            layout.delegate = self
         }
         lstTubs.delegate = self
         lstTubs.dataSource = self
@@ -176,15 +69,47 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         // Loading setup
         loading(show: !Settings.favorite.isEmpty && autocon)
         
-        //
-        if #available(iOS 14.0, *) {
-            let status = locationManager.authorizationStatus
-            if status != .authorizedWhenInUse {
-                locationManager.delegate = self
-                locationManager.requestWhenInUseAuthorization()
+        startLocationManager()
+        getAndPrintSSID()
+    }
+
+    func startLocationManager() {
+        // Verifica se o locationManger já foi criado
+        guard locationManger == nil else {
+            // Se já existir, solicita permissão para acessar a localização em uso
+            locationManger?.requestWhenInUseAuthorization()
+            
+            // Inicia a atualização da localização
+            locationManger?.startUpdatingLocation()
+            return
+        }
+        
+        // Se locationManger não existe, cria uma nova instância
+        locationManger = CLLocationManager()
+        
+        // Define o delegado (responsável por receber atualizações de localização) como o próprio objeto que possui esse método
+        locationManger?.delegate = self
+        
+        // Define a precisão desejada para a localização (neste caso, precisão de um quilômetro)
+        locationManger?.desiredAccuracy = kCLLocationAccuracyKilometer
+        
+        // Solicita permissão para acessar a localização em uso
+        locationManger?.requestWhenInUseAuthorization()
+        
+        // Inicia a atualização da localização
+        locationManger?.startUpdatingLocation()
+    }
+
+    func getAndPrintSSID() {
+        NEHotspotNetwork.fetchCurrent { network in
+            guard let ssid = network?.ssid else {
+                print("Não foi possível obter o SSID da rede PO")
+                return
             }
+            print("SSID: \(ssid)")
         }
     }
+
     
     override func viewDidAppear(_ animated: Bool) {
         // Cancel QoS
@@ -250,7 +175,7 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     // Lista de opcaos
     @IBAction func configBtnClick(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Opçoes", message: "Escolha uma opção", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Opções", message: "Escolha uma das opções:", preferredStyle: .actionSheet)
         
         // Adiciona opções na lista de opções
         alert.addAction(UIAlertAction(title: "Configuração de conta", style: .default, handler: { [self] _ in
@@ -265,7 +190,7 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
             viwQRScan.startScanning()
         }))
         
-        alert.addAction(UIAlertAction(title: "Configuracao Notificacao", style: .default, handler: { [self] _ in
+        alert.addAction(UIAlertAction(title: "Configuração de notificação", style: .default, handler: { [self] _ in
             // Código para lidar com a seleção da opção 3
             performSegue(withIdentifier: "AConfigNotif", sender: nil)
         }))
@@ -322,12 +247,15 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ATub", for: indexPath) as! ATubViewCell
         
         
-        //View principal da celula
+        // View principal da célula
         cell.layout_celula_view.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.addSubview(cell.layout_celula_view)
-        
+
+        // Configurar gradienteLayer com altura adicional na parte inferior
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = cell.layout_celula_view.bounds
+        let gradientFrame = CGRect(x: 0, y: 0, width: cell.layout_celula_view.bounds.width, height: cell.layout_celula_view.bounds.height + 40)
+        gradientLayer.frame = gradientFrame
+
         gradientLayer.colors = [
             UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
             UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
@@ -335,7 +263,8 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         cell.layout_celula_view.layer.addSublayer(gradientLayer)
-        cell.layout_celula_view.layer.addSublayer(gradientLayer)
+
+            
         
         cell.layout_celula_view.layer.cornerRadius = 30
         cell.layout_celula_view.layer.borderWidth = 4
@@ -454,7 +383,7 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         cell.del_btn.addTarget(self, action: #selector(deleteTub), for: .touchUpInside)
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(lstAddedLongPress))
         cell.del_btn.addGestureRecognizer(longPressGesture)
-        
+            
         // Configurando as tags dos ícones BLE, WiFi e MQTT da célula de acordo com o índice da linha da tabela
         cell.ble_ico.tag = (indexPath.row+1) * 17
         cell.wifi_ico.tag = (indexPath.row+1) * 19
@@ -482,29 +411,6 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         Settings.tub_pswd1 = sel_tub.tub_pswd1
         Settings.BTid = sel_tub.BTid
         
-        let ble_up = BLEService.it.ble_enabled &&
-        BLEService.it.discoveredPeripherals.contains(where: { $0.name == sel_tub.BTid })
-        if(force < 0 || force == 0) {
-            if(ble_up) {
-                BLEService.it.connect(BTid: sel_tub.BTid)
-                //viwLoading.backgroundColor = UIColor.red
-                autocon = false
-                return true
-            }
-        }
-        
-        let wifi_up = sel_tub.wifi_state == "2" &&
-            Utils.getWiFiNetworkName() != nil &&
-            Utils.getWiFiNetworkName() == sel_tub.ssid
-        if(force < 0 || force == 1) {
-            if(wifi_up) {
-                //viwLoading.backgroundColor = UIColor.green
-                WiFiService.it.setNetwork(BTid: sel_tub.BTid, ip: sel_tub.ip).connect()
-                autocon = false
-                return true
-            }
-        }
-        
         let mqtt_up = sel_tub.mqtt_state == "1" &&
             sel_tub.online &&
             Utils.isNetworkReachable()
@@ -516,6 +422,29 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
                     autocon = false
                     return true
                 }
+            }
+        }
+        
+        let ble_up = BLEService.it.ble_enabled &&
+        BLEService.it.discoveredPeripherals.contains(where: { $0.name == sel_tub.BTid })
+        if(force < 0 || force == 0) {
+            if(ble_up) {
+                BLEService.it.connect(BTid: sel_tub.BTid)
+                //viwLoading.backgroundColor = UIColor.red
+                autocon = false
+                return true
+            }
+        }
+
+        let wifi_up = sel_tub.wifi_state == "2" &&
+            Utils.getWiFiNetworkName() != nil &&
+            Utils.getWiFiNetworkName() == sel_tub.ssid
+        if(force < 0 || force == 1) {
+            if(wifi_up) {
+                //viwLoading.backgroundColor = UIColor.green
+                WiFiService.it.setNetwork(BTid: sel_tub.BTid, ip: sel_tub.ip).connect()
+                autocon = false
+                return true
             }
         }
         
@@ -635,6 +564,122 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         
         lstTubs.reloadData()
+    }
+    
+    private func layoutTubList(){
+        // Cria um gradiente com as 3 cores desejadas
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor,
+                                UIColor(red: 93/255, green: 143/255, blue: 250/255, alpha: 1).cgColor,
+                                UIColor(red: 39/255, green: 54/255, blue: 131/255, alpha: 1).cgColor]
+        
+        // Define o plano de fundo da view com o gradiente
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        view.bringSubviewToFront(viwQRCode)
+
+        
+        //ToolBar View
+        view_tool_bar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(view_tool_bar)
+        let guide = view.safeAreaLayoutGuide
+
+        
+        NSLayoutConstraint.activate([
+            view_tool_bar.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            view_tool_bar.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+            view_tool_bar.topAnchor.constraint(equalTo: guide.topAnchor),
+            view_tool_bar.heightAnchor.constraint(equalToConstant: 44.0),
+            view_tool_bar.widthAnchor.constraint(equalToConstant: 50.0)
+        ])
+        
+        //Logo dentro da view toolbar
+        logo_bar.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.addSubview(logo_bar)
+        
+        NSLayoutConstraint.activate([
+            logo_bar.widthAnchor.constraint(equalToConstant: 50.0),
+            logo_bar.heightAnchor.constraint(equalToConstant: 50.0),
+            logo_bar.centerXAnchor.constraint(equalTo: view_tool_bar.centerXAnchor),
+            logo_bar.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
+        ])
+        
+        //Bunton Config dentro da view toolbar
+        configBtn.translatesAutoresizingMaskIntoConstraints = false
+        view_tool_bar.addSubview(configBtn)
+        
+        
+        NSLayoutConstraint.activate([
+            configBtn.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
+            configBtn.trailingAnchor.constraint(equalTo: view_tool_bar.trailingAnchor),
+        ])
+        
+        configBtn.setTitle("", for: .normal)
+        
+        //Configuracao do titulo
+        txtAddedTitle.adjustsFontSizeToFitWidth = true
+        txtAddedTitle.minimumScaleFactor = 1 // ou qualquer outro valor que desejar
+        txtAddedTitle.textAlignment = .center
+        
+        txtAddedTitle.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(txtAddedTitle)
+        
+        NSLayoutConstraint.activate([
+            // Centralizar a label horizontalmente
+            txtAddedTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            // txt_email a parte superior da label com a parte inferior do texto email
+            txtAddedTitle.topAnchor.constraint(equalTo: view_tool_bar.bottomAnchor),
+        ])
+        
+        //View Botton Menu
+        view_botton_menu.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(view_botton_menu)
+        
+        NSLayoutConstraint.activate([
+            // Define a margem esquerda do objeto lstTubs para ser igual à margem esquerda da safe area
+            view_botton_menu.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            // Define a margem direita do objeto lstTubs para ser igual à margem direita da safe area
+            view_botton_menu.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            // Defina a margem inferior do lstTubs para ser igual à margem inferior da view
+            view_botton_menu.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            // Adicione a restrição de altura à view
+            view_botton_menu.heightAnchor.constraint(equalToConstant: 50.0),
+        ])
+        
+        //Button add dentro da view botton menu
+        // Desative a tradução automática das máscaras de layout
+        addBtn.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(addBtn)
+
+        let buttonSize: CGFloat = 50.0
+
+        NSLayoutConstraint.activate([
+            addBtn.centerXAnchor.constraint(equalTo: view_botton_menu.centerXAnchor),
+            addBtn.centerYAnchor.constraint(equalTo: view_botton_menu.centerYAnchor),
+            addBtn.widthAnchor.constraint(equalToConstant: buttonSize),
+            addBtn.heightAnchor.constraint(equalToConstant: buttonSize)
+        ])
+        
+        // List View
+        lstTubs.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(lstTubs)
+        
+        // Ativa as restrições de layout
+        NSLayoutConstraint.activate([
+            // Define a margem esquerda do objeto lstTubs para ser igual à margem esquerda da safe area
+            lstTubs.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            // Define a margem direita do objeto lstTubs para ser igual à margem direita da safe area
+            lstTubs.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            // Defina a margem superior do lstTubs para ser igual à margem superior da view
+            lstTubs.topAnchor.constraint(equalTo: txtAddedTitle.bottomAnchor, constant: 20),
+            // Defina a margem inferior do lstTubs para ser igual à margem inferior da view
+            lstTubs.bottomAnchor.constraint(equalTo: view_botton_menu.topAnchor)
+        ])
+        
+
+        
+        view.addSubview(viwQRCode)
     }
     
 }
@@ -796,7 +841,9 @@ extension TubListViewController: QRCodeProtocol {
 
 extension TubListViewController: CLLocationManagerDelegate {
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let status = manager.authorizationStatus
+        
         if status == .authorizedWhenInUse {
             print("SSID: \(Utils.getWiFiNetworkName() ?? "SSID error")")
         } else {

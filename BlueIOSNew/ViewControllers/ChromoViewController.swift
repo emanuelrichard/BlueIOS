@@ -348,7 +348,7 @@ class ChromoViewController: UIViewController {
                 }
             }
             if(p >= 0) {
-                Utils.sendCommand(cmd: TubCommands.POWER, value: p, word: nil)
+                Utils.askOffAction(vc: self)
             } else {
                 Utils.askOffAction(vc: self)
             }
@@ -442,7 +442,7 @@ class ChromoViewController: UIViewController {
         if(select) { setCtrlSelected(state: sel_effect, color: sel_color, select: false) }
         let textColor = select ?
             UIColor.init(named: "iconAct_color") ?? UIColor.green :
-            UIColor.init(named: "title_color") ?? UIColor.lightGray
+            UIColor.init(named: "title_color") ?? UIColor.darkGray
         
         switch state {
         case 0:

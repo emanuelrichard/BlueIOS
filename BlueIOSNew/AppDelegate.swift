@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Firebase notifications
         FirebaseApp.configure()
+        if #available(iOS 15, *) {
+            UINavigationBar.appearance().scrollEdgeAppearance = UINavigationBarAppearance()
+        }
         
         if #available(iOS 10.0, *) {
             // For iOS 10 Display notification (sent via APNs)

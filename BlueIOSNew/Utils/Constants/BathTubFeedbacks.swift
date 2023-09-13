@@ -66,16 +66,7 @@ class BathTubFeedbacks {
     static let MSG_CODE = "msg_num"
     static let LAST_ON = "alive"
     static let PSWD_ERR = "senha"
-    static let STATUS_M1 = "memoria"
-    static let NAME_M1 = "m1_nome"
-    static let STATUS_M2 = "memoria"
-    static let NAME_M2 = "m2_nome"
-    static let STATUS_M3 = "memoria"
-    static let NAME_M3 = "m3_nome"
-    static let STATUS_M4 = "m4_status"
-    static let NAME_M4 = "m4_nome"
-    static let STATUS_M5 = "m5_status"
-    static let NAME_M5 = "m5_nome"
+
     static let DRAIN_MODE = "modoacionamentoralo"
     static let DRAIN_TIME = "tempoparaesvaziar"
     
@@ -88,7 +79,7 @@ class BathTubFeedbacks {
     static let GET_SPOT_CMODE = "spotPadraoCor"
     static let GET_STRIP_CMODE = "fitaPadraoCor"
     
-    
+    static let PRODUTO = "prod"
     
     static let CASCATA = "cascata"
     static let BLOWER = "blower"
@@ -109,5 +100,16 @@ class BathTubFeedbacks {
     static let BOMB7_STATE = "saida07"
     static let BOMB8_STATE = "saida08"
     static let BOMB9_STATE = "saida09"
+    
+    static let STATUS_M1 = "m1_st"
+    static let NAME_M1 = "m1_nome"
+    static let STATUS_M2 = "m2_st"
+    static let NAME_M2 = "m2_nome"
+    static let STATUS_M3 = "m3_st"
+    static let NAME_M3 = "m3_nome"
+    static let STATUS_M4 = "m4_status"
+    static let NAME_M4 = "m4_nome"
+    static let STATUS_M5 = "m5_status"
+    static let NAME_M5 = "m5_nome"
     
 }

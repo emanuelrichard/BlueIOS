@@ -20,6 +20,6 @@ class ColorDefs {
     }
     
     // All colors Bright normalization
-    static let HSBBrightScale: [Int] = [ 0, 3, 5, 8, 11, 13, 17, 21, 27, 35, 50 ]
+    static let HSBBrightScale: [Int] = [ 0, 3, 5, 8, 11, 13, 17, 21, 27, 35, 50, 70, 90, 100 ]
     
 }

@@ -61,16 +61,20 @@ class Settings {
     
     static var memos: Int {
         get {
-            return (memo1.isEmpty ? 0:1) +
-                    (memo2.isEmpty ? 0:1) +
-                    (memo3.isEmpty ? 0:1) +
-                    (memo4.isEmpty ? 0:1) +
-                    (memo5.isEmpty ? 0:1)
+            return (memo1 == 0 ? 0:1) +
+                    (memo2 == 0 ? 0:1) +
+                    (memo3 == 0 ? 0:1)
         }
     }
-    static var memo1 = ""
-    static var memo2 = ""
-    static var memo3 = ""
+    static var memo1 = 0
+    static var memo2 = 0
+    static var memo3 = 0
+    static var memo1_name = ""
+    static var memo2_name = ""
+    static var memo3_name = ""
+    
+    static var produto = ""
+    
     static var memo4 = ""
     static var memo5 = ""
     
@@ -273,11 +277,16 @@ extension Settings {
         fl_time = 0
         wm_time = 0
         
-        memo1 = ""
-        memo2 = ""
-        memo3 = ""
+        memo1 = 0
+        memo2 = 0
+        memo3 = 0
+        memo1_name = ""
+        memo2_name = ""
+        memo3_name = ""
         memo4 = ""
         memo5 = ""
+        
+        produto = ""
         
         curr_temp = 15       // 15~40
         desr_temp = 15       // 15~40
@@ -490,6 +499,13 @@ extension Settings {
             Settings.modo_eco = value
         case BathTubFeedbacks.LAST_ON:
             Settings.online = true
+            
+        case BathTubFeedbacks.STATUS_M1:
+            memo1 = value
+        case BathTubFeedbacks.STATUS_M2:
+            memo2 = value
+        case BathTubFeedbacks.STATUS_M3:
+            memo3 = value
         default:
             return
         }
@@ -534,24 +550,6 @@ extension Settings {
             CommandQoS.removePendingCommand(code: text)
         case BathTubFeedbacks.PSWD_ERR:
             if(text == "ERRO") { pswd_err = true }
-        case BathTubFeedbacks.STATUS_M1:
-            if(text != "1 CRIADA" && text != "1 SALVA") {
-                memo1 = ""
-            }
-        case BathTubFeedbacks.NAME_M1:
-            memo1 = text
-        case BathTubFeedbacks.STATUS_M2:
-            if(text != "2 CRIADA" && text != "2 SALVA") {
-                memo2 = ""
-            }
-        case BathTubFeedbacks.NAME_M2:
-            memo2 = text
-        case BathTubFeedbacks.STATUS_M3:
-            if(text != "3 CRIADA" && text != "3 SALVA") {
-                memo3 = ""
-            }
-        case BathTubFeedbacks.NAME_M3:
-            memo3 = text
         case BathTubFeedbacks.STATUS_M4:
             if(text != "GRAVADA" && text != "SALVA") {
                 memo4 = ""
@@ -566,6 +564,16 @@ extension Settings {
             memo5 = text
         case BathTubFeedbacks.DRAIN_MODE:
             Settings.drain_mode = text == "toque_longo" ? 1 : 0
+            
+        case BathTubFeedbacks.NAME_M1:
+            Settings.memo1_name = text
+        case BathTubFeedbacks.NAME_M2:
+            Settings.memo2_name = text
+        case BathTubFeedbacks.NAME_M3:
+            Settings.memo3_name = text
+            
+        case BathTubFeedbacks.PRODUTO:
+            Settings.produto = text
         default:
             return
         }

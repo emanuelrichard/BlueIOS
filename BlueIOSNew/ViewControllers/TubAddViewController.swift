@@ -244,15 +244,15 @@ extension TubAddViewController {
         
         next_btn.isHidden = false
         
-        let sel_BTid = BLEService.it.nearestBtid!.suffix(4)
+        let sel_BTid = BLEService.it.nearestBtid!
         print(sel_BTid)
-        step3VC?.connected_txt.text = "Conectado à BLE \(sel_BTid)"
+        step3VC?.connected_txt.text = "Conectado à benheira \(sel_BTid)"
     }
     
     func checkStep3() {
         
         if(tmp_pswd.isEmpty) {
-            Utils.toast(vc: self, message: "Pressione as teclas no painel para confirma a conexao", type: 2)
+            Utils.toast(vc: self, message: "Aperte as teclas no painel para confirmar a conexão", type: 2)
             return
         }
         

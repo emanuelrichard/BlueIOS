@@ -64,6 +64,8 @@
 		2859099929E4A24E0015FF80 /* BLEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859099829E4A24E0015FF80 /* BLEService.swift */; };
 		2859099B29E4A2630015FF80 /* WifiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859099A29E4A2630015FF80 /* WifiService.swift */; };
 		2859099D29E4A30E0015FF80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2859099C29E4A30E0015FF80 /* LaunchScreen.storyboard */; };
+		2898F5352AA776D000160AD1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898F5342AA776D000160AD1 /* SystemConfiguration.framework */; };
+		2898F5372AA7770E00160AD1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898F5362AA7770D00160AD1 /* CoreFoundation.framework */; };
 		28D96FFE29E7298500122FCD /* AccountOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D96FFD29E7298500122FCD /* AccountOptionsViewController.swift */; };
 		D6E064A9A1FEF5CC49786F28 /* Pods_BlueIOSNew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E0B010CC2537A11BD1E0EF /* Pods_BlueIOSNew.framework */; };
 /* End PBXBuildFile section */
@@ -148,6 +150,9 @@
 		2859099829E4A24E0015FF80 /* BLEService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEService.swift; sourceTree = "<group>"; };
 		2859099A29E4A2630015FF80 /* WifiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WifiService.swift; sourceTree = "<group>"; };
 		2859099C29E4A30E0015FF80 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2898F5332AA76B9900160AD1 /* BlueIOSNew.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlueIOSNew.entitlements; sourceTree = "<group>"; };
+		2898F5342AA776D000160AD1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2898F5362AA7770D00160AD1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		28D96FFD29E7298500122FCD /* AccountOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOptionsViewController.swift; sourceTree = "<group>"; };
 		497DE0C63D6F98BED91AB5A2 /* Pods-BlueIOSNew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueIOSNew.release.xcconfig"; path = "Target Support Files/Pods-BlueIOSNew/Pods-BlueIOSNew.release.xcconfig"; sourceTree = "<group>"; };
 		C04285BCB8BE5012886D1B1F /* Pods-BlueIOSNew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueIOSNew.debug.xcconfig"; path = "Target Support Files/Pods-BlueIOSNew/Pods-BlueIOSNew.debug.xcconfig"; sourceTree = "<group>"; };
@@ -158,6 +163,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2898F5372AA7770E00160AD1 /* CoreFoundation.framework in Frameworks */,
+				2898F5352AA776D000160AD1 /* SystemConfiguration.framework in Frameworks */,
 				D6E064A9A1FEF5CC49786F28 /* Pods_BlueIOSNew.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,6 +211,7 @@
 		2842E83829C9F19B00A7B20D /* BlueIOSNew */ = {
 			isa = PBXGroup;
 			children = (
+				2898F5332AA76B9900160AD1 /* BlueIOSNew.entitlements */,
 				2859099529E4A21F0015FF80 /* Services */,
 				2859099229E4A1EA0015FF80 /* Database */,
 				2859098929E4A1930015FF80 /* Model */,
@@ -381,6 +389,8 @@
 		96EEA9F6F774313CA583C471 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2898F5362AA7770D00160AD1 /* CoreFoundation.framework */,
+				2898F5342AA776D000160AD1 /* SystemConfiguration.framework */,
 				03E0B010CC2537A11BD1E0EF /* Pods_BlueIOSNew.framework */,
 			);
 			name = Frameworks;
@@ -784,16 +794,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BlueIOSNew/BlueIOSNew.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3S3AKSLYQT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlueIOSNew/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "O aplicativo utilza o Bluetooth para comunicar com sua banheira sem fio";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Usar camera para adicionar a banheira pelo QRCODE";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este aplicativo precisa acessar a rede local para obter informações do SSID da rede Wi-Fi atual";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Este aplicativo precisa acessar a rede local para obter informações do SSID ";
+				INFOPLIST_KEY_NSLocationUsageDescription = "O aplicativo utiliza localizacao para comunicar via WI-Fi";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "O aplicativo deseja acessar sua localização para melhor integração Wi-Fi e correto funcionamento de funções personalizadas";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -817,16 +835,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BlueIOSNew/BlueIOSNew.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3S3AKSLYQT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlueIOSNew/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "O aplicativo utilza o Bluetooth para comunicar com sua banheira sem fio";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Usar camera para adicionar a banheira pelo QRCODE";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Este aplicativo precisa acessar a rede local para obter informações do SSID da rede Wi-Fi atual";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Este aplicativo precisa acessar a rede local para obter informações do SSID ";
+				INFOPLIST_KEY_NSLocationUsageDescription = "O aplicativo utiliza localizacao para comunicar via WI-Fi";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "O aplicativo deseja acessar sua localização para melhor integração Wi-Fi e correto funcionamento de funções personalizadas";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

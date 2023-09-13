@@ -14,9 +14,9 @@
             filePath = "BlueIOSNew/ViewControllers/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "861"
-            endingLineNumber = "861"
-            landmarkName = "updateHeater()"
+            startingLineNumber = "781"
+            endingLineNumber = "781"
+            landmarkName = "updateTubLevels()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -30,8 +30,8 @@
             filePath = "BlueIOSNew/ViewControllers/SettingsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "505"
-            endingLineNumber = "505"
+            startingLineNumber = "547"
+            endingLineNumber = "547"
             landmarkName = "setupSelected(inner:show:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -50,6 +50,134 @@
             endingLineNumber = "274"
             landmarkName = "TubAddViewController"
             landmarkType = "21">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D47AE96B-B130-4C80-8BED-B72725165978"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlueIOSNew/ViewControllers/TubListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "712"
+            endingLineNumber = "712"
+            landmarkName = "didConnectTub()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C7A76C05-13B1-4BE8-805E-C704972BF52F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlueIOSNew/ViewControllers/TubListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "515"
+            endingLineNumber = "515"
+            landmarkName = "forceConnect(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "74C40B91-0203-41E3-8B6C-90917ED5AD1B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlueIOSNew/ViewControllers/TubListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "409"
+            endingLineNumber = "409"
+            landmarkName = "connect(sel_tub:force:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "74C40B91-0203-41E3-8B6C-90917ED5AD1B - 7fb06aa4f9c34f90"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 1 of BlueIOSNew.TubListViewController.connect(sel_tub: BlueIOSNew.Tub, force: Swift.Int) -&gt; Swift.Bool"
+                  moduleName = "BlueIOSNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/opportunitysys/Documents/App/BlueIOSNew/BlueIOSNew/ViewControllers/TubListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "405"
+                  endingLineNumber = "405"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "74C40B91-0203-41E3-8B6C-90917ED5AD1B - 29407c5e376fb02f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BlueIOSNew.TubListViewController.connect(sel_tub: BlueIOSNew.Tub, force: Swift.Int) -&gt; Swift.Bool"
+                  moduleName = "BlueIOSNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/opportunitysys/Documents/App/BlueIOSNew/BlueIOSNew/ViewControllers/TubListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "406"
+                  endingLineNumber = "406"
+                  offsetFromSymbolStart = "144">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9867572C-62FC-4041-BC9A-036E8EC58EBE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BlueIOSNew/ViewControllers/TubListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "551"
+            endingLineNumber = "551"
+            landmarkName = "refreshTubList(reloadTubs:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9867572C-62FC-4041-BC9A-036E8EC58EBE - 5743ff74e0b1b059"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 0 of BlueIOSNew.TubListViewController.refreshTubList(reloadTubs: Swift.Bool) -&gt; ()"
+                  moduleName = "BlueIOSNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/opportunitysys/Documents/App/BlueIOSNew/BlueIOSNew/ViewControllers/TubListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "547"
+                  endingLineNumber = "547"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "9867572C-62FC-4041-BC9A-036E8EC58EBE - b7a5aa0bb9132956"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BlueIOSNew.TubListViewController.refreshTubList(reloadTubs: Swift.Bool) -&gt; ()"
+                  moduleName = "BlueIOSNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/opportunitysys/Documents/App/BlueIOSNew/BlueIOSNew/ViewControllers/TubListViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "548"
+                  endingLineNumber = "548"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

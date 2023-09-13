@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icons8-paleta-de-cores-24(@1×).png",
+      "filename" : "icons8-paleta-de-cores-32.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icons8-paleta-de-cores-48(@2×).png",
+      "filename" : "icons8-paleta-de-cores-64.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icons8-paleta-de-cores-72(@3×).png",
+      "filename" : "icons8-paleta-de-cores-64 1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,5 +19,9 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true,
+    "template-rendering-intent" : "template"
   }
 }

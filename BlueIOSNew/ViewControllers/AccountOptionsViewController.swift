@@ -28,37 +28,39 @@ class AccountOptionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        applyGradient(to: btnSave)
+        applyGradient(to: btnLogoff)
         
         // Configura o campo do nomo
-        edtName.layer.cornerRadius = 10.0
+        edtName.layer.cornerRadius = 15.0
         edtName.layer.masksToBounds = true
         edtName.backgroundColor = UIColor.clear
-        edtName.layer.borderColor = UIColor.white.cgColor
-        edtName.layer.borderWidth = 2
+        edtName.layer.borderColor = UIColor.lightGray.cgColor
+        edtName.layer.borderWidth = 1
         edtName.textColor = UIColor.white
         
         // Configura o campo do pswd antigo
-        edtCurrPswd.layer.cornerRadius = 10.0
+        edtCurrPswd.layer.cornerRadius = 15.0
         edtCurrPswd.layer.masksToBounds = true
         edtCurrPswd.backgroundColor = UIColor.clear
-        edtCurrPswd.layer.borderColor = UIColor.white.cgColor
-        edtCurrPswd.layer.borderWidth = 2
+        edtCurrPswd.layer.borderColor = UIColor.lightGray.cgColor
+        edtCurrPswd.layer.borderWidth = 1
         edtCurrPswd.textColor = UIColor.white
         
         // Configura o campo do psw1
-        edtNewPswd1.layer.cornerRadius = 10.0
+        edtNewPswd1.layer.cornerRadius = 15.0
         edtNewPswd1.layer.masksToBounds = true
         edtNewPswd1.backgroundColor = UIColor.clear
-        edtNewPswd1.layer.borderColor = UIColor.white.cgColor
-        edtNewPswd1.layer.borderWidth = 2
+        edtNewPswd1.layer.borderColor = UIColor.lightGray.cgColor
+        edtNewPswd1.layer.borderWidth = 1
         edtNewPswd1.textColor = UIColor.white
         
         // Configura o campo do pswd2
-        edtNewPswd2.layer.cornerRadius = 10.0
+        edtNewPswd2.layer.cornerRadius = 15.0
         edtNewPswd2.layer.masksToBounds = true
         edtNewPswd2.backgroundColor = UIColor.clear
-        edtNewPswd2.layer.borderColor = UIColor.white.cgColor
-        edtNewPswd2.layer.borderWidth = 2
+        edtNewPswd2.layer.borderColor = UIColor.lightGray.cgColor
+        edtNewPswd2.layer.borderWidth = 1
         edtNewPswd2.textColor = UIColor.white
         
         // Cria um gradiente com as 3 cores desejadas
@@ -78,6 +80,19 @@ class AccountOptionsViewController: UIViewController {
         //deleteLongPress = UILongPressGestureRecognizer(target: self, action: #selector(deleteAccount))
         //deleteLongPress.minimumPressDuration = 0.8
         //btnDeleteAcc.addGestureRecognizer(deleteLongPress)
+    }
+    
+    private func applyGradient(to button: UIButton) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = button.bounds
+        gradientLayer.colors = [
+            UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
+            UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        
+        button.layer.addSublayer(gradientLayer)
     }
     
     @objc private func logoff() {
@@ -184,11 +199,8 @@ extension AccountOptionsViewController {
     }
     
     private func backToLogin() {
-        if let navigationController = self.navigationController {
-            let viewControllers = navigationController.viewControllers
-            let loginViewController = viewControllers[0] // A primeira view controller na pilha de navegação
-            navigationController.popToViewController(loginViewController, animated: true)
-        }
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
     }
     
     private func btnCtrl(enabled: Bool) {

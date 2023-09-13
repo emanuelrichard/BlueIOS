@@ -7,6 +7,8 @@
 
 import UIKit
 import SystemConfiguration.CaptiveNetwork
+import Network
+import NetworkExtension
 
 class Utils {
     
@@ -122,18 +124,41 @@ class Utils {
     }
     
     static func getWiFiNetworkName() -> String? {
-        if let ifs = CFBridgingRetain(CNCopySupportedInterfaces()) as? [String],
-           let info = CFBridgingRetain(CNCopyCurrentNetworkInfo((ifs.first as CFString?)!)) as? [AnyHashable: Any] {
-            
-            let ssid = info["SSID"] as? String
-            print("SSID: \(ssid ?? "Nenhum")") // Adicione esta linha para imprimir o SSID
-            
-            return ssid
+        let monitor = NWPathMonitor()
+        let queue = DispatchQueue(label: "NetworkMonitor")
+        
+        monitor.start(queue: queue)
+        
+        let wifiInterface = monitor.currentPath.availableInterfaces.first { interface in
+            interface.type == .wifi
         }
+        
+        if let wifiInterface = wifiInterface {
+            let wifiSSID = getWiFiSSID(from: wifiInterface)
+            print("SSID: \(wifiSSID ?? "Nenhum")") // Adicione esta linha para imprimir o SSID
+            
+            return wifiSSID
+        }
+        
         
         print("Nenhuma rede Wi-Fi conectada") // Adicione esta linha para indicar que nenhuma rede Wi-Fi está conectada
         return nil
     }
+
+    static func getWiFiSSID(from interface: NWInterface) -> String? {
+        let interfaceName = interface.name
+        let interfaces = CNCopySupportedInterfaces() as? [String: Any]
+        
+        if let interfaceInfo = interfaces?[interfaceName] as? [String: Any],
+           let ssidData = interfaceInfo[kCNNetworkInfoKeySSID as String] as? Data,
+           let ssid = String(data: ssidData, encoding: .utf8) {
+            return ssid
+        }
+    
+        
+        return nil
+    }
+
     
     static func isNetworkReachable() -> Bool {
         return Reachability.isConnectedToNetwork()
