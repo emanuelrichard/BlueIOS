@@ -2681,7 +2681,7 @@ VUYXKg
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="level_0" translatesAutoresizingMaskIntoConstraints="NO" id="qpX-PO-58V" userLabel="level_ico">
-                                        <rect key="frame" x="0.0" y="0.0" width="38.666666666666664" height="47"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="100.66666666666667" height="47"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="1Vt-pN-wGM"/>
@@ -2689,7 +2689,7 @@ VUYXKg
                                         </constraints>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spot_led" translatesAutoresizingMaskIntoConstraints="NO" id="3mn-iR-xQK">
-                                        <rect key="frame" x="84.666666666666671" y="0.0" width="38.666666666666671" height="47"/>
+                                        <rect key="frame" x="146.66666666666666" y="0.0" width="100.66666666666666" height="47"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="X1O-ny-Hsw"/>
@@ -2697,7 +2697,7 @@ VUYXKg
                                         </constraints>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_aquecedor" translatesAutoresizingMaskIntoConstraints="NO" id="Qjr-x9-zcB" userLabel="heater_ico">
-                                        <rect key="frame" x="169.33333333333334" y="0.0" width="38.666666666666657" height="47"/>
+                                        <rect key="frame" x="293.33333333333331" y="0.0" width="100.66666666666669" height="47"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="QtY-O6-VOl"/>
@@ -2729,7 +2729,7 @@ VUYXKg
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" id="kxd-Xi-lzK">
-                                        <rect key="frame" x="158" y="3" width="79" height="24"/>
+                                        <rect key="frame" x="157" y="3" width="79" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <button hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cih-Tj-8if">
@@ -2751,7 +2751,7 @@ VUYXKg
                                                 </connections>
                                             </button>
                                             <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fIZ-ub-9BJ">
-                                                <rect key="frame" x="56.666666666666664" y="2.6666666666666643" width="22.333333333333336" height="19"/>
+                                                <rect key="frame" x="93.333333333333329" y="2.6666666666666643" width="22.333333333333329" height="19"/>
                                                 <color key="tintColor" name="background_color"/>
                                                 <state key="normal">
                                                     <imageReference key="backgroundImage" image="cloud.fill" catalog="system" symbolScale="default"/>
@@ -8966,12 +8966,12 @@ VUYXKg
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P5R-wV-YUG">
-                                                <rect key="frame" x="10" y="0.0" width="338" height="28"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <rect key="frame" x="14" y="0.0" width="338" height="28"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cromoterapia" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B02-Ye-XF3">
-                                                        <rect key="frame" x="113" y="7" width="101" height="18"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        <rect key="frame" x="118" y="7" width="101" height="18"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -9196,7 +9196,7 @@ VUYXKg
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="iIu-XQ-gCQ" customClass="DCBorderedButton" customModule="DCKit">
-                                                        <rect key="frame" x="190" y="0.0" width="50" height="53"/>
+                                                        <rect key="frame" x="190" y="3" width="50" height="53"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="UfS-hE-H9l"/>
@@ -9223,7 +9223,7 @@ VUYXKg
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3G0-o7-PVw" customClass="DCBorderedButton" customModule="DCKit">
-                                                        <rect key="frame" x="83" y="0.0" width="49" height="53"/>
+                                                        <rect key="frame" x="83" y="3" width="49" height="53"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="ifs-d3-E5k"/>
@@ -9272,43 +9272,64 @@ VUYXKg
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" id="rs8-Ya-dJr">
-                                                <rect key="frame" x="14" y="30" width="337" height="100"/>
+                                                <rect key="frame" x="14" y="30" width="339" height="100"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                 <subviews>
+                                                    <button opaque="NO" tag="25" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="YNj-5G-JvX" customClass="DCBorderedButton" customModule="DCKit">
+                                                        <rect key="frame" x="0.0" y="0.0" width="339" height="23"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        <state key="normal" title="Chromo">
+                                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="12"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="normalBorderColor">
+                                                                <color key="value" name="cardshadow_color"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="0.0"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
+                                                                <color key="value" red="0.1529411765" green="0.21176470589999999" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" id="J4J-ha-VTA">
-                                                        <rect key="frame" x="0.0" y="0.0" width="337" height="31.333333333333332"/>
+                                                        <rect key="frame" x="0.0" y="26" width="339" height="23"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                         <subviews>
-                                                            <button opaque="NO" tag="26" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="G8i-QN-Ben" customClass="DCBorderedButton" customModule="DCKit">
-                                                                <rect key="frame" x="0.0" y="0.0" width="166" height="31"/>
+                                                            <button opaque="NO" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="28d-9B-ixF" customClass="DCBorderedButton" customModule="DCKit">
+                                                                <rect key="frame" x="0.0" y="0.0" width="167" height="23"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                <state key="normal" title="Bumerang 1">
+                                                                <state key="normal" title="Automatico">
                                                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="15"/>
-                                                                    </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="normalBorderColor">
                                                                         <color key="value" name="cardshadow_color"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                                         <real key="value" value="0.0"/>
                                                                     </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="12"/>
+                                                                    </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
                                                                         <color key="value" red="0.1529411765" green="0.21176470589999999" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </button>
-                                                            <button opaque="NO" tag="27" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="j5f-DW-adO" customClass="DCBorderedButton" customModule="DCKit">
-                                                                <rect key="frame" x="171" y="0.0" width="166" height="31"/>
+                                                            <button opaque="NO" tag="26" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="G8i-QN-Ben" customClass="DCBorderedButton" customModule="DCKit">
+                                                                <rect key="frame" x="172" y="0.0" width="167" height="23"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                <state key="normal" title="Bumerang 2">
+                                                                <state key="normal" title="Balanço">
                                                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="15"/>
+                                                                        <real key="value" value="12"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="normalBorderColor">
                                                                         <color key="value" name="cardshadow_color"/>
@@ -9324,34 +9345,33 @@ VUYXKg
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" id="7gN-ME-DRl">
-                                                        <rect key="frame" x="0.0" y="34.333333333333336" width="337" height="31.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="52" width="339" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                         <subviews>
-                                                            <button opaque="NO" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="28d-9B-ixF" customClass="DCBorderedButton" customModule="DCKit">
-                                                                <rect key="frame" x="0.0" y="0.0" width="166" height="32"/>
+                                                            <button opaque="NO" tag="27" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="j5f-DW-adO" customClass="DCBorderedButton" customModule="DCKit">
+                                                                <rect key="frame" x="0.0" y="-1" width="167" height="23"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                <state key="normal" title="Randômico 1">
+                                                                <state key="normal" title="Oscilante">
                                                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="12"/>
+                                                                    </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="normalBorderColor">
                                                                         <color key="value" name="cardshadow_color"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                                         <real key="value" value="0.0"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="15"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
                                                                         <color key="value" red="0.1529411765" green="0.21176470589999999" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </button>
-                                                            <button opaque="NO" tag="23" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="0Rp-hR-4mw" customClass="DCBorderedButton" customModule="DCKit">
-                                                                <rect key="frame" x="171" y="0.0" width="166" height="32"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                <state key="normal" title="Randômico 2">
+                                                            <button opaque="NO" tag="29" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t6t-l1-jsy" customClass="DCBorderedButton" customModule="DCKit">
+                                                                <rect key="frame" x="172" y="0.0" width="167" height="22.666666666666668"/>
+                                                                <state key="normal" title="Strobo">
                                                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
@@ -9362,7 +9382,7 @@ VUYXKg
                                                                         <real key="value" value="0.0"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="15"/>
+                                                                        <real key="value" value="12"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
                                                                         <color key="value" red="0.1529411765" green="0.21176470589999999" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -9372,39 +9392,38 @@ VUYXKg
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" id="CeO-kR-i6m">
-                                                        <rect key="frame" x="0.0" y="68.666666666666671" width="337" height="31.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="77" width="339" height="23"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                         <subviews>
-                                                            <button opaque="NO" tag="24" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="MUP-kg-q7W" customClass="DCBorderedButton" customModule="DCKit">
-                                                                <rect key="frame" x="0.0" y="0.0" width="166" height="31"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                <state key="normal" title="Sequencial 1">
+                                                            <button opaque="NO" tag="28" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aH1-tX-tDo" customClass="DCBorderedButton" customModule="DCKit">
+                                                                <rect key="frame" x="0.0" y="0.0" width="167" height="22.666666666666668"/>
+                                                                <state key="normal" title="Caleidoscópio">
                                                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="15"/>
-                                                                    </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="normalBorderColor">
                                                                         <color key="value" name="cardshadow_color"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                                         <real key="value" value="0.0"/>
                                                                     </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="12"/>
+                                                                    </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
                                                                         <color key="value" red="0.1529411765" green="0.21176470589999999" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </button>
-                                                            <button opaque="NO" tag="25" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="YNj-5G-JvX" customClass="DCBorderedButton" customModule="DCKit">
-                                                                <rect key="frame" x="171" y="0.0" width="166" height="31"/>
+                                                            <button opaque="NO" tag="24" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="MUP-kg-q7W" customClass="DCBorderedButton" customModule="DCKit">
+                                                                <rect key="frame" x="172" y="0.0" width="167" height="23"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                <state key="normal" title="Sequencial 2">
+                                                                <state key="normal" title="Sequencial">
                                                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="15"/>
+                                                                        <real key="value" value="12"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="normalBorderColor">
                                                                         <color key="value" name="cardshadow_color"/>
@@ -9425,10 +9444,11 @@ VUYXKg
                                                 <rect key="frame" x="5" y="56" width="360" height="21.333333333333314"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <button opaque="NO" tag="28" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aH1-tX-tDo" customClass="DCBorderedButton" customModule="DCKit">
-                                                        <rect key="frame" x="0.0" y="0.0" width="177.66666666666666" height="21.333333333333332"/>
-                                                        <state key="normal" title="Caleidoscópio">
-                                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <button opaque="NO" tag="23" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="0Rp-hR-4mw" customClass="DCBorderedButton" customModule="DCKit">
+                                                        <rect key="frame" x="125" y="-4.6666666666666856" width="110" height="31"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        <state key="normal" title="Randômico 2">
+                                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="normalBorderColor">
@@ -9438,27 +9458,7 @@ VUYXKg
                                                                 <real key="value" value="0.0"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="10"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
-                                                                <color key="value" red="0.1529411765" green="0.21176470589999999" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </button>
-                                                    <button opaque="NO" tag="29" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t6t-l1-jsy" customClass="DCBorderedButton" customModule="DCKit">
-                                                        <rect key="frame" x="182.66666666666663" y="0.0" width="177.33333333333337" height="21.333333333333332"/>
-                                                        <state key="normal" title="Strobo">
-                                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="normalBorderColor">
-                                                                <color key="value" name="cardshadow_color"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                <real key="value" value="0.0"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="10"/>
+                                                                <real key="value" value="15"/>
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
                                                                 <color key="value" red="0.1529411765" green="0.21176470589999999" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -9468,12 +9468,12 @@ VUYXKg
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" id="Rei-EX-CVL">
-                                                <rect key="frame" x="14" y="0.0" width="334" height="24"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                <rect key="frame" x="16" y="0.0" width="334" height="24"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Efeitos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hZg-Ts-3NN">
-                                                        <rect key="frame" x="3" y="4" width="315" height="17"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                        <rect key="frame" x="9" y="4" width="315" height="17"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -9489,7 +9489,7 @@ VUYXKg
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Velocidade" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ux3-QQ-va9">
-                                                                <rect key="frame" x="136" y="0.0" width="90" height="18"/>
+                                                                <rect key="frame" x="138" y="0.0" width="90" height="18"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="18" id="0x1-nh-rA7"/>
@@ -9560,7 +9560,7 @@ VUYXKg
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brilho" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kwf-vw-lvW">
                                                         <rect key="frame" x="0.0" y="-4" width="47" height="28"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -10596,11 +10596,11 @@ VUYXKg
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="J28-jt-PGb">
-                                        <rect key="frame" x="0.0" y="20" width="410" height="480"/>
+                                        <rect key="frame" x="0.0" y="19" width="410" height="481"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" id="OIB-1x-yf4" userLabel="ConfigNotific">
-                                                <rect key="frame" x="0.0" y="0.0" width="410" height="480"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="410" height="482"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notificações" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pT8-zA-dNk">
@@ -10821,14 +10821,11 @@ VUYXKg
         </scene>
     </scenes>
     <designables>
-        <designable name="0Rp-hR-4mw">
-            <size key="intrinsicContentSize" width="90" height="30"/>
-        </designable>
         <designable name="1li-Zg-WrG">
             <size key="intrinsicContentSize" width="53" height="30"/>
         </designable>
         <designable name="28d-9B-ixF">
-            <size key="intrinsicContentSize" width="88" height="30"/>
+            <size key="intrinsicContentSize" width="79" height="30"/>
         </designable>
         <designable name="31w-v9-Udr">
             <size key="intrinsicContentSize" width="38" height="22.666666666666668"/>
@@ -10885,7 +10882,7 @@ VUYXKg
             <size key="intrinsicContentSize" width="159" height="33"/>
         </designable>
         <designable name="G8i-QN-Ben">
-            <size key="intrinsicContentSize" width="81" height="30"/>
+            <size key="intrinsicContentSize" width="55" height="30"/>
         </designable>
         <designable name="GvN-Z4-znB">
             <size key="intrinsicContentSize" width="70" height="30"/>
@@ -10900,7 +10897,7 @@ VUYXKg
             <size key="intrinsicContentSize" width="131" height="30"/>
         </designable>
         <designable name="MUP-kg-q7W">
-            <size key="intrinsicContentSize" width="86" height="30"/>
+            <size key="intrinsicContentSize" width="76" height="30"/>
         </designable>
         <designable name="RX4-w0-gDl">
             <size key="intrinsicContentSize" width="102" height="30"/>
@@ -10939,13 +10936,16 @@ VUYXKg
             <size key="intrinsicContentSize" width="137" height="33"/>
         </designable>
         <designable name="YNj-5G-JvX">
-            <size key="intrinsicContentSize" width="88" height="30"/>
+            <size key="intrinsicContentSize" width="55" height="30"/>
         </designable>
         <designable name="YTw-xM-Cee">
             <size key="intrinsicContentSize" width="64" height="30"/>
         </designable>
         <designable name="Z6q-S2-JU8">
             <size key="intrinsicContentSize" width="38" height="21"/>
+        </designable>
+        <designable name="aH1-tX-tDo">
+            <size key="intrinsicContentSize" width="97" height="30"/>
         </designable>
         <designable name="c6i-dt-De8">
             <size key="intrinsicContentSize" width="46" height="30"/>
@@ -10975,7 +10975,7 @@ VUYXKg
             <size key="intrinsicContentSize" width="21.333333333333332" height="21.333333333333332"/>
         </designable>
         <designable name="j5f-DW-adO">
-            <size key="intrinsicContentSize" width="84" height="30"/>
+            <size key="intrinsicContentSize" width="65" height="30"/>
         </designable>
         <designable name="k5H-Pl-vH9">
             <size key="intrinsicContentSize" width="48" height="21"/>
@@ -11003,6 +11003,9 @@ VUYXKg
         </designable>
         <designable name="s5g-Ix-al3">
             <size key="intrinsicContentSize" width="142" height="22.666666666666668"/>
+        </designable>
+        <designable name="t6t-l1-jsy">
+            <size key="intrinsicContentSize" width="47" height="30"/>
         </designable>
         <designable name="t7I-dw-nPh">
             <size key="intrinsicContentSize" width="43" height="30"/>
@@ -11075,8 +11078,8 @@ VUYXKg
         <image name="tub" width="33.333332061767578" height="33.333332061767578"/>
         <image name="update" width="50" height="50"/>
         <image name="water.waves" catalog="system" width="128" height="88"/>
-        <image name="wifi" width="18" height="18"/>
         <image name="wifi" catalog="system" width="128" height="90"/>
+        <image name="wifi" width="18" height="18"/>
         <namedColor name="Conection_ON">
             <color red="0.0" green="1" blue="0.008999999612569809" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

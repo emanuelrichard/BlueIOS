@@ -154,16 +154,26 @@ class ChromoAllColorViewController: UIViewController {
             
             let hue = (color.hue) * 100 * 3.6
             let saturation = color.saturation
-            var bright = 1
+            let bright = 1
             
             let rgbe_color = self.hsvToRgb(h: Float(hue), s: Float(saturation), v: Float(bright))
             
 //            print("colors RGBe: \(rgbe_color.red), \(rgbe_color.green), \(rgbe_color.blue)")
-            
-            let cmd = self.target == 0 ?
-            TubCommands.SPOT_STATIC_HSL + "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)" :
-            TubCommands.STRIP_STATIC_HSL + "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)"
-            Utils.sendCommand(cmd: cmd, value: nil, word: nil)
+            if(self.target == 0) {
+                if(Settings.spot_state == 1){
+                    Utils.sendCommand(cmd: TubCommands.SPOT_STATIC_CROMO, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                    Settings.spot_state = 1
+                } else{
+                    Utils.sendCommand(cmd: TubCommands.SPOTS_EFFECT_COLOR, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                }
+            } else {
+                if(Settings.strip_state == 1){
+                    Utils.sendCommand(cmd: TubCommands.STRIP_STATIC_CROMO, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                    Settings.strip_state = 1
+                } else{
+                    Utils.sendCommand(cmd: TubCommands.STRIP_EFFECT_COLOR, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                }
+            }
             
             // Update the favorite color and the color box
             self.favoriteColor = self.pckAllColor.selectedColor
@@ -182,14 +192,25 @@ class ChromoAllColorViewController: UIViewController {
             // Use a cor recuperada conforme necessário.
             let hue = backgroundColor1.hsbColor.asTupleNoAlpha().hue * 100 * 3.6
             let saturation = backgroundColor1.hsbColor.asTupleNoAlpha().saturation
-            var bright = 1
+            let bright = 1
             
             let rgbe_color = self.hsvToRgb(h: Float(hue), s: Float(saturation), v: Float(bright))
             
-            let cmd = self.target == 0 ?
-            TubCommands.SPOT_STATIC_HSL + "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)" :
-            TubCommands.STRIP_STATIC_HSL + "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)"
-            Utils.sendCommand(cmd: cmd, value: nil, word: nil)
+            if(self.target == 0) {
+                if(Settings.spot_state == 1){
+                    Utils.sendCommand(cmd: TubCommands.SPOT_STATIC_CROMO, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                    Settings.spot_state = 1
+                } else{
+                    Utils.sendCommand(cmd: TubCommands.SPOTS_EFFECT_COLOR, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                }
+            } else {
+                if(Settings.strip_state == 1){
+                    Utils.sendCommand(cmd: TubCommands.STRIP_STATIC_CROMO, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                    Settings.strip_state = 1
+                } else{
+                    Utils.sendCommand(cmd: TubCommands.STRIP_EFFECT_COLOR, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                }
+            }
             
             caixaCor1.backgroundColor = backgroundColor1
             caixaCor1.normalBackgroundColor = backgroundColor1
@@ -203,14 +224,25 @@ class ChromoAllColorViewController: UIViewController {
             // Use a cor recuperada conforme necessário.
             let hue = backgroundColor2.hsbColor.asTupleNoAlpha().hue * 100 * 3.6
             let saturation = backgroundColor2.hsbColor.asTupleNoAlpha().saturation
-            var bright = 1
+            let bright = 1
             
             let rgbe_color = self.hsvToRgb(h: Float(hue), s: Float(saturation), v: Float(bright))
             
-            let cmd = self.target == 0 ?
-            TubCommands.SPOT_STATIC_HSL + "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)" :
-            TubCommands.STRIP_STATIC_HSL + "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)"
-            Utils.sendCommand(cmd: cmd, value: nil, word: nil)
+            if(self.target == 0) {
+                if(Settings.spot_state == 1){
+                    Utils.sendCommand(cmd: TubCommands.SPOT_STATIC_CROMO, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                    Settings.spot_state = 1
+                } else{
+                    Utils.sendCommand(cmd: TubCommands.SPOTS_EFFECT_COLOR, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                }
+            } else {
+                if(Settings.strip_state == 1){
+                    Utils.sendCommand(cmd: TubCommands.STRIP_STATIC_CROMO, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                    Settings.strip_state = 1
+                } else{
+                    Utils.sendCommand(cmd: TubCommands.STRIP_EFFECT_COLOR, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                }
+            }
             
             caixaCor2.backgroundColor = backgroundColor2
             caixaCor2.normalBackgroundColor = backgroundColor2
@@ -225,14 +257,25 @@ class ChromoAllColorViewController: UIViewController {
             let hue = backgroundColor3.hsbColor.asTupleNoAlpha().hue * 100 * 3.6
             let saturation = backgroundColor3
                 .hsbColor.asTupleNoAlpha().saturation
-            var bright = 1
+            let bright = 1
             
             let rgbe_color = self.hsvToRgb(h: Float(hue), s: Float(saturation), v: Float(bright))
             
-            let cmd = self.target == 0 ?
-            TubCommands.SPOT_STATIC_HSL + "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)" :
-            TubCommands.STRIP_STATIC_HSL + "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)"
-            Utils.sendCommand(cmd: cmd, value: nil, word: nil)
+            if(self.target == 0) {
+                if(Settings.spot_state == 1){
+                    Utils.sendCommand(cmd: TubCommands.SPOTS_MODE_CHROMO, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                    Settings.spot_state = 1
+                } else{
+                    Utils.sendCommand(cmd: TubCommands.SPOTS_EFFECT_COLOR, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                }
+            } else {
+                if(Settings.strip_state == 1){
+                    Utils.sendCommand(cmd: TubCommands.SPOTS_MODE_CHROMO, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                    Settings.strip_state = 1
+                } else{
+                    Utils.sendCommand(cmd: TubCommands.STRIP_EFFECT_COLOR, value: nil, word: "\(rgbe_color.red) \(rgbe_color.green) \(rgbe_color.blue)")
+                }
+            }
             
             caixaCor3.backgroundColor = backgroundColor3
             caixaCor3.normalBackgroundColor = backgroundColor3

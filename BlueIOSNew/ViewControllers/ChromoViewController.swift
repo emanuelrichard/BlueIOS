@@ -111,6 +111,22 @@ class ChromoViewController: UIViewController {
         // Define o plano de fundo da view com o gradiente
         view.layer.insertSublayer(gradientLayer, at: 0)
         
+        if(target == 0) {
+            //setCtrlSelected(state: Settings.spot_state, color: Settings.spot_static, select: true)
+            caleid_btn.isHidden = true
+            rand2_btn.isHidden = true
+            seq1_btn.isHidden = true
+            bum2_btn.isHidden = true
+            bum1_btn.isHidden = true
+        } else {
+            //setCtrlSelected(state: Settings.strip_state, color: Settings.strip_static, select: true)
+            caleid_btn.isHidden = false
+            rand2_btn.isHidden = true
+            seq1_btn.isHidden = false
+            bum2_btn.isHidden = false
+            bum1_btn.isHidden = false
+        }
+        
         // Configura as cores de texto para o UISegmentedControl
         configureSegmentedControlTextColors()
         
@@ -119,7 +135,7 @@ class ChromoViewController: UIViewController {
         
         // Aplica gradientes aos botões
         applyGradientsToButtons([
-            rand1_btn, rand2_btn, seq1_btn, seq2_btn, bum1_btn, bum2_btn
+            rand1_btn, rand2_btn, seq1_btn, seq2_btn, bum1_btn, bum2_btn, strobe_btn, caleid_btn
         ])
     }
 
@@ -186,12 +202,13 @@ class ChromoViewController: UIViewController {
     // Aplica gradientes aos botões
     private func applyGradientsToButtons(_ buttons: [UIButton]? = nil) {
         let buttonsToApplyGradients = buttons ?? [
-            rand1_btn, rand2_btn, seq1_btn, seq2_btn, bum1_btn, bum2_btn
+            rand1_btn, rand2_btn, seq1_btn, seq2_btn, bum1_btn, bum2_btn, strobe_btn, caleid_btn
         ]
         
         for button in buttonsToApplyGradients {
             let gradientLayer = CAGradientLayer()
-            gradientLayer.frame = button.bounds
+            let gradientFrame = CGRect(x: 0, y: 0, width: button.bounds.width + 200, height: button.bounds.height)
+            gradientLayer.frame = gradientFrame
             gradientLayer.colors = [
                 UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
                 UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
@@ -326,10 +343,20 @@ class ChromoViewController: UIViewController {
             setCtrlSelected(state: Settings.spot_state, color: Settings.spot_static, select: true)
             speed_sld.value = Float(Settings.spot_speed)
             bright_sld.value = Float(Settings.spot_bright)
+            caleid_btn.isHidden = true
+            rand2_btn.isHidden = true
+            seq1_btn.isHidden = true
+            bum2_btn.isHidden = true
+            bum1_btn.isHidden = true
         } else {
             setCtrlSelected(state: Settings.strip_state, color: Settings.strip_static, select: true)
             speed_sld.value = Float(Settings.strip_speed)
             bright_sld.value = Float(Settings.strip_bright)
+            caleid_btn.isHidden = false
+            rand2_btn.isHidden = true
+            seq1_btn.isHidden = false
+            bum2_btn.isHidden = false
+            bum1_btn.isHidden = false
         }
     }
     
@@ -361,13 +388,23 @@ class ChromoViewController: UIViewController {
         let tag = button.tag - 10       // Tags from 10 to 18, Colors from 0 to 8
         
         if(target == 0) {
-            Utils.sendCommand(cmd: TubCommands.SPOT_STATIC_CROMO, value: tag, word: nil)
-            Settings.spot_state = 1
-            Settings.spot_static = tag
+            if(Settings.spot_state == 1){
+                Utils.sendCommand(cmd: TubCommands.SPOTS_MODE_CHROMO, value: tag, word: nil)
+                Settings.spot_state = 1
+                Settings.spot_static = tag
+            } else{
+                Utils.sendCommand(cmd: TubCommands.SPOTS_EFFECT_COLOR, value: tag, word: nil)
+                Settings.spot_static = tag
+            }
         } else {
-            Utils.sendCommand(cmd: TubCommands.STRIP_STATIC_CROMO, value: tag, word: nil)
-            Settings.strip_state = 1
-            Settings.strip_state = tag
+            if(Settings.strip_state == 1){
+                Utils.sendCommand(cmd: TubCommands.SPOTS_MODE_CHROMO, value: tag, word: nil)
+                Settings.strip_state = 1
+                Settings.strip_state = tag
+            } else{
+                Utils.sendCommand(cmd: TubCommands.STRIP_EFFECT_COLOR, value: tag, word: nil)
+                Settings.strip_static = tag
+            }
         }
         setCtrlSelected(state: 1, color: tag, select: true)
     }
@@ -396,9 +433,9 @@ class ChromoViewController: UIViewController {
             }
         case 5:
             if(target == 0) {
-                Utils.sendCommand(cmd: TubCommands.SPOT_SEQ_2, value: nil, word: nil)
+                Utils.sendCommand(cmd: TubCommands.SPOTS_MODE_CHROMO, value: nil, word: nil)
             } else {
-                Utils.sendCommand(cmd: TubCommands.STRIP_SEQ_2, value: nil, word: nil)
+                Utils.sendCommand(cmd: TubCommands.STRIP_MODE_CHROMO, value: nil, word: nil)
             }
         case 6:
             if(target == 0) {
