@@ -117,6 +117,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var item6: UIView!
     @IBOutlet weak var inner6: DCBorderedView!
     
+    @IBOutlet weak var item7: UIView!
+    @IBOutlet weak var inner7: DCBorderedView!
+    
     @IBOutlet weak var itemN: UIView!
     
     @IBOutlet weak var view_tool_bar: UIView!
@@ -135,7 +138,11 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var tempo_enchimento_status: UILabel!
     @IBOutlet weak var tempo_enchimento_slider: MSCircularSlider!
 
-
+    @IBOutlet weak var limparRegistroBtn: DCBorderedButton!
+    @IBOutlet weak var verificarErroBtn: DCBorderedButton!
+    
+    @IBOutlet weak var statusErroCodigo: UILabel!
+    @IBOutlet weak var dataErroCodigo: UILabel!
     
     private var brightsetTimer: Timer?
     
@@ -264,6 +271,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         innerDr.tag = Int(innerDr.frame.height)
         inner5.tag = Int(inner5.frame.height)
         inner6.tag = Int(inner6.frame.height)
+        inner7.tag = Int(inner7.frame.height)
         
         // Setup gesture recognizer for UIViews
         item0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClick0)))
@@ -291,6 +299,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         item5.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClick5)))
         
         item6.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClick6)))
+        
+        item7.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClick7)))
         
         itemN .addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClickN)))
         
@@ -416,7 +426,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     private func applyGradient(to button: UIButton) {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = button.bounds
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: button.bounds.width + 1000, height: button.bounds.height)
         gradientLayer.colors = [
             UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
             UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
@@ -426,6 +436,28 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
         button.layer.addSublayer(gradientLayer)
     }
+    
+    func atualizarErro() {
+        if (Settings.codigo_erro == 0){
+            statusErroCodigo.text = "Sem erros"
+        } else {
+            statusErroCodigo.text = "Codigo \(Settings.codigo_erro)"
+        }
+        
+        if(Settings.data_erro == 0){
+            dataErroCodigo.text = "--/--/--"
+        } else {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy"  // Define o formato desejado (dia/mês/ano)
+
+            let formattedDate = dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(Settings.data_erro)))
+            dataErroCodigo.text = formattedDate
+        }
+        
+        let date = Date()
+        let ntp = Int(date.timeIntervalSince1970)
+    }
+
     
     override func viewDidAppear(_ animated: Bool) {
         if(BLEService.it.state == Connection.State.CONNECTED ||
@@ -471,6 +503,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         setupSelected(inner: innerDr, show: false)
         setupSelected(inner: inner5, show: false)
         setupSelected(inner: inner6, show: false)
+        setupSelected(inner: inner7, show: false)
         
         // Update power indicator
         updatePower()
@@ -540,8 +573,24 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         setupSelected(inner: inner6, show: true)
     }
     
+    @objc private func itemClick7(sender: UITapGestureRecognizer) {
+        setupSelected(inner: inner7, show: true)
+    }
+    
     @objc private func itemClickN(sender: UITapGestureRecognizer) {
         Utils.disconnect()
+    }
+    
+    @IBAction func clear_error(_ sender: Any) {
+        Utils.sendCommand(cmd: TubCommands.APAGA_ERRO, value: nil, word: nil)
+        statusErroCodigo.text = "Sem erros"
+        dataErroCodigo.text = "--/--/--"
+    }
+    
+    @IBAction func verificar_Error(_ sender: Any) {
+        Utils.sendCommand(cmd: TubCommands.STATUS_ERRO, value: nil, word: nil)
+        
+        atualizarErro()
     }
     
     private func setupSelected(inner: UIView, show: Bool) {
@@ -1027,6 +1076,13 @@ extension SettingsViewController: MSCircularSliderDelegate {
         }))
 
         alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: nil))
+        
+        // Configura o popoverPresentationController para iPad
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = sender as? UIView
+            popoverController.sourceRect = (sender as AnyObject).bounds
+        }
+        
 
         // Exibe a lista de opções
         present(alert, animated: true, completion: nil)

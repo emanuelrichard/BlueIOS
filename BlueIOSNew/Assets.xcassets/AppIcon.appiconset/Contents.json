@@ -1,6 +1,11 @@
 {
   "images" : [
-
+    {
+      "filename" : "Captura_de_Tela_2023-09-15_às_14.08.04-transformed_(1)-transformed.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    }
   ],
   "info" : {
     "author" : "xcode",

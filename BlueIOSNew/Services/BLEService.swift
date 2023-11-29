@@ -186,7 +186,7 @@ extension BLEService: CBCentralManagerDelegate {
 
         // Ignore non-tub peripherals
         if(peripheral.name == nil) { return }
-        if (!peripheral.name!.starts(with: "Opp_") &&
+        if (!peripheral.name!.starts(with: "Opp") &&
             !peripheral.name!.starts(with: "OppCromo_") &&
             !peripheral.name!.starts(with: "OppOne_") &&
             !peripheral.name!.starts(with: "OppFlex_") &&
@@ -298,7 +298,7 @@ extension BLEService: CBPeripheralDelegate {
                 Settings.updateStrSettings(about: about, text: text)
                 commDelegate?.didReceiveFeedback(about: about, text: text)
             } //else {
-//                print(" *** Poh Sérgio, tá vacilando no Chave-Valor !! :/ - \(feedback)")
+//                print(" ***Chave-Valor !! :/ - \(feedback)")
 //            }
         }
     }

@@ -207,7 +207,7 @@ class ChromoViewController: UIViewController {
         
         for button in buttonsToApplyGradients {
             let gradientLayer = CAGradientLayer()
-            let gradientFrame = CGRect(x: 0, y: 0, width: button.bounds.width + 200, height: button.bounds.height)
+            let gradientFrame = CGRect(x: 0, y: 0, width: button.bounds.width + 1000, height: button.bounds.height)
             gradientLayer.frame = gradientFrame
             gradientLayer.colors = [
                 UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,

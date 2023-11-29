@@ -112,4 +112,8 @@ class BathTubFeedbacks {
     static let STATUS_M5 = "m5_status"
     static let NAME_M5 = "m5_nome"
     
+    static let CODIGO_ERRO = "codErro"
+    static let DATA_ERRO = "dataErroUTC"
+
+    
 }

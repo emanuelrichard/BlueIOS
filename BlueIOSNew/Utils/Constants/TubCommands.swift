@@ -93,7 +93,10 @@ class TubCommands {
     static let B9 = "s 9 "
     
     static let SPOTS_EFFECT_COLOR = "spots cor "
-    static let SPOTS_MODE_CHROMO = "spots st"
+    static let SPOTS_MODE_CHROMO = "spots st "
     static let STRIP_EFFECT_COLOR = "fitas cor "
-    static let STRIP_MODE_CHROMO = "fitas st"
+    static let STRIP_MODE_CHROMO = "fitas st "
+    
+    static let STATUS_ERRO = "stErro"
+    static let APAGA_ERRO = "apagaErro"
 }

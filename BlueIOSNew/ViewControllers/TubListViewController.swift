@@ -196,6 +196,12 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         }))
         alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: nil))
         
+        // Configura o popoverPresentationController para iPad
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+        }
+        
         // Exibe a lista de opções
         present(alert, animated: true, completion: nil)
     }
@@ -207,7 +213,7 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     // Método que retorna a quantidade de itens na seção da collectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return added_lst.count
+        return added_lst.count
     }
 
     // Método que retorna a altura da célula para um determinado indexPath
@@ -401,6 +407,8 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         selected = indexPath.row
         let sel_tub = added_lst[selected]
         
+        print("AQUIIIIII \(added_lst[selected])")
+        
         Utils.disconnect()
 
         return connect(sel_tub: sel_tub)
@@ -418,6 +426,7 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
             if(mqtt_up) {
                 if let tubid = Utils.getMqttId(pub: sel_tub.mqtt_pub, sub: sel_tub.mqtt_sub) {
                     MqttService.it.connect(BTid: sel_tub.BTid, tubid: tubid)
+                    print("BTID = \(sel_tub.BTid)")
                     //viwLoading?.backgroundColor = UIColor.cyan
                     autocon = false
                     return true
@@ -430,6 +439,7 @@ class TubListViewController: UIViewController, UICollectionViewDelegate, UIColle
         if(force < 0 || force == 0) {
             if(ble_up) {
                 BLEService.it.connect(BTid: sel_tub.BTid)
+                print("BTID = \(sel_tub.BTid)")
                 //viwLoading.backgroundColor = UIColor.red
                 autocon = false
                 return true

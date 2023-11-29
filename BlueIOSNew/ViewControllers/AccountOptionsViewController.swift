@@ -16,12 +16,12 @@ class AccountOptionsViewController: UIViewController {
     @IBOutlet weak var edtNewPswd2: UITextField!
     @IBOutlet weak var btnSave: DCBorderedButton!
     @IBOutlet weak var btnLogoff: DCBorderedButton!
-    //@IBOutlet weak var btnDeleteAcc: DCBorderedButton!
+    @IBOutlet weak var btnDeleteAcc: DCBorderedButton!
     @IBOutlet weak var btnBack: DCBorderedButton!
     
     
     var logoffLongPress = UILongPressGestureRecognizer(target: AccountOptionsViewController.self, action: #selector(logoff))
-    //var deleteLongPress = UILongPressGestureRecognizer(target: AccountOptionsViewController.self, action: #selector(deleteAccount))
+    var deleteLongPress = UILongPressGestureRecognizer(target: AccountOptionsViewController.self, action: #selector(deleteAccount))
     
     private var password = ""
     
@@ -47,7 +47,7 @@ class AccountOptionsViewController: UIViewController {
         edtCurrPswd.layer.borderWidth = 1
         edtCurrPswd.textColor = UIColor.white
         
-        // Configura o campo do psw1
+        // Configura o campo do pswd1
         edtNewPswd1.layer.cornerRadius = 15.0
         edtNewPswd1.layer.masksToBounds = true
         edtNewPswd1.backgroundColor = UIColor.clear
@@ -77,14 +77,14 @@ class AccountOptionsViewController: UIViewController {
         logoffLongPress.minimumPressDuration = 0.8
         btnLogoff.addGestureRecognizer(logoffLongPress)
         
-        //deleteLongPress = UILongPressGestureRecognizer(target: self, action: #selector(deleteAccount))
-        //deleteLongPress.minimumPressDuration = 0.8
-        //btnDeleteAcc.addGestureRecognizer(deleteLongPress)
+        deleteLongPress = UILongPressGestureRecognizer(target: self, action: #selector(deleteAccount))
+        deleteLongPress.minimumPressDuration = 0.8
+        btnDeleteAcc.addGestureRecognizer(deleteLongPress)
     }
     
     private func applyGradient(to button: UIButton) {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = button.bounds
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: button.bounds.width + 1000, height: button.bounds.height)
         gradientLayer.colors = [
             UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
             UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor
@@ -105,12 +105,12 @@ class AccountOptionsViewController: UIViewController {
         }
     }
     
-//    @objc private func deleteAccount() {
-//        if(deleteLongPress.state == .ended) {
- //           btnCtrl(enabled: false)
-//            RequestManager.it.deleteUserRequest(delegate: self)
-//}
-//}
+    @objc private func deleteAccount() {
+        if(deleteLongPress.state == .ended) {
+            btnCtrl(enabled: false)
+            RequestManager.it.deleteUserRequest(delegate: self)
+        }
+    }
     
     @IBAction func saveChangesClick(_ sender: Any) {
         var name = edtName.text
@@ -165,8 +165,11 @@ class AccountOptionsViewController: UIViewController {
 
 extension AccountOptionsViewController {
     
+    // MARK: - Métodos de Validação
+    
+    // Verifica se o nome inserido é válido
     private func isValidName(_ name: String) -> Bool {
-        if(edtName.text!.count < 4) {
+        if edtName.text!.count < 4 {
             Utils.toast(vc: self, message: "Nome muito curto, tente digitar um nome um pouco mais completo", type: 2)
             edtName.textColor = UIColor.init(named: "red_color")
             return false
@@ -176,9 +179,10 @@ extension AccountOptionsViewController {
         }
     }
     
+    // Verifica se a senha inserida atende aos requisitos mínimos
     private func isValidPswd1(_ pswd1: String) -> Bool {
-        if(pswd1.count < 6) {
-            Utils.toast(vc: self, message: "A senha deve conter no mínimo 6 digitos", type: 2)
+        if pswd1.count < 6 {
+            Utils.toast(vc: self, message: "A senha deve conter no mínimo 6 dígitos", type: 2)
             edtNewPswd1.textColor = UIColor.init(named: "red_color")
             return false
         } else {
@@ -187,8 +191,9 @@ extension AccountOptionsViewController {
         }
     }
     
+    // Verifica se as duas senhas inseridas coincidem
     private func isValidPswd2(_ pswd2: String) -> Bool {
-        if(edtNewPswd1.text! != pswd2) {
+        if edtNewPswd1.text! != pswd2 {
             Utils.toast(vc: self, message: "As senhas não correspondem", type: 2)
             edtNewPswd2.textColor = UIColor.init(named: "red_color")
             return false
@@ -198,11 +203,14 @@ extension AccountOptionsViewController {
          }
     }
     
+    // MARK: - Outros Métodos
+    
+    // Retorna para a tela de login
     private func backToLogin() {
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        navigationController?.popToViewController((navigationController?.viewControllers[1])!, animated: true)
     }
     
+    // Controla o estado habilitado/desabilitado dos botões
     private func btnCtrl(enabled: Bool) {
         btnSave.isEnabled = enabled
         btnLogoff.isEnabled = enabled
@@ -211,23 +219,29 @@ extension AccountOptionsViewController {
     }
 }
 
+
 extension AccountOptionsViewController: RequestProtocol {
+    
+    // MARK: - Métodos do Protocolo de Requisição
     
     func onSuccess(code: Int, response: [Dictionary<String, AnyObject>], source: String) {
         DispatchQueue.main.async {
             self.btnCtrl(enabled: true)
-            if(code < 400) {
+            
+            // Verifica se a requisição foi bem-sucedida (código de status < 400)
+            if code < 400 {
                 switch source {
                 case "PUT_USER":
                     
-                    if(!self.password.isEmpty) {
-                        // Update local password
+                    // Atualiza a senha local se não estiver vazia
+                    if !self.password.isEmpty {
                         Settings.saveLoggedUser(email: Settings.uemail, pswd: self.password, name: Settings.uname)
                         self.password = ""
                     }
                     
                     Utils.toast(vc: self, message: "Alterações salvas com sucesso", type: 1)
                     
+                    // Remove a tela após um atraso
                     Timer.scheduledTimer(withTimeInterval: 1.2, repeats: false) { (timer) in
                         self.navigationController?.popViewController(animated: true)
                     }
@@ -235,6 +249,7 @@ extension AccountOptionsViewController: RequestProtocol {
                 case "DELETE_USER":
                     Utils.toast(vc: self, message: "Conta deletada com sucesso", type: 1)
                     
+                    // Faz logout e volta para a tela de login após um atraso
                     Timer.scheduledTimer(withTimeInterval: 1.2, repeats: false) { (timer) in
                         Settings.logout()
                         self.backToLogin()
@@ -243,13 +258,18 @@ extension AccountOptionsViewController: RequestProtocol {
                 default:
                     return
                 }
-            } else if(code < 500) {
+            } else if code < 500 {
+                // Trata erros com código de status entre 400 e 499
                 self.password = ""
-                if(code == 401) {
+                
+                // Verifica se o erro é devido a acesso não autorizado (401 Não Autorizado)
+                if code == 401 {
                     Timer.scheduledTimer(withTimeInterval: 1.2, repeats: false) { (timer) in
                         self.navigationController?.popViewController(animated: true)
                     }
                 }
+                
+                // Trata outros erros HTTP
                 Utils.handleHTTPError(vc: self, code: code, msg: "Não foi possível completar sua requisição, tente novamente mais tarde")
             }
         }
@@ -259,8 +279,9 @@ extension AccountOptionsViewController: RequestProtocol {
         DispatchQueue.main.async {
             self.password = ""
             self.btnCtrl(enabled: true)
+            
+            // Trata erros com código de status >= 500
             Utils.handleHTTPError(vc: self, code: code, msg: "Não foi possível completar sua requisição, tente novamente mais tarde")
         }
     }
-    
 }

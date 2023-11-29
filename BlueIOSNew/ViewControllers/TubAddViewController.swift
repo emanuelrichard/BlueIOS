@@ -58,7 +58,7 @@ class TubAddViewController: UIViewController {
     
     func applyGradient(to button: UIButton) {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = button.bounds
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: button.bounds.width + 1000, height: button.bounds.height)
         gradientLayer.colors = [
             UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1).cgColor,
             UIColor(red: 0, green: 0, blue: 0.4, alpha: 1).cgColor

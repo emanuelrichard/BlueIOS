@@ -148,6 +148,9 @@ class Settings {
     
     static var initialized = false
     static var pswd_err = false
+    
+    static var codigo_erro = -1
+    static var data_erro = -1
 }
 
 extension Settings {
@@ -360,6 +363,9 @@ extension Settings {
         
         initialized = false
         pswd_err = false
+        
+        codigo_erro = -1
+        data_erro = -1
     }
     
 }
@@ -497,6 +503,11 @@ extension Settings {
             Settings.bubbles = value
         case BathTubFeedbacks.MODO_ECO:
             Settings.modo_eco = value
+            Settings.bubbles = value
+        case BathTubFeedbacks.CODIGO_ERRO:
+            Settings.codigo_erro = value
+        case BathTubFeedbacks.DATA_ERRO:
+            Settings.data_erro = value
         case BathTubFeedbacks.LAST_ON:
             Settings.online = true
             

@@ -109,7 +109,7 @@ class InstallationViewController: UIViewController, UITextFieldDelegate {
         if(zip.isEmpty) { canSubmit = false }
         
         if(canSubmit) {
-            let ownerAddr = getAddress(main: main, number: number, neighb: neighb, extras: extras, city: city, uf: uf, zip: zip)
+            _ = getAddress(main: main, number: number, neighb: neighb, extras: extras, city: city, uf: uf, zip: zip)
             
             //TODO: Get coordinates
             
