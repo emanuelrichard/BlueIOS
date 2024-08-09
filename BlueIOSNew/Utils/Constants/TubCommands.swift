@@ -80,6 +80,7 @@ class TubCommands {
     static let MODO_BLOQUEIO = "setmodo "
     static let MODO_AQUECIMENTO = "saw "
     static let TIMEOUT_BANHEIRA = "settimeoutligado "
+    static let CURRENT_WATER_LEVEL = "settimeoutenchendo "
     
     
     static let B1 = "s 1 "

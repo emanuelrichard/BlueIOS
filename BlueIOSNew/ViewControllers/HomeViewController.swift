@@ -67,6 +67,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var info_view: UIStackView!
     @IBOutlet weak var bombas_view: UIStackView!
     @IBOutlet weak var utilitarios_view: UIStackView!
+    @IBOutlet weak var utilitarios_view2: UIStackView!
     @IBOutlet weak var logo_img: UIImageView!
 
 
@@ -227,8 +228,8 @@ class HomeViewController: UIViewController {
             keepWarm_act.heightAnchor.constraint(equalToConstant: 50),
             autoOn_act.heightAnchor.constraint(equalToConstant: 50),
             waterEntry_act.heightAnchor.constraint(equalToConstant: 50),
-            cascata_bt.heightAnchor.constraint(equalToConstant: 50),
-            bubbles_act.heightAnchor.constraint(equalToConstant: 50)
+//            cascata_bt.heightAnchor.constraint(equalToConstant: 50),
+//            bubbles_act.heightAnchor.constraint(equalToConstant: 50)
         ])
         
         //View da temp desejada e da temp atual
@@ -394,7 +395,7 @@ class HomeViewController: UIViewController {
         let bombIndicators: [UIButton] = [bomb1_act, bomb2_act, bomb3_act, bomb4_act, bomb5_act, bomb6_act, bomb7_act, bomb8_act, bomb9_act]
         bombIndicators.forEach { addImageViewToStackView(imageView: $0, stackView: bombas_view, size: iconSize) }
         
-        let utilitarios: [UIButton] = [keepWarm_act, autoOn_act, waterEntry_act, cascata_bt, bubbles_act]
+        let utilitarios: [UIButton] = [keepWarm_act, autoOn_act, waterEntry_act]
         utilitarios.forEach { addImageViewToStackView(imageView: $0, stackView: utilitarios_view, size: iconSize) }
     }
     
@@ -490,8 +491,9 @@ class HomeViewController: UIViewController {
                     default: break
                 }
             }
-            if(p >= 0) {
-                Utils.askOffAction(vc: self)
+            if(Settings.ralo_on_off.isEmpty) {
+                Utils.sendCommand(cmd: TubCommands.POWER, value: p, word: nil)
+                Settings.power = 0
             } else {
                 Utils.askOffAction(vc: self)
             }
@@ -783,7 +785,7 @@ class HomeViewController: UIViewController {
     }
     
     private func updateTubLevels() {
-        if(Settings.power != 0) {
+        if(true) {
             lvl_ico.tintColor = UIColor.nivelColor
 
             switch Settings.level {
@@ -920,18 +922,18 @@ class HomeViewController: UIViewController {
             cascata_bt.isHidden = true
             return
         }
-        
+
         cascata_bt.tintColor = Settings.cascata != 0 ? UIColor.blue : UIColor(named: "Icon_OFF")
         cascata_bt.isHidden = false
     }
     
     private func updateBubbles() {
         if(Settings.power <= 0 || Settings.bubbles == -1) {
-            bubbles_act.tintColor = UIColor.lightGray
+            bubbles_act.tintColor = UIColor(named: "Icon_OFF")
             bubbles_act.isHidden = true
             return
         }
-        
+                
         bubbles_act.tintColor = Settings.bubbles != 0 ? UIColor.blue : UIColor(named: "Icon_OFF")
         bubbles_act.isHidden = false
     }
@@ -972,8 +974,8 @@ class HomeViewController: UIViewController {
     private func warnDesr(temp: Int = Settings.desr_temp) {
         desrTitle_txt.textColor = UIColor.white
         if(temp >= 36) {
-            desr_txt.textColor = UIColor.red
-            desrUnity_txt.textColor = UIColor.red
+            desr_txt.textColor = UIColor.orange
+            desrUnity_txt.textColor = UIColor.orange
             desr_sld.filledColor = UIColor.orange
         } else {
             desr_txt.textColor = UIColor.white

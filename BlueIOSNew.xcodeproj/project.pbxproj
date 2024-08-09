@@ -67,7 +67,7 @@
 		2898F5352AA776D000160AD1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898F5342AA776D000160AD1 /* SystemConfiguration.framework */; };
 		2898F5372AA7770E00160AD1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2898F5362AA7770D00160AD1 /* CoreFoundation.framework */; };
 		28D96FFE29E7298500122FCD /* AccountOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D96FFD29E7298500122FCD /* AccountOptionsViewController.swift */; };
-		D6E064A9A1FEF5CC49786F28 /* Pods_BlueIOSNew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E0B010CC2537A11BD1E0EF /* Pods_BlueIOSNew.framework */; };
+		E4A8EDF5C63808678C93CF6A /* Pods_BlueIOSNew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D528D88B1B08C14A395BD8F8 /* Pods_BlueIOSNew.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,7 +88,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		03E0B010CC2537A11BD1E0EF /* Pods_BlueIOSNew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlueIOSNew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2816269E29E44001006B7656 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2842E83629C9F19B00A7B20D /* BlueIOSNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueIOSNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2842E83929C9F19B00A7B20D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -154,8 +153,9 @@
 		2898F5342AA776D000160AD1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2898F5362AA7770D00160AD1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		28D96FFD29E7298500122FCD /* AccountOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOptionsViewController.swift; sourceTree = "<group>"; };
-		497DE0C63D6F98BED91AB5A2 /* Pods-BlueIOSNew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueIOSNew.release.xcconfig"; path = "Target Support Files/Pods-BlueIOSNew/Pods-BlueIOSNew.release.xcconfig"; sourceTree = "<group>"; };
-		C04285BCB8BE5012886D1B1F /* Pods-BlueIOSNew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueIOSNew.debug.xcconfig"; path = "Target Support Files/Pods-BlueIOSNew/Pods-BlueIOSNew.debug.xcconfig"; sourceTree = "<group>"; };
+		5FEED449B1C69E7F3E59FC00 /* Pods-BlueIOSNew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueIOSNew.release.xcconfig"; path = "Target Support Files/Pods-BlueIOSNew/Pods-BlueIOSNew.release.xcconfig"; sourceTree = "<group>"; };
+		A02463F931EC1AD257D285AA /* Pods-BlueIOSNew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlueIOSNew.debug.xcconfig"; path = "Target Support Files/Pods-BlueIOSNew/Pods-BlueIOSNew.debug.xcconfig"; sourceTree = "<group>"; };
+		D528D88B1B08C14A395BD8F8 /* Pods_BlueIOSNew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlueIOSNew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +165,7 @@
 			files = (
 				2898F5372AA7770E00160AD1 /* CoreFoundation.framework in Frameworks */,
 				2898F5352AA776D000160AD1 /* SystemConfiguration.framework in Frameworks */,
-				D6E064A9A1FEF5CC49786F28 /* Pods_BlueIOSNew.framework in Frameworks */,
+				E4A8EDF5C63808678C93CF6A /* Pods_BlueIOSNew.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,8 +380,8 @@
 		49BDA347919D9D2ECB1DFB48 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C04285BCB8BE5012886D1B1F /* Pods-BlueIOSNew.debug.xcconfig */,
-				497DE0C63D6F98BED91AB5A2 /* Pods-BlueIOSNew.release.xcconfig */,
+				A02463F931EC1AD257D285AA /* Pods-BlueIOSNew.debug.xcconfig */,
+				5FEED449B1C69E7F3E59FC00 /* Pods-BlueIOSNew.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -391,7 +391,7 @@
 			children = (
 				2898F5362AA7770D00160AD1 /* CoreFoundation.framework */,
 				2898F5342AA776D000160AD1 /* SystemConfiguration.framework */,
-				03E0B010CC2537A11BD1E0EF /* Pods_BlueIOSNew.framework */,
+				D528D88B1B08C14A395BD8F8 /* Pods_BlueIOSNew.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -403,19 +403,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2842E86029C9F19E00A7B20D /* Build configuration list for PBXNativeTarget "BlueIOSNew" */;
 			buildPhases = (
-				E05821506372B18926058F84 /* [CP] Check Pods Manifest.lock */,
+				DEF7AE1C45818531DDF43AEB /* [CP] Check Pods Manifest.lock */,
 				2842E83229C9F19B00A7B20D /* Sources */,
 				2842E83329C9F19B00A7B20D /* Frameworks */,
 				2842E83429C9F19B00A7B20D /* Resources */,
-				207A079B515FB79FFEE63082 /* [CP] Embed Pods Frameworks */,
+				1D607417E16C06A57EC720B3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = BlueIOSNew;
-			packageProductDependencies = (
-			);
 			productName = BlueIOSNew;
 			productReference = 2842E83629C9F19B00A7B20D /* BlueIOSNew.app */;
 			productType = "com.apple.product-type.application";
@@ -488,8 +486,6 @@
 				Base,
 			);
 			mainGroup = 2842E82D29C9F19B00A7B20D;
-			packageReferences = (
-			);
 			productRefGroup = 2842E83729C9F19B00A7B20D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -531,7 +527,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		207A079B515FB79FFEE63082 /* [CP] Embed Pods Frameworks */ = {
+		1D607417E16C06A57EC720B3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -548,7 +544,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BlueIOSNew/Pods-BlueIOSNew-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E05821506372B18926058F84 /* [CP] Check Pods Manifest.lock */ = {
+		DEF7AE1C45818531DDF43AEB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -724,7 +720,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -778,7 +774,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -790,13 +786,14 @@
 		};
 		2842E86129C9F19E00A7B20D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C04285BCB8BE5012886D1B1F /* Pods-BlueIOSNew.debug.xcconfig */;
+			baseConfigurationReference = A02463F931EC1AD257D285AA /* Pods-BlueIOSNew.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = BlueIOSNew/BlueIOSNew.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = QWSR4CS6AV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlueIOSNew/Info.plist;
@@ -813,19 +810,20 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
-				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.opportunity.blueeasyapple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -834,13 +832,14 @@
 		};
 		2842E86229C9F19E00A7B20D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 497DE0C63D6F98BED91AB5A2 /* Pods-BlueIOSNew.release.xcconfig */;
+			baseConfigurationReference = 5FEED449B1C69E7F3E59FC00 /* Pods-BlueIOSNew.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = BlueIOSNew/BlueIOSNew.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = QWSR4CS6AV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BlueIOSNew/Info.plist;
@@ -857,19 +856,20 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
-				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.opportunity.blueeasyapple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

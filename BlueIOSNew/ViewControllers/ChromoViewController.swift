@@ -44,7 +44,11 @@ class ChromoViewController: UIViewController {
     @IBOutlet weak var logo_img: UIImageView!
     
     @IBOutlet weak var view_custon_color_chromo: UIView!
+    @IBOutlet weak var viewMae: UIView!
     @IBOutlet weak var view_chromo: UIView!
+    @IBOutlet weak var viewSpotOrFita: UIView!
+    @IBOutlet weak var viewEfeito: UIView!
+    @IBOutlet weak var viewBrilho: UIView!
     @IBOutlet weak var allColor_btn: UIButton!
 
     @IBOutlet weak var bar_chromo: UITabBarItem!
@@ -66,6 +70,8 @@ class ChromoViewController: UIViewController {
         
         // Configura as visualizações
         setupViews()
+        
+        setupViewSpotOrFita()
     }
 
     // Configura os serviços BLE, Wi-Fi e MQTT
@@ -110,6 +116,12 @@ class ChromoViewController: UIViewController {
         
         // Define o plano de fundo da view com o gradiente
         view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        if (Settings.n_stripleds <= 0){
+            viewSpotOrFita.isHidden = true
+        } else {
+            viewSpotOrFita.isHidden = false
+        }
         
         if(target == 0) {
             //setCtrlSelected(state: Settings.spot_state, color: Settings.spot_static, select: true)
@@ -248,6 +260,59 @@ class ChromoViewController: UIViewController {
         segment.setTitleTextAttributes(selectedTextAttributes, for: .selected)
     }
     
+    private func setupViewSpotOrFita() {
+        // Desativar translatesAutoresizingMaskIntoConstraints para todas as views
+        [viewSpotOrFita, view_chromo, viewEfeito, viewBrilho, view_custon_color_chromo].forEach {
+            $0?.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        // Adicionar as views como subviews, se necessário
+        [viewSpotOrFita, view_chromo, viewEfeito, viewBrilho, view_custon_color_chromo].forEach {
+            if let view = $0, view.superview == nil {
+                self.view.addSubview(view)
+            }
+        }
+        
+        NSLayoutConstraint.activate([
+            // viewSpotOrFita constraints
+            viewSpotOrFita.topAnchor.constraint(equalTo: view_tool_bar.bottomAnchor),
+            viewSpotOrFita.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            viewSpotOrFita.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            viewSpotOrFita.heightAnchor.constraint(equalToConstant: 60), // Ajuste conforme necessário
+            
+            // view_chromo constraints
+            view_chromo.topAnchor.constraint(equalTo: viewSpotOrFita.bottomAnchor),
+            view_chromo.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view_chromo.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            view_chromo.heightAnchor.constraint(equalToConstant: 230), // Ajuste conforme necessário
+            
+            // viewEfeito constraints
+            viewEfeito.topAnchor.constraint(equalTo: view_chromo.bottomAnchor),
+            viewEfeito.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            viewEfeito.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            viewEfeito.heightAnchor.constraint(equalToConstant: 200), // Ajuste conforme necessário
+            
+            // viewBrilho constraints
+            viewBrilho.topAnchor.constraint(equalTo: viewEfeito.bottomAnchor),
+            viewBrilho.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            viewBrilho.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            viewBrilho.heightAnchor.constraint(equalToConstant: 60) // Ajuste conforme necessário
+        ])
+        
+        // Configurar view_custon_color_chromo, se necessário
+        // Este exemplo assume que view_custon_color_chromo é uma subview de view_chromo
+        if let customColorView = view_custon_color_chromo {
+            customColorView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                customColorView.topAnchor.constraint(equalTo: view_chromo.topAnchor),
+                customColorView.leadingAnchor.constraint(equalTo: view_chromo.leadingAnchor),
+                customColorView.trailingAnchor.constraint(equalTo: view_chromo.trailingAnchor),
+                customColorView.bottomAnchor.constraint(equalTo: view_chromo.bottomAnchor)
+            ])
+        }
+
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         if(BLEService.it.state == Connection.State.CONNECTED ||
             WiFiService.it.state == Connection.State.CONNECTED ||
@@ -374,8 +439,9 @@ class ChromoViewController: UIViewController {
                     default: break
                 }
             }
-            if(p >= 0) {
-                Utils.askOffAction(vc: self)
+            if(Settings.ralo_on_off.isEmpty) {
+                Utils.sendCommand(cmd: TubCommands.POWER, value: p, word: nil)
+                Settings.power = 0
             } else {
                 Utils.askOffAction(vc: self)
             }

@@ -144,6 +144,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var statusErroCodigo: UILabel!
     @IBOutlet weak var dataErroCodigo: UILabel!
     
+    @IBOutlet weak var scrolView: UIView!
+    
     private var brightsetTimer: Timer?
     
     private var wifi_toast = false
@@ -237,6 +239,25 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
         }
         
+        view.addSubview(view_tool_bar)
+        view.addSubview(scrolView)
+        
+        view_tool_bar.translatesAutoresizingMaskIntoConstraints = false
+        scrolView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            // Constraints para view_tool_bar
+            view_tool_bar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            view_tool_bar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view_tool_bar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            // Constraints para scrollView
+            scrolView.topAnchor.constraint(equalTo: view_tool_bar.bottomAnchor),
+            scrolView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrolView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrolView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
         // Assumes BLE service responses
         BLEService.it.delegates(ble: nil, conn: self, comm: self).ok()
         
@@ -313,13 +334,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         manageProfiles(slot: profile1_btn, slotname: profile1_edt, slotAct: pf1Action_btn, pos: 1, del: Settings.memo1 == 0, ini: true)
         manageProfiles(slot: profile2_btn, slotname: profile2_edt, slotAct: pf2Action_btn, pos: 2, del: Settings.memo2 == 0, ini: true)
         manageProfiles(slot: profile3_btn, slotname: profile3_edt, slotAct: pf3Action_btn, pos: 3, del: Settings.memo3 == 0, ini: true)
-//        manageProfiles(slot: profile4_btn, slotname: profile4_edt, slotAct: pf4Action_btn, pos: 4, del: Settings.memo4.isEmpty, ini: true)
-//        manageProfiles(slot: profile5_btn, slotname: profile5_edt, slotAct: pf5Action_btn, pos: 5, del: Settings.memo5.isEmpty, ini: true)
+        
         profile1_edt.text = Settings.memo1_name.isEmpty ? "Memoria 1" : Settings.memo1_name
         profile2_edt.text = Settings.memo2_name.isEmpty ? "Memoria 2" : Settings.memo2_name
         profile3_edt.text = Settings.memo3_name.isEmpty ? "Memoria 3" : Settings.memo3_name
-//        profile4_edt.text = Settings.memo4.isEmpty ? "Memoria 4" : Settings.memo4
-//        profile5_edt.text = Settings.memo5.isEmpty ? "Memoria 5" : Settings.memo5
         
         // Bright
         bright_txx.text = "\(Settings.backlight)%"
@@ -327,13 +345,19 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         bright_sld.currentValue = Double(Settings.backlight)
         bright_sld.delegate = self
         
-        // Desligamento Automatico
+        // Desligamento Automático
         if Settings.timeoutligado == 0 {
             desligamento_automatico_status.text = "— Desativado"
             desligamento_automatico_valor.text = "off"
-        }else{
-            desligamento_automatico_valor.text = "\(Settings.timeoutligado)h"
-            desligamento_automatico_status.text = "— \(Settings.timeoutligado)h"
+        } else {
+            let valorTimeOut = Float(Settings.timeoutligado) / 60.0
+            let hours = Int(valorTimeOut)
+            let minutes = Int((valorTimeOut - Float(hours)) * 60)
+            let formattedTime = String(format: "%d:%02d", hours, minutes)
+            
+            desligamento_automatico_slider.currentValue = Double(valorTimeOut)
+            desligamento_automatico_valor.text = "\(formattedTime)h"
+            desligamento_automatico_status.text = "— \(formattedTime)h"
         }
         desligamento_automatico_slider.currentValue = Double(Settings.timeoutligado)
         desligamento_automatico_slider.delegate = self
@@ -343,10 +367,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             tempo_enchimento_status.text = "— Desativado"
             tempo_enchimento_valor.text = "off"
         }else{
-            tempo_enchimento_valor.text = "\(Settings.timeoutligado)h"
-            tempo_enchimento_status.text = "— \(Settings.timeoutligado)h"
+            let enchimento = Float(Settings.timeEnchimento) / 60.0
+            tempo_enchimento_slider._currentValue = Double(enchimento)
+            tempo_enchimento_valor.text = "\(enchimento)hr"
+            tempo_enchimento_status.text = "— \(enchimento)hr"
         }
-        tempo_enchimento_slider.currentValue = Double(Settings.timeoutligado)
+        tempo_enchimento_slider.currentValue = Double(Settings.timeEnchimento)
         tempo_enchimento_slider.delegate = self
         
         // Filtering
@@ -383,9 +409,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             setWifi_btn.isEnabled = false
         }
         
-        // MQTT
-//        mqttStatus_txt.text = Settings.mqtt_state == 1 ? "— Disponível" : "— Não disponível"
-        
         //Drain
 //        drainStatus_txt.text = Settings.drain_mode == 1 ? "— Toque longo" : "— Toque curto"
 //        drainMode_swt.isOn = Settings.drain_mode == 1
@@ -410,7 +433,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     private func produtos(){
         switch Settings.produto {
-        case "BluePLUS", "BlueFLEX", "BlueCROMO":
+        case "BluePLUS", "BlueFLEX", "BlueCROMO", "BlueSLIM":
             // Caso "BluePLUS", "BlueFLEX" ou "BlueCROMO"
             brilho_opcao.isHidden = true
             sch_btn.setEnabled(false, forSegmentAt: 0)
@@ -455,7 +478,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
         
         let date = Date()
-        let ntp = Int(date.timeIntervalSince1970)
+        _ = Int(date.timeIntervalSince1970)
     }
 
     
@@ -826,28 +849,29 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 extension SettingsViewController: MSCircularSliderDelegate {
     
     @IBAction func powerClick(_ sender: Any) {
-        if(Settings.power <= 0) {
-            Utils.sendCommand(cmd: TubCommands.POWER, value: 1, word: nil)
-            Settings.power = 1
-        } else {
-            var p = 0;
-            if(Settings.has_drain > 0) {
-                switch(Settings.off_action) {
-                    case 0: p = 2
-                    case 1: p = 0
-                    case 2: p = -1
-                    default: break
-                }
-            }
-            if(p >= 0) {
-                Utils.sendCommand(cmd: TubCommands.POWER, value: p, word: nil)
+            if(Settings.power <= 0) {
+                Utils.sendCommand(cmd: TubCommands.POWER, value: 1, word: nil)
+                Settings.power = 1
             } else {
-                Utils.askOffAction(vc: self)
+                var p = 0;
+                if(Settings.has_drain > 0) {
+                    switch(Settings.off_action) {
+                        case 0: p = 2
+                        case 1: p = 0
+                        case 2: p = -1
+                        default: break
+                    }
+                }
+                if(Settings.ralo_on_off.isEmpty) {
+                    Utils.sendCommand(cmd: TubCommands.POWER, value: p, word: nil)
+                    Settings.power = 0
+                } else {
+                    Utils.askOffAction(vc: self)
+                }
+                Settings.power = 0
             }
-            Settings.power = 0
+            updatePower()
         }
-        updatePower()
-    }
     
     // Tubname
     @IBAction func saveTubnameClick(_ sender: Any) {
@@ -875,45 +899,73 @@ extension SettingsViewController: MSCircularSliderDelegate {
     // Bright. enchimento, desligamento
     func circularSlider(_ slider: MSCircularSlider, valueChangedTo value: Double, fromUser: Bool) {
         
+        // Arredondar o valor para o múltiplo mais próximo de 0.5
+        let roundedValue = round(value * 2) / 2.0
+        // Converter o valor arredondado para minutos (1 hora = 60 minutos)
+        let valueHora = roundedValue * 60
+
+        // Verificar se o slider é o controle de brilho
         if slider == bright_sld {
+            // Atualizar os textos de exibição com o valor de brilho em porcentagem
             bright_txx.text = "\(Int(value))%"
             brightStatus_txt.text = "— \(Int(value))%"
+            
+            // Verificar se a mudança foi feita pelo usuário
             if(fromUser) {
+                // Invalidar o temporizador existente, se houver
                 self.brightsetTimer?.invalidate()
+                // Configurar um novo temporizador para enviar o comando de ajuste de brilho após 0.3 segundos
                 self.brightsetTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false){ t in
                     Utils.sendCommand(cmd: TubCommands.SET_BACKLIGHT, value: value < 1 ? 1 : Int(value), word: nil)
                 }
             }
-        } else if slider == desligamento_automatico_slider {
+        }
+        // Verificar se o slider é o controle de desligamento automático
+        else if slider == desligamento_automatico_slider {
             if value == 0 {
+                // Atualizar os textos de exibição para mostrar que o desligamento automático está desativado
                 desligamento_automatico_valor.text = "off"
                 desligamento_automatico_status.text = "— Desativado"
-
             } else {
-                desligamento_automatico_valor.text = "\(Int(value))h"
-                desligamento_automatico_status.text = "— \(Int(value))h"
+                // Converter roundedValue para horas e minutos
+                let hours = Int(roundedValue)
+                let minutes = Int((Double(roundedValue) - Double(hours)) * 60)
+                let formattedTime = String(format: "%d:%02d", hours, minutes)
+                
+                // Atualizar os textos de exibição com o valor de desligamento automático em horas e minutos
+                desligamento_automatico_valor.text = "\(formattedTime)hr"
+                desligamento_automatico_status.text = "— \(formattedTime)hr"
             }
             
+            // Verificar se a mudança foi feita pelo usuário
             if(fromUser) {
+                // Invalidar o temporizador existente, se houver
                 self.brightsetTimer?.invalidate()
+                // Configurar um novo temporizador para enviar o comando de ajuste de tempo de desligamento automático após 0.3 segundos
                 self.brightsetTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false){ t in
-                    Utils.sendCommand(cmd: TubCommands.TIMEOUT_BANHEIRA, value: Int(value), word: nil)
+                    Utils.sendCommand(cmd: TubCommands.TIMEOUT_BANHEIRA, value: Int(valueHora), word: nil)
                 }
             }
-        } else if slider == tempo_enchimento_slider {
+        }
+        // Verificar se o slider é o controle de tempo de enchimento
+        else if slider == tempo_enchimento_slider {
             if value == 0 {
+                // Atualizar os textos de exibição para mostrar que o enchimento está desativado
                 tempo_enchimento_valor.text = "off"
                 tempo_enchimento_status.text = "— Desativado"
-
             } else {
-                tempo_enchimento_valor.text = "\(Int(value))h"
-                tempo_enchimento_status.text = "— \(Int(value))h"
+                // Atualizar os textos de exibição com o valor de tempo de enchimento em horas
+                tempo_enchimento_valor.text = "\(roundedValue)hr"
+                tempo_enchimento_status.text = "— \(roundedValue)hr"
             }
             
+            // Verificar se a mudança foi feita pelo usuário
             if(fromUser) {
+                // Invalidar o temporizador existente, se houver
                 self.brightsetTimer?.invalidate()
+                // Configurar um novo temporizador para enviar o comando de ajuste de nível de água após 0.3 segundos
                 self.brightsetTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false){ t in
-                    Utils.sendCommand(cmd: TubCommands.TIMEOUT_BANHEIRA, value: Int(value), word: nil)
+                    Utils.sendCommand(cmd: TubCommands.CURRENT_WATER_LEVEL, value: Int(valueHora), word: nil)
                 }
             }
         }
@@ -1072,7 +1124,7 @@ extension SettingsViewController: MSCircularSliderDelegate {
         
         alert.addAction(UIAlertAction(title: "Atualizar painel automatico", style: .default, handler: { _ in
             // Código para lidar com a seleção da opção 2
-            Utils.sendCommand(cmd: TubCommands.OTA_MODE, value: nil, word: "auto")
+            Utils.sendCommand(cmd: TubCommands.OTA_MODE, value: nil, word: " auto")
         }))
 
         alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: nil))

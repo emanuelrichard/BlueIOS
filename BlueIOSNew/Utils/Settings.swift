@@ -59,6 +59,8 @@ class Settings {
     static var fl_time = 0
     static var wm_time = 0
     
+    static var ralo_on_off = ""
+    
     static var memos: Int {
         get {
             return (memo1 == 0 ? 0:1) +
@@ -130,6 +132,7 @@ class Settings {
     static var aquecedor_on_off = -1
     static var aquecedor_automatico : Int = -1
     static var timeoutligado : Int = -1
+    static var timeEnchimento : Int = -1
     
     
     static var auto_conn = false
@@ -347,6 +350,8 @@ extension Settings {
         aquecedor_automatico = -1
         timeoutligado = -1
         
+        ralo_on_off = ""
+        
         auto_conn = false
         
         firmware = ""
@@ -366,6 +371,8 @@ extension Settings {
         
         codigo_erro = -1
         data_erro = -1
+        
+        timeEnchimento = -1
     }
     
 }
@@ -503,20 +510,20 @@ extension Settings {
             Settings.bubbles = value
         case BathTubFeedbacks.MODO_ECO:
             Settings.modo_eco = value
-            Settings.bubbles = value
         case BathTubFeedbacks.CODIGO_ERRO:
             Settings.codigo_erro = value
         case BathTubFeedbacks.DATA_ERRO:
             Settings.data_erro = value
         case BathTubFeedbacks.LAST_ON:
             Settings.online = true
-            
         case BathTubFeedbacks.STATUS_M1:
             memo1 = value
         case BathTubFeedbacks.STATUS_M2:
             memo2 = value
         case BathTubFeedbacks.STATUS_M3:
             memo3 = value
+        case BathTubFeedbacks.TIMEOUTENCHENDO:
+            timeEnchimento = value
         default:
             return
         }
@@ -575,16 +582,16 @@ extension Settings {
             memo5 = text
         case BathTubFeedbacks.DRAIN_MODE:
             Settings.drain_mode = text == "toque_longo" ? 1 : 0
-            
         case BathTubFeedbacks.NAME_M1:
             Settings.memo1_name = text
         case BathTubFeedbacks.NAME_M2:
             Settings.memo2_name = text
         case BathTubFeedbacks.NAME_M3:
             Settings.memo3_name = text
-            
         case BathTubFeedbacks.PRODUTO:
             Settings.produto = text
+        case BathTubFeedbacks.RALO_ON_OFF:
+            ralo_on_off = text
         default:
             return
         }

@@ -115,5 +115,8 @@ class BathTubFeedbacks {
     static let CODIGO_ERRO = "codErro"
     static let DATA_ERRO = "dataErroUTC"
 
+    static let TIMEOUTENCHENDO = "timeoutenchendo"
+    static let RALO_ON_OFF = "ralo"
+
     
 }
