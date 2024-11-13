@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "2mwK6hZ5Y36FiFM8cHARi5JG5fE.svg",
+      "filename" : "2mU0Et1bYVMtg5s8F1IPFF1C3ba (1).svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "2mwK6hZ5Y36FiFM8cHARi5JG5fE 1.svg",
+      "filename" : "2mU0Et1bYVMtg5s8F1IPFF1C3ba (1) 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "2mwK6hZ5Y36FiFM8cHARi5JG5fE 2.svg",
+      "filename" : "2mU0Et1bYVMtg5s8F1IPFF1C3ba (1) 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,8 +19,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }
