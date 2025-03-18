@@ -172,6 +172,7 @@ class Utils {
         // add the actions (buttons)
         alert.addAction(UIAlertAction(title: "Desligar", style: UIAlertAction.Style.default, handler: { action in
             Utils.sendCommand(cmd: TubCommands.POWER, value: 2, word: nil)
+            Settings.power = 2
         }))
         alert.addAction(UIAlertAction(title: "Desligar e Esvaziar", style: UIAlertAction.Style.cancel, handler: { action in
                 Utils.sendCommand(cmd: TubCommands.POWER, value: 0, word: nil)

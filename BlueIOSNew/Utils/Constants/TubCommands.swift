@@ -7,13 +7,13 @@
 
 class TubCommands {
     
-    static let STATUS = "st"
+    static let STATUS = "stg"
     static let POWER = "p "
     static let GET_LEVEL = "statusNivel"
     static let GET_TEMP = "statusTempAgua"
     static let GET_DTEMP = "statusTempSet"
     static let TEMP_SET = "tempset "                //const value 15~40
-
+    
     static let WATER = "agua "
     static let SET_AUTOON = "saae "
     static let SPOT_OFF = "spots off"
@@ -100,4 +100,16 @@ class TubCommands {
     
     static let STATUS_ERRO = "stErro"
     static let APAGA_ERRO = "apagaErro"
+    
+    //Painel Solar
+    static let SET_CANAL_SOLAR = "scas "
+    static let SET_CANAL_VALVULA_SOLAR = "scvs "
+    static let SET_TEMPO_AQUECEDOR_SOLAR = "steaq"
+    static let OFF_SET_SOLAR_ELETRICO = "sosea"
+    static let OFF_SET_SOLAR = "soss"
+    static let HORA_INICIO_SOLAR = "sifh"
+    static let HORA_FIM_SOLAR = "sffh"
+    
+    // Fuso Horario
+    static let SET_FUSO = "setfuso "
 }

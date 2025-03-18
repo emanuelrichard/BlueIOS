@@ -11,6 +11,7 @@ import MSCircularSlider
 import CoreImage.CIFilterBuiltins
 import SafariServices
 import SwiftUI
+import DropDown
 
 class SettingsViewController: UIViewController, UITextFieldDelegate {
     
@@ -81,6 +82,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var item0: UIView!
     @IBOutlet weak var inner0: DCBorderedView!
     
+    @IBOutlet weak var itemFusoHorario: UIView!
+    @IBOutlet weak var innerFusoHorario: DCBorderedView!
+    
     @IBOutlet weak var itemBloqueio: UIView!
     @IBOutlet weak var innerBloqueio: DCBorderedView!
     
@@ -146,6 +150,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var scrolView: UIView!
     
+    @IBOutlet weak var openFusoHorario: UIButton!
+    @IBOutlet weak var fusoHorario_status: UILabel!
+    
+    @IBOutlet weak var horariosDeAgenda: UILabel!
+
+    
     private var brightsetTimer: Timer?
     
     private var wifi_toast = false
@@ -155,6 +165,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     let ci_filter = CIFilter(name: "CIQRCodeGenerator")
     
     private var viewSelected: UIView?
+
+    var menus: [DropDown] = []
+    let timeZonesAMPM = (-12...12).map { offset -> String in
+        let sign = offset >= 0 ? "+" : "-"
+        let absOffset = abs(offset)
+        return "UTC \(sign)\(String(format: "%02d", absOffset)):00"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,6 +185,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
         // Define o plano de fundo da view com o gradiente
         view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        self.setupDropDownMenu(for: self.openFusoHorario, withAction: TubCommands.SET_FUSO, atIndex: 0)
                 
         //ToolBar View
         view_tool_bar.translatesAutoresizingMaskIntoConstraints = false
@@ -280,6 +299,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
         // Setup tags as heights
         inner0.tag = Int(inner0.frame.height)
+        innerFusoHorario.tag = Int(innerFusoHorario.frame.height)
         innerBloqueio.tag = Int(innerBloqueio.frame.height)
         innerAquecimento.tag = Int(innerAquecimento.frame.height)
         innerDesligamentoAutomatico.tag = Int(innerDesligamentoAutomatico.frame.height)
@@ -296,6 +316,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
         // Setup gesture recognizer for UIViews
         item0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClick0)))
+        
+        itemFusoHorario.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClickFusoHorario)))
         
         itemPf.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.itemClickPf)))
         
@@ -328,6 +350,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         // Tubname
         tubnameStatus_txt.text = "— \(Settings.tubname)"
         tubname_edt.text = Settings.tubname
+        
+        // Fuso
+        updateFusoHorarioStatus(fuso: Settings.fuso)
+
         
         // Profiles
         profileStatus.text = "— \(Settings.memos)/3 salvos"
@@ -428,23 +454,105 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         applyGradient(to: clearFilter_btn)
         applyGradient(to: atualizacao_btn)
         
-        produtos()
+        configurarProduto()
     }
     
-    private func produtos(){
+    private func configurarFiltroOuBanho() {
+        let isBanho = sch_btn.selectedSegmentIndex == 0
+        let settings = isBanho ? (Settings.bh_hour, Settings.bh_min, Settings.bh_days, Settings.bh_temp) : (Settings.ft_hour, Settings.ft_min, Settings.ft_days, Settings.ft_time)
+        
+        setFilteringDate(hour: settings.0, minute: settings.1, now: settings.2 == 0)
+        ftDuration_txt.text = isBanho ? "Temperatura: (°C)" : "Duração: (minutos)"
+        ftDuration_edt.placeholder = isBanho ? "40" : "240"
+        ftDuration_edt.text = settings.2 == 0 ? (isBanho ? "34" : "120") : "\(settings.3)"
+        setActiveDays(days: settings.2)
+        
+        if isBanho {
+            let fl = (0...65499).contains(Settings.fl_time) ? "\(Settings.fl_time)" : "--"
+            let wm = (1...254).contains(Settings.wm_time) ? "\(Settings.wm_time)" : "--"
+            fillWarmTime_txt.text = "Tempo para encher/aquecer (minutos): \(fl) / \(wm)"
+        } else {
+            fillWarmTime_txt.text = ""
+        }
+    }
+    
+    private func configurarStatusFiltragem(){
+        
+        let diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+        var textoAgenda = ""
+        
+        if Settings.ft_days > 0 && Settings.ft_days < 128 {
+            textoAgenda = "Filtragem agendados nos dias:\n"
+            let diasAgendados = diasSemana.enumerated().filter { index, _ in
+                ((Settings.ft_days >> index) & 1) == 1
+            }.map { $0.element }
+            textoAgenda += diasAgendados.joined(separator: ", ")
+            horariosDeAgenda.textColor = .green
+        } else if Settings.ft_days == 128 {
+            textoAgenda = "— Filtragem Agendada —"
+            horariosDeAgenda.textColor = .green
+        } else {
+            textoAgenda = "— Não há filtragem agendada no momento —"
+            horariosDeAgenda.textColor = .red
+        }
+        
+        horariosDeAgenda.text = textoAgenda
+        
+        setActiveDays(days: Settings.ft_days)
+        if(Settings.ft_days <= 0){
+            ftDuration_edt.text = ""
+            filterStatus_txt.text = "— Não agendado"
+        } else {
+            filterStatus_txt.text = "— Agendado"
+        }
+    }
+    
+    private func configurarStatusBanho(){
+        
+        let diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+        var textoAgenda = ""
+        
+        if Settings.ft_days > 0 && Settings.ft_days < 128 {
+            textoAgenda = "Banhos agendados nos dias:\n"
+            let diasAgendados = diasSemana.enumerated().filter { index, _ in
+                ((Settings.ft_days >> index) & 1) == 1
+            }.map { $0.element }
+            textoAgenda += diasAgendados.joined(separator: ", ")
+            horariosDeAgenda.textColor = .green
+        } else if Settings.ft_days == 128 {
+            textoAgenda = "— Banho Agendado —"
+            horariosDeAgenda.textColor = .green
+        } else {
+            textoAgenda = "— Não há banho agendado no momento —"
+            horariosDeAgenda.textColor = .red
+        }
+        
+        horariosDeAgenda.text = textoAgenda
+        
+        setActiveDays(days: Settings.bh_days)
+        if(Settings.bh_days <= 0){
+            ftDuration_edt.text = ""
+            filterStatus_txt.text = "— Não agendado"
+        } else {
+            filterStatus_txt.text = "— Agendado"
+        }
+    }
+    
+    private func configurarProduto() {
         switch Settings.produto {
-        case "BluePLUS", "BlueFLEX", "BlueCROMO", "BlueSLIM":
-            // Caso "BluePLUS", "BlueFLEX" ou "BlueCROMO"
+        case "BluePLUS", "BlueFLEX", "BlueCROMO":
             brilho_opcao.isHidden = true
             sch_btn.setEnabled(false, forSegmentAt: 0)
             sch_btn.selectedSegmentIndex = 1
+        case "BlueSLIM":
+            brilho_opcao.isHidden = true
         case "ProTECLAS":
-            // Caso "ProTECLAS"
             brilho_opcao.isHidden = false
         default:
-            // Outros casos, se necessário
             break
         }
+        configurarFiltroOuBanho()
+        configurarStatusFiltragem()
     }
     
     private func applyGradient(to button: UIButton) {
@@ -506,6 +614,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
         // Colapse all views
         setupSelected(inner: inner0, show: false)
+        setupSelected(inner: innerFusoHorario, show: false)
         setupSelected(inner: innerPf, show: false)
         setupSelected(inner: inner1, show: false)
         
@@ -535,6 +644,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @objc private func itemClick0(sender: UITapGestureRecognizer) {
         setupSelected(inner: inner0, show: true)
         tubname_edt.text = Settings.tubname
+    }
+    
+    @objc private func itemClickFusoHorario(sender: UITapGestureRecognizer) {
+        setupSelected(inner: innerFusoHorario, show: true)
     }
     
     @objc private func itemClickPf(sender: UITapGestureRecognizer) {
@@ -644,6 +757,67 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             if(!hide) { viewSelected = inner }
         }
     }
+    
+    func setupDropDownMenu(for button: UIButton, withAction action: String, atIndex index: Int) {
+        DispatchQueue.main.async {
+            
+            let menu = DropDown()
+            menu.dataSource = self.timeZonesAMPM
+            
+            menu.anchorView = button
+            menu.bottomOffset = CGPoint(x: 0, y: button.bounds.height)
+            
+            // Definir o valor inicial com base no Settings.fuso
+            let fusoAtual = Settings.fuso
+            let fusoFormatado = String(format: "%+03d:00", fusoAtual)
+            let valorInicial = "UTC \(fusoFormatado)"
+            button.setTitle(valorInicial, for: .normal)
+            
+            if let indexInicial = self.timeZonesAMPM.firstIndex(of: valorInicial) {
+                menu.selectRow(at: indexInicial)
+            }
+            
+            // Ação quando um item é selecionado no menu suspenso
+            menu.selectionAction = { [weak self] index, item in
+                guard let self = self else { return }
+                button.setTitle(item, for: .normal)
+                
+                // Extrair o valor do item selecionado
+                let value = item.replacingOccurrences(of: "UTC ", with: "").replacingOccurrences(of: ":00", with: "")
+                
+                // Enviar um comando com base na ação e no valor extraído
+                Utils.sendCommand(cmd: action, value: nil, word: value)
+                
+                // Atualizar o status imediatamente após o envio do comando
+                if let fusoValue = Int(value) {
+                    self.updateFusoHorarioStatus(fuso: fusoValue)
+                }
+            }
+            
+            self.menus.append(menu)
+            button.tag = index
+            
+            // Adicionar ação de toque ao botão
+            button.addTarget(self, action: #selector(self.openMenuButtonTapped(_:)), for: .touchUpInside)
+        }
+    }
+    
+    // Método para atualizar o status do fuso horário
+    func updateFusoHorarioStatus(fuso: Int) {
+        DispatchQueue.main.async {
+            let fusoFormatado = String(format: "%+03d", fuso)
+            self.fusoHorario_status.text = "— UTC \(fusoFormatado):00"
+        }
+    }
+    
+    // Ação quando um botão de menu é tocado
+    @IBAction func openMenuButtonTapped(_ sender: UIButton) {
+        if sender.tag < menus.count {
+            menus[sender.tag].show()
+        }
+    }
+    
+    
     @IBAction func profile1Click(_ sender: Any) {
         manageProfiles(slot: profile1_btn, slotname: profile1_edt, slotAct: pf1Action_btn, pos: 1, del: false)
     }
@@ -1223,13 +1397,7 @@ extension SettingsViewController: ConnectingProtocol, CommunicationProtocol {
             bright_txx.text = "\(Settings.backlight)%"
             bright_sld._currentValue = Double(Settings.backlight)
         case BathTubFeedbacks.FT_DAYS:
-            setActiveDays(days: Settings.ft_days)
-            if(Settings.ft_days <= 0){
-                ftDuration_edt.text = "120"
-                filterStatus_txt.text = "— Não agendado"
-            } else {
-                filterStatus_txt.text = "— Agendado"
-            }
+            configurarStatusFiltragem()
         case BathTubFeedbacks.FT_HOUR:
             if(Settings.ft_days > 0) {
                 setFilteringDate(hour: Settings.ft_hour, minute: Settings.ft_min, now: Settings.ft_days == 0)
@@ -1243,13 +1411,7 @@ extension SettingsViewController: ConnectingProtocol, CommunicationProtocol {
                 ftDuration_edt.text = "\(Settings.ft_time)"
             }
         case BathTubFeedbacks.BH_DAYS:
-            setActiveDays(days: Settings.bh_days)
-            if(Settings.bh_days <= 0){
-                ftDuration_edt.text = "34"
-                filterStatus_txt.text = "— Não agendado"
-            } else {
-                filterStatus_txt.text = "— Agendado"
-            }
+            configurarStatusBanho()
         case BathTubFeedbacks.BH_HOUR:
             if(Settings.bh_days > 0) {
                 setFilteringDate(hour: Settings.bh_hour, minute: Settings.bh_min, now: Settings.bh_days == 0)
@@ -1294,6 +1456,8 @@ extension SettingsViewController: ConnectingProtocol, CommunicationProtocol {
             }
         case BathTubFeedbacks.DRAIN_TIME:
             drainTime_txt.text = "\(value/60)"
+        case BathTubFeedbacks.FUSO:
+            updateFusoHorarioStatus(fuso: value)
         default:
             return
         }

@@ -154,6 +154,24 @@ class Settings {
     
     static var codigo_erro = -1
     static var data_erro = -1
+    
+    // Painel solar
+    static var temp_solar = -1
+    static var temp_off_set_solar = -1
+    static var canal_solar = -1
+    static var canal_valvula_solar = -1
+    static var temp_esperar_agua_quente = -1
+    static var off_set_solar_aquecedor = -1
+    static var off_set_soh_solar = -1
+    static var inicio_horario = -1
+    static var fim_horario = -1
+    
+    //Esvaziar
+    static var ralo = -1
+    static var tempoEsvaziar = -1
+
+    //Fuso
+    static var fuso = -13
 }
 
 extension Settings {
@@ -373,6 +391,24 @@ extension Settings {
         data_erro = -1
         
         timeEnchimento = -1
+        
+        //painel solar
+        temp_solar = -1
+        temp_off_set_solar = -1
+        canal_solar = -1
+        canal_valvula_solar = -1
+        temp_esperar_agua_quente = -1
+        off_set_solar_aquecedor = -1
+        off_set_soh_solar = -1
+        inicio_horario = -1
+        fim_horario = -1
+        
+        //esvaziar
+        ralo = -1
+        tempoEsvaziar = -1
+
+        //fuso
+        fuso = -1
     }
     
 }
@@ -524,6 +560,31 @@ extension Settings {
             memo3 = value
         case BathTubFeedbacks.TIMEOUTENCHENDO:
             timeEnchimento = value
+            //Painel Solar
+        case BathTubFeedbacks.TEMP_SOLAR:
+            temp_solar = value
+        case BathTubFeedbacks.TEMP_OFF_SET_SOLAR:
+            temp_off_set_solar = value
+        case BathTubFeedbacks.CANAL_SOLAR:
+            canal_solar = value
+        case BathTubFeedbacks.CANAL_VALVULA_SOLAR:
+            canal_valvula_solar = value
+        case BathTubFeedbacks.TEMP_ESPERAR_AGUA_QUENTE:
+            temp_esperar_agua_quente = value
+        case BathTubFeedbacks.OFF_SET_SOLAR_AQUECEDOR:
+            off_set_solar_aquecedor = value
+        case BathTubFeedbacks.OFF_SET_SOH_SOLAR:
+            off_set_soh_solar = value
+        case BathTubFeedbacks.INICIO_HORARIO:
+            inicio_horario = value
+        case BathTubFeedbacks.FIM_HORARIO:
+            fim_horario = value
+        case BathTubFeedbacks.RALO:
+                ralo = value
+        case BathTubFeedbacks.TEMPO_ESVAZIAR:
+                tempoEsvaziar = value
+        case BathTubFeedbacks.FUSO:
+                fuso = value
         default:
             return
         }

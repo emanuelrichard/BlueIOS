@@ -69,7 +69,16 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var utilitarios_view: UIStackView!
     @IBOutlet weak var utilitarios_view2: UIStackView!
     @IBOutlet weak var logo_img: UIImageView!
+    
+    @IBOutlet weak var esvaziamentoView: UIView!
+    @IBOutlet weak var timerRaloTxt: UILabel!
+    @IBOutlet weak var esvaziandoTxt: UILabel!
 
+
+
+    //Painel Solar
+//    @IBOutlet weak var painelSolar_icon: UIImageView!
+//    @IBOutlet weak var templSolar_txt: UILabel!
 
     
     // Standart vars
@@ -141,19 +150,21 @@ class HomeViewController: UIViewController {
             }
         }
         
+        esvaziar()
+        
         CommandQoS.startQoS()
         
     }
     
     private func layoutHome() {
         
-        //ToolBar View
+        // Configuração da View da Barra de Ferramentas
         view_tool_bar.translatesAutoresizingMaskIntoConstraints = false
         view_tool_bar.backgroundColor = UIColor.clear // Adicione esta linha para tornar o fundo transparente
         view.addSubview(view_tool_bar)
         let guide = view.safeAreaLayoutGuide
 
-        
+        // Definindo as constraints da view_tool_bar
         NSLayoutConstraint.activate([
             view_tool_bar.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
             view_tool_bar.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
@@ -162,10 +173,11 @@ class HomeViewController: UIViewController {
             view_tool_bar.widthAnchor.constraint(equalToConstant: 50.0)
         ])
         
-        //Logo dentro da view toolbar
+        // Configuração do logo dentro da view_tool_bar
         logo_img.translatesAutoresizingMaskIntoConstraints = false
         view_tool_bar.addSubview(logo_img)
         
+        // Definindo as constraints do logo_img
         NSLayoutConstraint.activate([
             logo_img.widthAnchor.constraint(equalToConstant: 50.0),
             logo_img.heightAnchor.constraint(equalToConstant: 50.0),
@@ -173,19 +185,20 @@ class HomeViewController: UIViewController {
             logo_img.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
         ])
         
-        
-        //Bunton on/off dentro da view toolbar
+        // Configuração do botão de ligar/desligar dentro da view_tool_bar
         power_btn.translatesAutoresizingMaskIntoConstraints = false
         view_tool_bar.addSubview(power_btn)
         
-        
+        // Definindo as constraints do power_btn
         NSLayoutConstraint.activate([
             power_btn.centerYAnchor.constraint(equalTo: view_tool_bar.centerYAnchor),
             power_btn.trailingAnchor.constraint(equalTo: view_tool_bar.trailingAnchor, constant: -15),
         ])
 
+        // Adicionando a info_view à view principal
         view.addSubview(info_view)
         
+        // Adicionando as ImageViews ao StackView
         addImageViewsToStackView()
         
         
@@ -359,6 +372,22 @@ class HomeViewController: UIViewController {
         viwLoading.layer.insertSublayer(gradientLayer, at: 0)
         Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(hideLoadingView), userInfo: nil, repeats: false)
 
+        // Adicionar esvaziamentoView
+        esvaziamentoView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(esvaziamentoView)
+        
+        NSLayoutConstraint.activate([
+            // Posicionar esvaziamentoView abaixo da view_tool_bar com um espaçamento de 10 pontos
+            esvaziamentoView.topAnchor.constraint(equalTo: view_tool_bar.bottomAnchor, constant: 10),
+            
+            // Definir margens laterais (ajuste conforme necessário)
+            esvaziamentoView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            esvaziamentoView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            // Definir altura fixa para esvaziamentoView (ajuste conforme necessário)
+            esvaziamentoView.heightAnchor.constraint(equalToConstant: 100)
+        ])
+
     }
     
     @objc func hideLoadingView() {
@@ -375,8 +404,13 @@ class HomeViewController: UIViewController {
     }
     
     func addImageViewToStackView(imageView: UIButton, stackView: UIStackView, size: CGSize) {
-        imageView.frame.size = size
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(imageView)
+        
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: size.width),
+            imageView.heightAnchor.constraint(equalToConstant: size.height)
+        ])
     }
     
     func addImageViewToStackViewInfo(imageView: UIImageView, stackView: UIStackView, size: CGSize) {
@@ -390,7 +424,7 @@ class HomeViewController: UIViewController {
         addImageViewToStackViewInfo(imageView: spot_ico, stackView: info_view, size: CGSize(width: 100, height: 100))
         addImageViewToStackViewInfo(imageView: heater_ico, stackView: info_view, size: CGSize(width: 100, height: 100))
         
-        let iconSize = CGSize(width: 100, height: 100)
+        let iconSize = CGSize(width: 50, height: 50)
         
         let bombIndicators: [UIButton] = [bomb1_act, bomb2_act, bomb3_act, bomb4_act, bomb5_act, bomb6_act, bomb7_act, bomb8_act, bomb9_act]
         bombIndicators.forEach { addImageViewToStackView(imageView: $0, stackView: bombas_view, size: iconSize) }
@@ -429,6 +463,8 @@ class HomeViewController: UIViewController {
             setupConns()
             
             saveTubLocally()
+            
+            esvaziar()
 
         } else {
             if let pvc = self.navigationController?.viewControllers[1] {
@@ -476,14 +512,52 @@ class HomeViewController: UIViewController {
         bombIndicators.forEach { $0?.tintColor = .lightGray }
     }
     
+    func esvaziar() {
+        DispatchQueue.main.async {
+            
+            if (Settings.ralo == 100 ) {
+                self.timerRaloTxt?.isHidden = true
+                self.esvaziandoTxt?.isHidden = true
+                
+                let horas = Settings.tempoEsvaziar / 3600
+                let minutos = (Settings.tempoEsvaziar % 3600) / 60
+                let segundos = Settings.tempoEsvaziar % 60
+                
+                print("Settings: ralo = \(Settings.ralo), power = \(Settings.power), tempoEsvaziar = \(Settings.tempoEsvaziar)")
+                print("Tempo para esvaziar: \(horas)h \(minutos)m \(segundos)s")
+                self.timerRaloTxt.text = "\(horas)h \(minutos)m \(segundos)s"
+
+                
+                if (Settings.power > 0) {
+                    DispatchQueue.main.async {
+//                        self.timerRaloTxt.text = "\(horas)h \(minutos)m \(segundos)s"
+                    }
+                } else {
+                    self.timerRaloTxt?.isHidden = false
+                    self.esvaziandoTxt?.isHidden = false
+                }
+            }
+            else {
+                self.timerRaloTxt?.isHidden = true
+                self.esvaziandoTxt?.isHidden = true
+            }
+        }
+    }
+    
     // Actions
     @IBAction func powerAction(_ sender: Any) {
+        // Verifica se a energia está desligada
         if(Settings.power <= 0) {
+            // Envia comando para ligar a energia
             Utils.sendCommand(cmd: TubCommands.POWER, value: 1, word: nil)
+            // Atualiza a configuração de energia para ligada
             Settings.power = 1
         } else {
+            // Inicializa a variável p com valor 0
             var p = 0;
+            // Verifica se há drenagem
             if(Settings.has_drain > 0) {
+                // Define a ação de desligamento com base na configuração
                 switch(Settings.off_action) {
                     case 0: p = 2
                     case 1: p = 0
@@ -491,14 +565,20 @@ class HomeViewController: UIViewController {
                     default: break
                 }
             }
+            // Verifica se a configuração de ralo está vazia
             if(Settings.ralo_on_off.isEmpty) {
+                // Envia comando para desligar a energia com a ação definida
                 Utils.sendCommand(cmd: TubCommands.POWER, value: p, word: nil)
+                // Atualiza a configuração de energia para desligada
                 Settings.power = 0
             } else {
+                // Pergunta ao usuário qual ação tomar ao desligar
                 Utils.askOffAction(vc: self)
             }
+            // Atualiza a configuração de energia para desligada
             Settings.power = 0
         }
+        // Atualiza a interface de energia
         updatePower()
     }
     
@@ -594,7 +674,6 @@ class HomeViewController: UIViewController {
     }
     
 
-    
     @IBAction func waterEntryAction(_ sender: Any) {
 //        if(Settings.has_waterctrl < 1) {
 //            Utils.toast(vc: self, message: "Controle indisponível")
@@ -745,6 +824,7 @@ class HomeViewController: UIViewController {
         updateKeepWarm()
         updateBubbles()
         updateCascata()
+        esvaziar()
     }
     
     private func updateTemp() {
@@ -983,7 +1063,6 @@ class HomeViewController: UIViewController {
             desr_sld.filledColor = UIColor.blue
         }
     }
-    
 }
 
 extension HomeViewController: MSCircularSliderDelegate {
@@ -1113,8 +1192,10 @@ extension HomeViewController: ConnectingProtocol, CommunicationProtocol {
             updateCascata()
         case BathTubFeedbacks.BLOWER:
             updateBubbles()
-//        case BathTubFeedbacks.AQUECEDOR_ON_OFF:
-//            updateHeater()
+        case BathTubFeedbacks.RALO:
+            esvaziar()
+        case BathTubFeedbacks.TEMPO_ESVAZIAR:
+            esvaziar()
         default:
             return
         }

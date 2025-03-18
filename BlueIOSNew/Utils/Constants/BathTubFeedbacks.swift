@@ -117,6 +117,22 @@ class BathTubFeedbacks {
 
     static let TIMEOUTENCHENDO = "timeoutenchendo"
     static let RALO_ON_OFF = "ralo"
-
+    
+    // Painel solar
+    static let TEMP_SOLAR = "tempSolar"
+    static let TEMP_OFF_SET_SOLAR = "tempOffSetSolar"
+    static let CANAL_SOLAR = "canalSolar"
+    static let CANAL_VALVULA_SOLAR = "canalValvulaSolar"
+    static let TEMP_ESPERAR_AGUA_QUENTE = "tempoparaesperaraguaquente"
+    static let OFF_SET_SOLAR_AQUECEDOR = "offsetsolareaquecedor"
+    static let OFF_SET_SOH_SOLAR = "offsetsohsolar"
+    static let INICIO_HORARIO = "iniciofaixadehorario"
+    static let FIM_HORARIO = "fimfaixadehorario"
+    
+    static let TEMPO_ESVAZIAR = "tempoEsvaziar"
+    static let RALO = "ralo"
+    
+    //fuso
+    static let FUSO = "fuso"
     
 }
