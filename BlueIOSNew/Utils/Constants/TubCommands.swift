@@ -104,11 +104,12 @@ class TubCommands {
     //Painel Solar
     static let SET_CANAL_SOLAR = "scas "
     static let SET_CANAL_VALVULA_SOLAR = "scvs "
-    static let SET_TEMPO_AQUECEDOR_SOLAR = "steaq"
-    static let OFF_SET_SOLAR_ELETRICO = "sosea"
-    static let OFF_SET_SOLAR = "soss"
-    static let HORA_INICIO_SOLAR = "sifh"
-    static let HORA_FIM_SOLAR = "sffh"
+    static let SET_TEMPO_AQUECEDOR_SOLAR = "steaq "
+    static let OFF_SET_SOLAR_ELETRICO = "sosea "
+    static let OFF_SET_SOLAR = "soss "
+    static let HORA_INICIO_SOLAR = "sifh "
+    static let HORA_FIM_SOLAR = "sffh "
+    static let SOLAR = "solar "
     
     // Fuso Horario
     static let SET_FUSO = "setfuso "

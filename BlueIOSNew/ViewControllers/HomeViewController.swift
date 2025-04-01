@@ -9,6 +9,7 @@ import UIKit
 import DCKit
 import MSCircularSlider
 import SwiftUI
+import Combine
 
 class HomeViewController: UIViewController {
     
@@ -49,10 +50,12 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var waterEntry_act: UIButton!
     @IBOutlet weak var autoOn_act: UIButton!
     @IBOutlet weak var keepWarm_act: UIButton!
+    
     @IBOutlet weak var bubbles_act: UIButton!
     @IBOutlet weak var cascata_bt: UIButton!
+    @IBOutlet weak var temp_solar: UILabel!
+    @IBOutlet weak var solar_bt: UIImageView!
     
-
     @IBOutlet weak var bleDisconn_ico: UIButton!
     
 
@@ -87,6 +90,9 @@ class HomeViewController: UIViewController {
     
     // Calcular a largura da view
     let widthInPixels = UIScreen.main.bounds.width - 150
+    
+    // Adicione esta linha
+    private var cancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         
@@ -311,14 +317,20 @@ class HomeViewController: UIViewController {
         
         tempTitle_txt.topAnchor.constraint(equalTo: temp_viw.topAnchor, constant: 10).isActive = true
         temp_txt.centerXAnchor.constraint(equalTo: temp_viw.centerXAnchor).isActive = true
-        //temp_txt.heightAnchor.constraint(equalToConstant: 50).isActive = true // Defina a altura desejada
+        // Adiciona restrição de altura para temp_txt
+        temp_txt.heightAnchor.constraint(equalToConstant: 65).isActive = true // Define altura específica
+        // Adiciona restrição de largura para garantir que não seja maior que o texto exibido
+        temp_txt.widthAnchor.constraint(lessThanOrEqualToConstant: 100).isActive = true
         if let customFontTemp = UIFont(name: "Helvetica-Bold", size: 60) {
             temp_txt.font = customFontTemp
         }
         
         tempUnity_txt.topAnchor.constraint(equalTo: temp_txt.topAnchor).isActive = true
         tempUnity_txt.leadingAnchor.constraint(equalTo: temp_txt.trailingAnchor).isActive = true
-        
+        // Adiciona restrições para limitar o tamanho do tempUnity_txt
+        tempUnity_txt.heightAnchor.constraint(equalToConstant: 40).isActive = true 
+        tempUnity_txt.widthAnchor.constraint(lessThanOrEqualToConstant: 40).isActive = true
+
         if let customFonttempUnity = UIFont(name: "Helvetica-Bold", size: 40) {
             tempUnity_txt.font = customFonttempUnity
         }
@@ -461,6 +473,7 @@ class HomeViewController: UIViewController {
             updateBomb3()
             updateBomb4()
             setupConns()
+            painelSolar()
             
             saveTubLocally()
             
@@ -502,6 +515,11 @@ class HomeViewController: UIViewController {
         lvl_ico.tintColor = .nivelColor
         spot_ico.tintColor = .white
         
+        // Configura o temp_txt para não interferir com interações
+        temp_txt.isUserInteractionEnabled = false
+        tempUnity_txt.isUserInteractionEnabled = false
+        temp_viw.isUserInteractionEnabled = false
+        
         // Initializing bomb indicators and other controls
         let bombIndicators: [UIButton?] = [
             bomb1_act, bomb2_act, bomb3_act, bomb4_act, bomb5_act,
@@ -510,6 +528,9 @@ class HomeViewController: UIViewController {
         ]
         
         bombIndicators.forEach { $0?.tintColor = .lightGray }
+        
+        // Configurar a cor da tint do solar_bt separadamente
+        solar_bt.tintColor = .lightGray
     }
     
     func esvaziar() {
@@ -542,6 +563,82 @@ class HomeViewController: UIViewController {
                 self.esvaziandoTxt?.isHidden = true
             }
         }
+    }
+    
+    func painelSolar() {
+        solar_bt.isUserInteractionEnabled = true // Permite interações
+        temp_solar.text = "\(Settings.temp_solar)C"
+        // Remove qualquer gesture recognizer existente antes de adicionar um novo
+        if let existingGestures = solar_bt.gestureRecognizers {
+            for gesture in existingGestures {
+                solar_bt.removeGestureRecognizer(gesture)
+            }
+        }
+        
+        // Cria e configura o novo tap gesture
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(solarTapped))
+        tapGesture.numberOfTapsRequired = 1
+        tapGesture.numberOfTouchesRequired = 1
+        tapGesture.cancelsTouchesInView = false
+        tapGesture.delaysTouchesBegan = false
+        tapGesture.delaysTouchesEnded = false
+        
+        // Adiciona o gesture ao solar_bt
+        solar_bt.addGestureRecognizer(tapGesture)
+        
+        // Configura a exibição do botão de acordo com o produto
+        if (Settings.produto == "BlueGYM"){
+            solar_bt.isHidden = false
+            spot_ico.isHidden = true
+        } else {
+            solar_bt.isHidden = true
+            spot_ico.isHidden = false
+            // Coloca a view na frente de outras views para garantir que receba toques
+            if let superview = solar_bt.superview {
+                superview.bringSubviewToFront(solar_bt)
+            }
+        }
+        
+        // Atualiza a aparência
+        updateSolarButtonAppearance()
+        
+    }
+    
+    private func updateSolarButtonAppearance() {
+        let painelSolarState = (Settings.solar == 0) ? 
+            UIColor(named: "iconOff") ?? .gray : 
+            UIColor(named: "painelSolarIco") ?? .yellow
+        
+        solar_bt.tintColor = painelSolarState
+        temp_solar.textColor = painelSolarState
+    }
+    
+    @objc func solarTapped() {
+            // Feedback visual de toque
+        UIView.animate(withDuration: 0.1, animations: {
+            self.solar_bt.alpha = 0.5
+            self.solar_bt.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }) { (_) in
+            UIView.animate(withDuration: 0.1) {
+                self.solar_bt.alpha = 1.0
+                self.solar_bt.transform = CGAffineTransform.identity
+            }
+
+        }
+        
+        // Feedback tátil (vibração)
+        if #available(iOS 10.0, *) {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.prepare()
+            generator.impactOccurred()
+        }
+        // Exibir informações do painel solar ou executar ação desejada
+        let newMode = (Settings.solar > 0) ? 0 : 1
+        Utils.sendCommand(cmd: TubCommands.SOLAR, value: newMode, word: nil)
+        Settings.solar = newMode
+        
+        // Atualize a aparência depois de mudar o estado
+        updateSolarButtonAppearance()
     }
     
     // Actions
@@ -1063,6 +1160,19 @@ class HomeViewController: UIViewController {
             desr_sld.filledColor = UIColor.blue
         }
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Certifica-se que o solar_bt esteja na frente de outras views
+        if let superview = solar_bt.superview {
+            superview.bringSubviewToFront(solar_bt)
+        }
+        
+        // Imprime informações para debug
+        print("viewDidLayoutSubviews - temp_txt frame: \(temp_txt.frame)")
+        print("viewDidLayoutSubviews - solar_bt frame: \(solar_bt.frame)")
+    }
 }
 
 extension HomeViewController: MSCircularSliderDelegate {
@@ -1278,3 +1388,4 @@ extension TubCommands {
         return "s \(index) "
     }
 }
+

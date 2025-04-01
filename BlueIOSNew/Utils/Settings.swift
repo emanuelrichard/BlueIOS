@@ -165,6 +165,7 @@ class Settings {
     static var off_set_soh_solar = -1
     static var inicio_horario = -1
     static var fim_horario = -1
+    static var solar = -1
     
     //Esvaziar
     static var ralo = -1
@@ -563,6 +564,8 @@ extension Settings {
             //Painel Solar
         case BathTubFeedbacks.TEMP_SOLAR:
             temp_solar = value
+        case BathTubFeedbacks.SOLAR:
+            solar = value
         case BathTubFeedbacks.TEMP_OFF_SET_SOLAR:
             temp_off_set_solar = value
         case BathTubFeedbacks.CANAL_SOLAR:

@@ -128,6 +128,7 @@ class BathTubFeedbacks {
     static let OFF_SET_SOH_SOLAR = "offsetsohsolar"
     static let INICIO_HORARIO = "iniciofaixadehorario"
     static let FIM_HORARIO = "fimfaixadehorario"
+    static let SOLAR = "solar"
     
     static let TEMPO_ESVAZIAR = "tempoEsvaziar"
     static let RALO = "ralo"

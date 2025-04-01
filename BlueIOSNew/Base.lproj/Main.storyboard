@@ -719,7 +719,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </stackView>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" reuseIdentifier="ATub" translatesAutoresizingMaskIntoConstraints="NO" id="g2X-ax-wXL" customClass="ATubViewCell" customModule="BlueIOSNew" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" reuseIdentifier="ATub" translatesAutoresizingMaskIntoConstraints="NO" id="g2X-ax-wXL" customClass="ATubViewCell" customModule="BlueIOSNew" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="M2p-q1-wqv" customClass="DCBorderedView" customModule="DCKit">
@@ -9152,7 +9152,7 @@ VUYXKg
                                                                 </userDefinedRuntimeAttributes>
                                                             </button>
                                                             <button opaque="NO" tag="24" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="MUP-kg-q7W" customClass="DCBorderedButton" customModule="DCKit">
-                                                                <rect key="frame" x="171" y="0.0" width="166" height="23"/>
+                                                                <rect key="frame" x="171" y="0.0" width="165" height="23"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                 <state key="normal" title="Sequencial">
                                                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -10689,11 +10689,11 @@ VUYXKg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="40" id="8T4-wx-1EO" userLabel="cascata e borbulhador">
-                                <rect key="frame" x="103" y="505" width="207" height="52"/>
+                                <rect key="frame" x="103" y="525" width="207" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="50" placeholderIntrinsicHeight="50" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Nn-lD-dFV" userLabel="cascata">
-                                        <rect key="frame" x="0.0" y="1" width="83.666666666666671" height="50"/>
+                                        <rect key="frame" x="0.0" y="1" width="42.333333333333336" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="Jge-HK-pEc"/>
                                             <constraint firstAttribute="width" constant="100" id="Stm-kw-X6b"/>
@@ -10709,8 +10709,15 @@ VUYXKg
                                             <action selector="cascataAction:" destination="5fB-il-dAE" eventType="touchUpInside" id="JbI-x0-bSv"/>
                                         </connections>
                                     </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="painelSolar_icon" translatesAutoresizingMaskIntoConstraints="NO" id="qg5-92-Dy4">
+                                        <rect key="frame" x="82.333333333333329" y="0.0" width="42.333333333333329" height="52"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="5Ot-2e-KNK"/>
+                                            <constraint firstAttribute="width" constant="100" id="spF-B1-FUC"/>
+                                        </constraints>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="50" placeholderIntrinsicHeight="50" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mW6-tf-COV">
-                                        <rect key="frame" x="123.66666666666669" y="1" width="83.333333333333314" height="50"/>
+                                        <rect key="frame" x="164.66666666666666" y="1" width="42.333333333333343" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="3ju-AJ-Cl8"/>
                                             <constraint firstAttribute="width" constant="100" id="iN4-ZZ-uc3"/>
@@ -11014,7 +11021,7 @@ VUYXKg
                                 </subviews>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" id="rcG-ut-ECf">
-                                <rect key="frame" x="102" y="565" width="210" height="46"/>
+                                <rect key="frame" x="102" y="600" width="210" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="level_0" translatesAutoresizingMaskIntoConstraints="NO" id="VwM-9O-feL" userLabel="level_ico">
@@ -11179,6 +11186,13 @@ VUYXKg
                                     </button>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-1C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aXR-0I-DD0">
+                                <rect key="frame" x="197" y="610" width="32" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nET-NK-r6L"/>
                         <color key="backgroundColor" red="1" green="0.32980699409999997" blue="0.57759350840000001" alpha="0.99609981309999995" colorSpace="custom" customColorSpace="sRGB"/>
@@ -11225,10 +11239,12 @@ VUYXKg
                         <outlet property="mqttDisconn_ico" destination="WIS-9U-jMs" id="roN-Yn-NRu"/>
                         <outlet property="power_btn" destination="uR4-52-H79" id="nkW-BY-7ut"/>
                         <outlet property="separador" destination="zBu-PU-g8V" id="lOM-PN-Vsn"/>
+                        <outlet property="solar_bt" destination="qg5-92-Dy4" id="PJY-KK-pu0"/>
                         <outlet property="spot_ico" destination="6aG-mR-1kE" id="ezD-Fh-Msu"/>
                         <outlet property="tempTitle_txt" destination="KiZ-CR-hR7" id="aBY-ZI-jjs"/>
                         <outlet property="tempUnity_txt" destination="dsA-lV-6R6" id="r3A-oo-4j7"/>
                         <outlet property="temp_sld" destination="VrB-M4-JIz" id="PHT-du-qZx"/>
+                        <outlet property="temp_solar" destination="aXR-0I-DD0" id="2oN-9A-VbT"/>
                         <outlet property="temp_txt" destination="Xy9-U5-LzM" id="dgS-Er-NEv"/>
                         <outlet property="temp_viw" destination="ceb-fR-Pw7" id="VbH-FD-Vsz"/>
                         <outlet property="timerRaloTxt" destination="5Si-PN-3WS" id="dBo-Jm-tf1"/>
@@ -11281,6 +11297,7 @@ VUYXKg
         <image name="level_0" width="18" height="18"/>
         <image name="modoAuto_ico" width="50" height="50"/>
         <image name="on_off" width="36" height="36"/>
+        <image name="painelSolar_icon" width="100" height="100"/>
         <image name="paleta_cores_ic" width="21.333333969116211" height="21.333333969116211"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
         <image name="sbright" width="24" height="24"/>
@@ -11297,8 +11314,8 @@ VUYXKg
         <image name="tub" width="33.333332061767578" height="33.333332061767578"/>
         <image name="update" width="50" height="50"/>
         <image name="water.waves" catalog="system" width="128" height="88"/>
-        <image name="wifi" catalog="system" width="128" height="90"/>
         <image name="wifi" width="18" height="18"/>
+        <image name="wifi" catalog="system" width="128" height="90"/>
         <namedColor name="Conection_ON">
             <color red="0.0" green="1" blue="0.008999999612569809" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -11372,28 +11389,28 @@ VUYXKg
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
